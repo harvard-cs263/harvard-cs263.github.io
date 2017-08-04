@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="generator" content="Docutils 0.13.1: http://docutils.sourceforge.net/" />
+<title></title>
+<style type="text/css">
+
+/******************************************************************************
+The MIT License (MIT)
+
+Copyright (c) 2014 Matthias Eisen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+******************************************************************************/
+
+/* Modified by Jerry Ma */
+
+body {
+    font-family: Palatino, "Palatino LT STD", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-size: 16px;
+    color: #24292e;
+}
+
+div.document {
+    margin: 0 auto;
+    width: 95%;
+    max-width: 960px;
+}
+
+p {
+    line-height: 120%;
+}
+
+
+/* ========== Headings ========== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    margin-top: 1.5em;
+}
+
+h1.section-subtitle, 
+h2.section-subtitle, 
+h3.section-subtitle,
+h4.section-subtitle, 
+h5.section-subtitle, 
+h6.section-subtitle {
+    margin-top: 0.4em;
+}
+
+h1.title {
+    text-align: center;
+}
+
+h2.subtitle {
+    text-align: center;
+}
+
+span.section-subtitle {
+    font-size: 80%,
+}
+
+/* //-------- Headings ---------- */
+
+
+/* ========== Images ========== */
+
+img, 
+.figure, 
+object {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+div.figure {
+    margin-left:    2em;
+    margin-right:   2em;
+}
+
+img.align-left, .figure.align-left, object.align-left {
+    clear:          left;
+    float:          left;
+    margin-right:   1em;
+}
+
+img.align-right, .figure.align-right, object.align-right {
+    clear:          right;
+    float:          right;
+    margin-left:    1em;
+}
+
+img.align-center, .figure.align-center, object.align-center {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+/* reset inner alignment in figures */
+div.align-right {
+    text-align: inherit;
+}
+
+object[type="image/svg+xml"], 
+object[type="application/x-shockwave-flash"] {
+    overflow: hidden;
+}
+
+/* //-------- Images ---------- */
+
+
+
+/* ========== Literal Blocks ========== */
+
+pre, tt.literal, span.literal {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    font-size: 14px;
+}
+
+tt.literal {
+    background-color: #ffa;
+}
+
+span.literal {
+    background-color: #f3f3f4;
+    border-radius: 0.3em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    white-space: pre;
+}
+
+pre.address {
+    margin-bottom: 0;
+    margin-top: 0;
+    font: inherit;
+}
+
+pre.literal-block {
+    border-left: solid 5px #ccc;
+    background-color: #f6f8fa;
+    padding: 1em;
+}
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+}
+
+span.interpreted {
+}
+
+span.pre {
+    white-space: pre;
+}
+
+pre.code .ln { 
+    color: grey; 
+}
+pre.code, code {
+    border-style: none;
+    padding: 1em 0;
+}
+pre.code .comment, code .comment { 
+    color: #888;
+}
+pre.code .keyword, code .keyword {
+    font-weight: bold; 
+    color: #080;
+}
+pre.code .literal.string, code .literal.string { 
+    color: #d20;
+    background-color: #fff0f0;
+}
+pre.code .literal.number, code .literal.number { 
+    color: #00d;
+}
+pre.code .name.builtin, code .name.builtin {
+    color: #038;
+    color: #820;
+}
+pre.code .name.namespace, code .name.namespace {
+    color: #b06;
+}
+pre.code .deleted, code .deleted {
+    background-color: #fdd;
+}
+pre.code .inserted, code .inserted {
+    background-color: #dfd;
+}
+
+
+/* //-------- Literal Blocks --------- */
+
+
+/* ========== Tables ========== */
+
+table {
+    border-spacing:         0;
+    border-collapse:        collapse;
+    border-style:           none;
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+}
+
+td, 
+th {
+    border: none;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    vertical-align:         top;
+}
+
+th {
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+    background-color:       #ddd;
+}
+
+td p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+table.field-list,
+table.footnote,
+table.citation,
+table.option-list {
+    border:                 none;
+}
+table.docinfo {
+    margin:                 2em 4em;
+}
+
+table.docutils {
+    margin:                 1em 0;
+}
+
+table.docutils th.field-name, 
+table.docinfo th.docinfo-name {
+    border:                 none;
+    background:             none;
+    font-weight:            bold ;
+    text-align:             left ;
+    white-space:            nowrap ;
+    padding-left:           0;
+    vertical-align:         middle; 
+}
+
+table.docutils.booktabs {
+    border:                 none;
+    border-top:             2px solid;
+    border-bottom:          2px solid;
+    border-collapse:        collapse;
+}
+
+table.docutils.booktabs * {
+    border:                 0px;
+}
+table.docutils.booktabs th {
+    border-bottom:          thin solid;
+    text-align:             left;
+}
+
+span.option {
+    white-space: nowrap;
+}
+
+table caption {
+    margin-bottom: 2px;
+}
+
+/* //-------- Tables ---------- */
+
+
+/* ========== Lists ========== */
+
+ol.simple, ul.simple {
+    margin-bottom: 1em;
+}
+
+ol.arabic {
+    list-style: decimal;
+}
+
+ol.loweralpha {
+    list-style: lower-alpha;
+}
+
+ol.upperalpha {
+    list-style: upper-alpha;
+}
+
+ol.lowerroman {
+    list-style: lower-roman;
+}
+
+ol.upperroman {
+    list-style: upper-roman;
+}
+
+dl.docutils dd {
+    margin-bottom: 0.5em;
+}
+
+
+dl.docutils dt {
+    font-weight: bold;
+}
+
+li p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+dl {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* //-------- Lists ---------- */
+
+
+/* ========== Sidebar ========== */
+
+div.sidebar {
+    margin: 0 0 0.5em 1em ;
+    border-left: solid 2px #111;
+    padding: 1em ;
+    width: 40% ;
+    float: right ;
+    clear: right;
+}
+
+div.sidebar {
+    font-size: 14px;
+}
+
+p.sidebar-title {
+    font-size: 16px;
+    font-weight: bold ;
+}
+
+p.sidebar-subtitle {
+    font-weight: bold;
+}
+
+/* //-------- Sidebar ---------- */
+
+
+/* ========== Topic ========== */
+
+div.topic {
+    margin: 2em;
+    padding: 1em 0;
+    border-width: 1px;
+    border-color: #111;
+    border-style: solid none;
+}
+
+div.topic p {
+    padding: 0;
+}
+
+p.topic-title {
+    font-weight: bold;
+}
+
+/* //-------- Topic ---------- */
+
+
+/* ========== Header ========== */
+
+div.header {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             2em auto 4em auto;
+    max-width:          960px;
+    clear:              both;
+}
+
+hr.header {
+    border:             0;
+    height:             1px;
+    margin-top:         1em;
+    background-color:   #111;
+}
+
+/* //-------- Header ---------- */
+
+
+/* ========== Footer ========== */
+
+div.footer {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             6em auto 2em auto;
+    max-width:          960px;
+    clear:              both;
+    text-align:         center;
+}
+
+hr.footer {
+    border:             0;
+    height:             1px;
+    margin-bottom:      2em;
+    background-color:   #111;
+}
+
+/* //-------- Footer ---------- */
+
+
+/* ========== Admonitions ========== */
+
+div.admonition, 
+div.attention, 
+div.caution, 
+div.danger, 
+div.error,
+div.hint, 
+div.important, 
+div.note, 
+div.tip, 
+div.warning {
+    margin: 2em;
+    border: solid 1px #111;
+    padding: 0 1em;
+    background-color: #eee;
+}
+
+div.error,
+div.danger {
+    border-color: #a94442;
+    background-color: #f2dede;
+}
+
+div.hint,
+div.tip {
+    border-color: #31708f;
+    background-color: #d9edf7;
+}
+
+div.attention,
+div.caution,
+div.warning {
+    border-color: #8a6d3b;
+    background-color: #fcf8e3; 
+}
+
+div.hint p.admonition-title,
+div.tip p.admonition-title {
+    color: #31708f;
+    font-weight: bold ;
+}
+
+div.note p.admonition-title,
+div.admonition p.admonition-title, 
+div.important p.admonition-title {
+    font-weight: bold ;
+}
+
+div.attention p.admonition-title,
+div.caution p.admonition-title,
+div.warning p.admonition-title {
+    color: #8a6d3b;
+    font-weight: bold ;
+}
+
+div.danger p.admonition-title, 
+div.error p.admonition-title,
+.code .error {
+    color: #a94442;
+    font-weight: bold ;
+}
+
+/* //-------- Admonitions ---------- */
+
+
+/* ========== Table of Contents ========== */
+
+div.contents {
+    margin: 2em 0;
+    border: none;
+}
+
+ul.auto-toc {
+    list-style-type: none;
+}
+
+a.toc-backref {
+    text-decoration: none ;
+    color: #111;
+}
+
+/* //-------- Table of Contents ---------- */
+
+
+
+/* ========== Line Blocks========== */
+
+div.line-block {
+    display: block ;
+    margin-top: 1em ;
+    margin-bottom: 1em;
+}
+
+div.line-block div.line-block {
+    margin-top: 0 ;
+    margin-bottom: 0 ;
+    margin-left: 1.5em;
+}
+
+/* //-------- Line Blocks---------- */
+
+
+/* ========== System Messages ========== */
+
+div.system-messages {
+    margin: 5em;
+}
+
+div.system-messages h1 {
+    color: red;
+}
+
+div.system-message {
+    border: medium outset ;
+    padding: 1em;
+}
+
+div.system-message p.system-message-title {
+    color: red ;
+    font-weight: bold;
+}
+
+/* //-------- System Messages---------- */
+
+
+/* ========== Helpers ========== */
+
+.hidden {
+    display: none;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    clear: both ;
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/* //-------- Helpers---------- */
+
+
+p.caption {
+    font-style: italic;
+    text-align: center;
+}
+
+p.credits {
+font-style: italic ;
+font-size: smaller }
+
+p.label {
+white-space: nowrap }
+
+p.rubric {
+font-weight: bold ;
+font-size: larger ;
+color: maroon ;
+text-align: center }
+
+p.attribution {
+text-align: right ;
+margin-left: 50% }
+
+blockquote.epigraph {
+    margin: 2em 5em;
+}
+
+div.abstract {
+margin: 2em 5em }
+
+div.abstract {
+font-weight: bold ;
+text-align: center }
+
+div.dedication {
+margin: 2em 5em ;
+text-align: center ;
+font-style: italic }
+
+div.dedication {
+font-weight: bold ;
+font-style: normal }
+
+
+span.classifier {
+font-style: oblique }
+
+span.classifier-delimiter {
+font-weight: bold }
+
+span.problematic {
+color: red }
+
+
+
+
+</style>
+</head>
+<body>
+<div class="document">
+
+
+<div class="section" id="buffer-overflows">
+<h1>Buffer Overflows</h1>
+<p>This project will give you hands-on experience with buffer overflow vulnerabilities, allowing you to attack a simple web server called zookws. The zookws web server is running a simple python web application, zoobar, in which users transfer &quot;zoobars&quot; (credits) between each other. You will find buffer overflows in the zookws web server code, write exploits for those buffer overflows, and look for other potential problems in the web server implementation.</p>
+</div>
+<div class="section" id="project-setup">
+<h1>Project Setup</h1>
+<ul class="simple">
+<li><p>Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</p></li>
+<li><p>Wait for the repository to be created, then create a fork.</p></li>
+<li><p>Login to the VM.</p></li>
+<li><p><span class="docutils literal">cd</span> to your home directory and run <span class="docutils literal">git clone &lt;fork_url&gt; lab/</span> to clone your fork.</p></li>
+<li><p>Run <span class="docutils literal">cd lab/</span> to enter the project directory.</p></li>
+</ul>
+<p>Refer to Project 0's writeup for elaboration on any of these steps.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>As mentioned in Project 0's writeup, <strong>do not</strong> use <span class="docutils literal"><span class="pre">apt-get</span></span> and related commands yet. Installing, removing, or upgrading packages (esp. <span class="docutils literal">lib*</span>) has the potential to change various things in your address space, so your code will probably fail tests on our grading machines.</p>
+</div>
+</div>
+<div class="section" id="specification">
+<h1>Specification</h1>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.</p>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>The files that you will need for this project should now reside in <span class="docutils literal">~/lab</span>. Before you proceed with the project, compile the zookws webserver via <span class="docutils literal">make</span>.</p>
+<p>The zookws web server consists of the following components:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">zookld</span>, a launcher daemon that launches services configured in the file <span class="docutils literal">zook.conf</span>.</p></li>
+<li><p><span class="docutils literal">zookd</span>, a dispatcher that routes HTTP requests to corresponding services.</p></li>
+<li><p><span class="docutils literal">zookfs</span> and other services that may serve static files or execute dynamic scripts.</p></li>
+</ul>
+<p>After <span class="docutils literal">zookld</span> launches the configured services, <span class="docutils literal">zookd</span> listens on a port (8080 by default) for incoming HTTP requests and reads the first line of each request for dispatching. In this lab, <span class="docutils literal">zookd</span> is configured to dispatch every request to the <span class="docutils literal">zookfs</span> service, which reads the rest of the request and generates a response from the requested file. Most HTTP-related code is in <span class="docutils literal">http.c</span>. Here is a <a class="reference external" href="http://www.garshol.priv.no/download/text/http-tut.html">tutorial of the HTTP protocol</a>.</p>
+<p>You will be using two versions of the web server:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">zookld</span>, <span class="docutils literal"><span class="pre">zookd-exstack</span></span>, <span class="docutils literal"><span class="pre">zookfs-exstack</span></span>, as configured in the file <span class="docutils literal"><span class="pre">zook-exstack.conf</span></span></p></li>
+<li><p><span class="docutils literal">zookld</span>, <span class="docutils literal"><span class="pre">zookd-nxstack</span></span>, <span class="docutils literal"><span class="pre">zookfs-nxstack</span></span>, as configured in the file <span class="docutils literal"><span class="pre">zook-nxstack.conf</span></span></p></li>
+</ul>
+<p>In the first version, the <span class="docutils literal"><span class="pre">*-exstack</span></span> binaries have an executable stack, which makes it easier to inject executable code using a stack buffer overflow. The <span class="docutils literal"><span class="pre">*-nxstack</span></span> binaries have a non-executable stack; you will write exploits that bypass non-executable stacks later in this lab assignment.</p>
+<p>In order to run the web server in a predictable fashion---so that its stack and memory layout is the same every time---you will use the <span class="docutils literal"><span class="pre">clean-env.sh</span></span> script. This is the same way in which we will run the web server during grading, so make sure that all of your exploits work on this configuration!</p>
+<p>The reference binaries of zookws are provided in <span class="docutils literal">bin.tar.gz</span>. We will use those binaries for grading, so make sure that your exploits work on those binaries.</p>
+<p>Now, make sure that you can run the zookws web server and start the application via <span class="docutils literal"><span class="pre">./clean-env.sh</span> ./zookld <span class="pre">zook-exstack.conf</span></span>. You should then be able to open your browser and go to <a class="reference external" href="http://192.168.26.3:8080/">http://192.168.26.3:8080/</a>. If something doesn't seem to be working, try to figure out what went wrong before proceeding further.</p>
+</div>
+<div class="section" id="part-1-finding-buffer-overflows">
+<h2>Part 1: Finding Buffer Overflows</h2>
+<p>In the first part of this lab assignment, you will find buffer overflows in the provided web server. Read Aleph One's article, &quot;Smashing the Stack for Fun and Profit&quot;, as well as &quot;Buffer Overflows: Attacks and Defenses for the Vulnerability of the Decade&quot; (<span class="docutils literal">articles/stack_smashing.txt</span> and <span class="docutils literal">articles/buffer_overflows.pdf</span> in the repository, respectively), to figure out how buffer overflows work.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Since the repository lives on your VM and <span class="docutils literal">scp</span> is a pain, it's probably easiest to download all files in <span class="docutils literal">articles/</span> from your fork's GitHub page.</p>
+</div>
+<p>Study the web server's code, and find examples of code that is vulnerable to memory corruption via buffer overflows. Write down a description of each vulnerability in the file <span class="docutils literal">bugs.txt</span>; use the format described in that file. For each vulnerability, describe the buffer which may overflow, how you would structure the input to the web server (i.e., the HTTP request) to overflow the buffer, and whether the vulnerability can be prevented using stack canaries. Locate at least 5 different vulnerabilities.</p>
+<p><strong>Testing</strong>: <span class="docutils literal">make test_bugs</span> will check if your <span class="docutils literal">bugs.txt</span> file matches the required format. However, the command will not check whether the bugs that you listed are actual bugs (or whether your analysis of them is correct).</p>
+</div>
+<div class="section" id="part-2-memory-corruption">
+<h2>Part 2: Memory Corruption</h2>
+<p>Now, you will start developing exploits to take advantage of the buffer overflows that you have found. We have provided template Python code for an exploit in <span class="docutils literal">exploit_template.py</span>. That script issues an HTTP request, and takes two arguments, the server name and port number. So, you might run it as follows to issue a request to zookws running on localhost:</p>
+<pre class="literal-block">httpd&#64;vm263:~/lab$ ./clean-env.sh ./zookld zook-exstack.conf
+
+(in another terminal session)
+httpd&#64;vm263:~/lab$ ./exploit-template.py localhost 8080
+HTTP request:
+GET / HTTP/1.0
+
+...</pre>
+<p>You are free to use this template, or write your own exploit code from scratch. Note, however, that if you choose to write your own exploit, the exploit must run correctly inside the provided virtual machine.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The exploit template is <strong>Python 3</strong> code. You may use Python 2.7 (if you do, be sure to change the first line's <span class="docutils literal">python3</span> to <span class="docutils literal">python2</span>), but you are on your own as we only officially support Python 3.</p>
+</div>
+<p>Pick two buffer overflows from the ones you put in <span class="docutils literal">bugs.txt</span>. The first must overwrite a return address on the stack, and the second must overwrite some other data structure that you will use to take over the control flow of the program.</p>
+<p>Then, write exploits that trigger them. For now, you do not need to inject code or do anything other than corrupt memory past the end of the buffer. Verify that your exploit actually corrupts memory, by either checking the last few lines of <span class="docutils literal">dmesg | tail</span>, using <span class="docutils literal">gdb</span>, or observing that the web server crashes.</p>
+<p>Name these exploits <span class="docutils literal">crash_1.py</span> and <span class="docutils literal">crash_2.py</span>. In addition, answer the written questions in <span class="docutils literal">crash.txt</span> (save your answers directly in the file).</p>
+<p>If you believe that a vulnerability in <span class="docutils literal">bugs.txt</span> is too difficult to exploit, choose a different one.</p>
+<p><strong>Testing</strong>: <span class="docutils literal">make test_crash_1</span> and <span class="docutils literal">make test_crash_2</span> will check that your exploits crash the server via memory corruption (namely, a <span class="docutils literal">SIGSEGV</span>). Note that this does <strong>not</strong> check <span class="docutils literal">crash.txt</span>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You will find <span class="docutils literal">gdb</span> useful in building your exploits. As zookws forks off many processes, it can be difficult to debug the correct one. The easiest way to do this is to run the web server ahead of time with <span class="docutils literal"><span class="pre">clean-env.sh</span></span> and then attaching <span class="docutils literal">gdb</span> to an already-running process with the <span class="docutils literal"><span class="pre">-p</span></span> flag. To help find the right process for debugging, zookld prints out the process IDs of the child processes that it spawns. You can also find the PID of a process by using pgrep; for example, to attach to <span class="docutils literal"><span class="pre">zookd-exstack</span></span>, start the server and, in another shell, run:</p>
+<pre class="literal-block">httpd&#64;vm-CS263:~/lab$ gdb -p $(pgrep zookd-exstack)
+...
+0x4001d422 in __kernel_vsyscall ()
+(gdb) break your-breakpoint
+Breakpoint 1 at 0x1234567: file zookd.c, line 999.
+(gdb) continue
+Continuing.</pre>
+<p>Keep in mind that a process being debugged by <span class="docutils literal">gdb</span> will not get killed even if you terminate the parent zookld process using <span class="docutils literal"><span class="pre">Ctrl-C</span></span>. If you are having trouble restarting the web server, check for leftover processes from the previous run, or be sure to exit <span class="docutils literal">gdb</span> before restarting zookld.</p>
+<p>When a process being debugged by <span class="docutils literal">gdb</span> forks, by default <span class="docutils literal">gdb</span> continues to debug the parent process and does not attach to the child. Since zookfs forks a child process to service each request, you may find it helpful to have <span class="docutils literal">gdb</span> attach to the child on fork, using the command <span class="docutils literal">set <span class="pre">follow-fork-mode</span> child</span>. We have added that command to <span class="docutils literal">.gdbinit</span>, which will take effect if you start <span class="docutils literal">gdb</span> in that directory.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For this and subsequent tasks, you may need to encode your attack payload in different ways, depending on which vulnerability you are exploiting. In some cases, you may need to make sure that your attack payload is URL-encoded, i.e.,, using <span class="docutils literal">+</span> instead of space and <span class="docutils literal">%2b</span> instead of <span class="docutils literal">+</span>. Here is a <a class="reference external" href="http://www.blooberry.com/indexdot/html/topics/urlencoding.htm">URL encoding reference</a>. You can also use the quoting functions in the Python <a class="reference external" href="https://docs.python.org/3/library/urllib.html">urllib module</a> to URL-encode strings (see the exploit template for an example).</p>
+<p>In other cases, you may need to include binary values into your payload. The Python <a class="reference external" href="https://docs.python.org/3/library/struct.html">struct module</a> can help you do that. For example, <span class="docutils literal"><span class="pre">struct.pack(b'&lt;I',</span> x)</span> will produce a 4-byte (32-bit) little-endian binary encoding of the integer <span class="docutils literal">x</span>.</p>
+</div>
+</div>
+<div class="section" id="part-3-code-injection-via-buffer-overflow">
+<h2>Part 3: Code Injection via Buffer Overflow</h2>
+<p>In this part, you will use your buffer overflows to inject code into the web server. The goal of the injected code will be to <span class="docutils literal">unlink</span> (i.e., remove) a sensitive file on the server, namely <span class="docutils literal">/home/httpd/grades.txt</span>. Use the <span class="docutils literal"><span class="pre">*-exstack</span></span> binaries (via configuration files, as discussed before), since they have an executable stack that makes it easier to inject code. The zookws web server should be started via <span class="docutils literal"><span class="pre">./clean-env.sh</span> ./zookld <span class="pre">zook-exstack.conf</span></span>.</p>
+<div class="section" id="shell-code">
+<h3>Shell Code</h3>
+<p>We have provided Aleph One's shell code for you to use in <span class="docutils literal">shellcode.S</span>, along with <span class="docutils literal">Makefile</span> rules that produce <span class="docutils literal">shellcode.bin</span>, a compiled version of the shell code, when you run make. Aleph One's exploit is intended to exploit <span class="docutils literal"><span class="pre">setuid-root</span></span> binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink <span class="docutils literal">/home/httpd/grades.txt</span>. This part is ungraded, but you will most likely need <span class="docutils literal">shellcode.bin</span> for your injection attack.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To help you develop your shell code for this task, we have provided a program called <span class="docutils literal"><span class="pre">run-shellcode</span></span> that will run your binary shell code, as if you correctly jumped to its starting point. For example, running it on Aleph One's shell code will cause the program to <span class="docutils literal"><span class="pre">execve(&quot;/bin/sh&quot;)</span></span>, thereby giving you another shell prompt:</p>
+<pre class="literal-block">httpd&#64;vm263:~/lab$ ./run-shellcode shellcode.bin
+$</pre>
+</div>
+</div>
+<div class="section" id="injection-attack">
+<h3>Injection Attack</h3>
+<p>Starting from one of your memory corruption exploits, construct an exploit that hijacks control flow of the web server to unlink <span class="docutils literal">/home/httpd/grades.txt</span>. Save this exploit in a file called <span class="docutils literal">unlink_exstack.py</span>. In addition, answer the written questions in <span class="docutils literal">unlink_exstack.txt</span> (save your answers directly in the file).</p>
+<p>Verify that your exploit works; you will need to re-create <span class="docutils literal">/home/httpd/grades.txt</span> after each successful exploit run.</p>
+<p><strong>Testing</strong>: <span class="docutils literal">make test_unlink_exstack</span> will check that your exploit unlinks <span class="docutils literal">/home/httpd/grades.txt</span> with an executable stack. Note that this does <strong>not</strong> check <span class="docutils literal">unlink_exstack.txt</span>.</p>
+<div class="admonition tip" id="foostack">
+<p class="admonition-title">Tip</p>
+<p>When developing an exploit, you will have to think about what values are on the stack, so that you can modify them accordingly. For your reference, here is what the stack frame of some function <span class="docutils literal">foo()</span> looks like; here, <span class="docutils literal">foo()</span> has a local variable <span class="docutils literal">char buf[256]</span>:</p>
+<pre class="literal-block">             +------------------+
+             |       ...        |
+             |  stack frame of  |
+             |   foo's caller   |
+             |       ...        |
+             +------------------+
+             |  return address  | (4 bytes)
+             | to foo's caller  |
+             +------------------+
+%ebp ------&gt; |    saved %ebp    | (4 bytes)
+             +------------------+
+             |       ...        |
+             +------------------+
+             |     buf[255]     |
+             |       ...        |
+ buf ------&gt; |      buf[0]      |
+             +------------------+</pre>
+<p>Note that the stack grows down in this figure, and memory addresses are increasing up.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When developing an exploit, you will often need to know the addresses of specific stack locations, or specific functions, in a particular program. The easiest way to do this is to use <span class="docutils literal">gdb</span>. For example, suppose you want to know the stack address of the <span class="docutils literal">pn[]</span> array in the <span class="docutils literal">http_serve()</span> function in <span class="docutils literal"><span class="pre">zookfs-exstack</span></span>, and the address of its saved <span class="docutils literal">%ebp</span> register on the stack. You can obtain them using <span class="docutils literal">gdb</span> as follows:</p>
+<pre class="literal-block">httpd&#64;vm-CS263:~/lab$ gdb -p $(pgrep zookfs-exstack)
+...
+0x40022416 in __kernel_vsyscall ()
+(gdb) break http_serve
+Breakpoint 1 at 0x8049415: file http.c, line 248.
+(gdb) continue
+Continuing.</pre>
+<p>Be sure to run <span class="docutils literal">gdb</span> from the <span class="docutils literal">~/lab</span> directory, so that it picks up the <span class="docutils literal">set <span class="pre">follow-fork-mode</span> child</span> command from <span class="docutils literal"><span class="pre">~/lab/.gdbinit</span></span>. Now you can issue an HTTP request to the web server, so that it triggers the breakpoint, and so that you can examine the stack of <span class="docutils literal">http_serve()</span>:</p>
+<pre class="literal-block">[New process 1339]
+[Switching to process 1339]
+
+Breakpoint 1, http_serve (fd=3, name=0x8051014 &quot;/&quot;) at http.c:248
+248     void (*handler)(int, const char *) = http_serve_none;
+(gdb) print &amp;pn
+$1 = (char (*)[1024]) 0xbfffd10c
+(gdb) info registers
+eax            0x3  3
+ecx            0x400bdec0 1074519744
+edx            0x6c6d74 7105908
+ebx            0x804a38e  134521742
+esp            0xbfffd0a0 0xbfffd0a0
+ebp            0xbfffd518 0xbfffd518
+esi            0x0  0
+edi            0x0  0
+eip            0x8049415  0x8049415 &lt;http_serve+9&gt;
+eflags         0x200286 [ PF SF IF ID ]
+cs             0x73 115
+ss             0x7b 123
+ds             0x7b 123
+es             0x7b 123
+fs             0x0  0
+gs             0x33 51
+(gdb)</pre>
+<p>From this, you can tell that, at least for this invocation of <span class="docutils literal">http_serve()</span>, the <span class="docutils literal">pn[]</span> buffer on the stack lives at address <span class="docutils literal">0xbfffd10c</span>, and the value of <span class="docutils literal">%ebp</span> (which points at the saved <span class="docutils literal">%ebp</span> on the stack) is <span class="docutils literal">0xbfffd518</span>.</p>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Here's a suggested plan of attack for this task:</p>
+<p>First, focus on obtaining control of the program counter. Sketch out the stack layout that you expect the program to have at the point when you overflow the buffer, and use <span class="docutils literal">gdb</span> to verify that your overflow data ends up where you expect it to. Step through the execution of the function to the return instruction to make sure you can control what address the program returns to. The <span class="docutils literal">next</span>, <span class="docutils literal">stepi</span>, <span class="docutils literal">info reg</span>, and <span class="docutils literal">disassemble</span> commands in <span class="docutils literal">gdb</span> should prove helpful.</p>
+<p>Once you can reliably hijack the control flow of the program, find a suitable address that will contain the code you want to execute, and focus on placing the correct code at that address (perhaps from <span class="docutils literal">shellcode.bin</span>).</p>
+<p>Note that <span class="docutils literal">SYS_unlink</span>, the number of the unlink syscall, is 10 or <span class="docutils literal">'\n'</span> (newline). Why does this complicate matters? How can you get around it?</p>
+</div>
+</div>
+</div>
+<div class="section" id="part-4-return-to-libc-attacks">
+<h2>Part 4: Return-to-libc Attacks</h2>
+<p>Many modern operating systems mark the stack as non-executable in an attempt to make it more difficult to exploit buffer overflows. In this part, you will explore how this protection mechanism can be circumvented. You'll need to run the web server configured with binaries that have a non-executable stack via <span class="docutils literal"><span class="pre">./clean-env.sh</span> ./zookld <span class="pre">zook-nxstack.conf</span></span>.</p>
+<p>Starting from your two memory corruption exploits, construct two additional exploits that unlink <span class="docutils literal">/home/httpd/grades.txt</span> when run on the binaries that have a non-executable stack. Name these new exploits <span class="docutils literal">unlink_libc_1.py</span> and <span class="docutils literal">unlink_libc_2.py</span>. In addition, answer the written questions in <span class="docutils literal">unlink_libc.txt</span> (save your answers directly in the file).</p>
+<p>Verify that your exploits work; you will need to re-create <span class="docutils literal">/home/httpd/grades.txt</span> after each successful exploit run.</p>
+<p><strong>Testing</strong>: <span class="docutils literal">make test_unlink_libc_1</span> and <span class="docutils literal">make test_unlink_libc_2</span> will check that your exploits unlink <span class="docutils literal">/home/httpd/grades.txt</span> with a non-executable stack. Note that this does <strong>not</strong> check <span class="docutils literal">unlink_libc.txt</span>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Although in principle you could use shellcode that's not located on the stack, for this task you should not inject any shellcode into the vulnerable process. You should use a return-to-libc (or at least a call-to-libc) attack where you divert control flow directly into <span class="docutils literal">libc</span> code that existed before your attack.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The key observation to exploiting buffer overflows with a non-executable stack is that you still control the program counter, after a <span class="docutils literal">RET</span> instruction jumps to an address that you placed on the stack. Even though you cannot jump to the address of the overflowed buffer (it will not be executable), there's usually enough code in the vulnerable server's address space to perform the operation you want.</p>
+<p>Thus, to bypass a non-executable stack, you need to first find the code you want to execute. This is often a function in the standard library, called <span class="docutils literal">libc</span>; examples of functions which are often useful are <span class="docutils literal">execl</span>, <span class="docutils literal">system</span>, or <span class="docutils literal">unlink</span>. Then, you need to arrange for the stack to look like a call to that function with the desired arguments, such as <span class="docutils literal"><span class="pre">system(&quot;/bin/sh&quot;)</span></span>. Finally, you need to arrange for the <span class="docutils literal">RET</span> instruction to jump to the function you found in the first step. This attack is often called a return-to-libc attack. The file <span class="docutils literal">articles/return_to_libc.txt</span> contains a more detailed description of this style of attack.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You will need to understand the calling convention for C functions. For your reference, consider the following simple C program:</p>
+<pre class="literal-block">void
+foo(int x, char *msg, int y)
+{
+     /* ... */
+}
+
+void
+bar(void)
+{
+    int a = 3;
+    foo(5, &quot;Hello, world!&quot;, 7);
+}</pre>
+<p>The stack layout when <span class="docutils literal">bar()</span> invokes <span class="docutils literal">foo()</span>, just after the program counter has switched to the beginning of <span class="docutils literal">foo()</span>, looks like this:</p>
+<pre class="literal-block">                +------------------+
+   %ebp ------&gt; |    saved %ebp    | (4 bytes)
+                +------------------+
+                |       ...        |
+                +------------------+
+bar's a ------&gt; |        3         | (4 bytes)
+                +------------------+
+                |       ...        |
+                +------------------+
+                |        7         | (4 bytes)
+                +------------------+
+                |    pointer to    | ------&gt;  &quot;Hello, world!&quot;, somewhere
+                |      string      | (4 bytes)                 in memory
+                +------------------+
+                |        5         | (4 bytes)
+                +------------------+
+                |  return address  | (4 bytes)
+   %esp ------&gt; |     into bar     |
+                +------------------+
+                |                  |</pre>
+<p>When foo starts running, the first thing it will do is save the <span class="docutils literal">%ebp</span> register on the stack, and set the <span class="docutils literal">%ebp</span> register to point at this saved value on the stack, so the stack frame will look like the one shown <a class="reference internal" href="#foostack">for foo</a>.</p>
+</div>
+</div>
+<div class="section" id="part-5-finding-other-vulnerabilities">
+<h2>Part 5: Finding Other Vulnerabilities</h2>
+<p>Now that you have figured out how to exploit buffer overflows, you will try to find other kinds of vulnerabilities in the same code. As with many real-world applications, the &quot;security&quot; of our web server is not well-defined. Thus, you will need to use your imagination to think of a plausible threat model and policy for the web server.</p>
+<p>Look through the source code and try to find more vulnerabilities that can allow an attacker to compromise the security of the web server. Describe the attacks you have found in <span class="docutils literal">attacks.txt</span>, along with an explanation of the limitations of the attack, what an attacker can accomplish, why it works, and how you might go about fixing or preventing it. You should ignore bugs in <span class="docutils literal">zoobar/</span>.</p>
+<p>You should find at least two vulnerabilities for this exercise.</p>
+<p><strong>Testing</strong>: on your own.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>One approach for finding vulnerabilities is to trace the flow of inputs controlled by the attacker through the server code. At each point that the attacker's input is used, consider all the possible values that the attacker might have provided at that point; consider what the attacker can achieve.</p>
+</div>
+</div>
+<div class="section" id="part-6-fixing-buffer-overflows">
+<h2>Part 6: Fixing Buffer Overflows</h2>
+<p>Finally, you will explore fixing some of the vulnerabilities that you have found in this lab assignment. For each buffer overflow vulnerability you have found in <span class="docutils literal">bugs.txt</span>, fix the web server's code to prevent the vulnerability in the first place. Above each modified code block, add a comment stating which bug from <span class="docutils literal">bugs.txt</span> is fixed.</p>
+<p>Commit these fixes directly to your fork. Don't worry about your fixes breaking your previous exploits, as the test scripts will always use the original (buggy) binaries.</p>
+<p><strong>Testing</strong>: on your own.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Do not rely on compile-time or runtime mechanisms such as stack canaries, removing <span class="docutils literal"><span class="pre">-fno-stack-protector</span></span>, baggy bounds checking, etc.</p>
+</div>
+</div>
+</div>
+<div class="section" id="submitting">
+<h1>Submitting</h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Before submitting, make sure all your work is committed and pushed to the master branch of your fork.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Due to the specificity of the VM environment, there is no Travis build for this project. Thus, you need to be especially careful in making sure that <span class="docutils literal">make test</span> succeeds locally (with all files committed and pushed).</p>
+<p>If you want to make sure your submission is OK, here's how we're going to grade your code:</p>
+<ul class="simple">
+<li><p>Create a clean VM from the vm263 image.</p></li>
+<li><p>Login and clone your repository.</p></li>
+<li><p><span class="docutils literal">make <span class="pre">-k</span> test</span></p></li>
+</ul>
+</div>
+<p>On the fork's GitHub page. click on &quot;New pull request&quot;. The base fork should be the original repository (prefixed with <span class="docutils literal"><span class="pre">harvard-cs263</span></span>), and the head fork should be your fork (prefixed with your GitHub username). Then, click on &quot;Create pull request&quot; to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).</p>
+<p>If you need to edit your submission before the deadline, just commit and push your new changes to the master branch of your fork. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify the original repository. We will merge your pull request when grading.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute (based on pull request/push times, not commit times), and the course late policy is a 10% deduction per 8 hours of lateness.</p>
+</div>
+</div>
+<div class="section" id="deliverables-and-rubric">
+<h1>Deliverables and Rubric</h1>
+<p>&quot;Script&quot; grading means we will assign points based on the result of the relevant <span class="docutils literal">make test_blah</span> command.</p>
+<table>
+<colgroup>
+<col style="width: 68%" />
+<col style="width: 11%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr><th class="head"><p>Criteria</p></th>
+<th class="head"><p>Points</p></th>
+<th class="head"><p>Grading method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">bugs.txt</span></p></td>
+<td><p>15</p></td>
+<td><p>Manual</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">crash_1.py</span> and <span class="docutils literal">crash_2.py</span></p></td>
+<td><p>16</p></td>
+<td><p>Script</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">crash.txt</span></p></td>
+<td><p>2</p></td>
+<td><p>Manual</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">unlink_exstack.py</span></p></td>
+<td><p>16</p></td>
+<td><p>Script</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">unlink_exstack.txt</span></p></td>
+<td><p>2</p></td>
+<td><p>Manual</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">unlink_libc_1.py</span> and <span class="docutils literal">unlink_libc_2.py</span></p></td>
+<td><p>26</p></td>
+<td><p>Script</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">unlink_libc.txt</span></p></td>
+<td><p>4</p></td>
+<td><p>Manual</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">attacks.txt</span></p></td>
+<td><p>10</p></td>
+<td><p>Manual</p></td>
+</tr>
+<tr><td><p>Buffer overflow fixes</p></td>
+<td><p>9</p></td>
+<td><p>Manual</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="acknowledgements">
+<h1>Acknowledgements</h1>
+<p>This project was derived from one offered by MIT's 6.858 class.</p>
+<!-- Links follow -->
+</div>
+</div>
+</body>
+</html>
