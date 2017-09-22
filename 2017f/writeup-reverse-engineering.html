@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="generator" content="Docutils 0.13.1: http://docutils.sourceforge.net/" />
-<title></title>
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<title>INSTRUCTIONS.rst</title>
 <style type="text/css">
 
 /******************************************************************************
@@ -655,6 +655,11 @@ color: red }
 <li><p>Run <span class="docutils literal">./pre_setup.sh</span> to download dependencies.</p></li>
 </ul>
 <p>Refer to Project 0's writeup for elaboration on any of these steps.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Before starting, remember the warning from Project 0:</p>
+<p>It is important that you <strong>do not</strong> modify the original repository created by GitHub Classroom (the one with <span class="docutils literal"><span class="pre">harvard-cs263</span></span> in the URL). Only ever modify the fork. This applies to <strong>all</strong> projects in this course.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The ChatMax binaries <strong>should</strong> work on most Linux machines; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.</p>
@@ -712,9 +717,8 @@ Debugger's willingness to use watchpoint hardware is 1.</pre>
 <p>Using your reverse-engineered hash function, implement a password cracking function in <span class="docutils literal">crackpw.c</span> according to the specification in the file. Do not use off-the-shelf password crackers (e.g. John the Ripper)  -- instead, write your own. In the comment at the top of the file, briefly describe how your cracker works.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>You may find it useful to use external text or data files. Put these files in the <span class="docutils literal">data/</span> directory so that they do not pollute the repository. In addition, please add the file to <span class="docutils literal">download_data.sh</span> so that Travis can load these files.</p>
-<p>All external data dependencies must be downloaded by <span class="docutils literal">download_data.sh</span>. That is, your code should still work after running <span class="docutils literal">rm <span class="pre">-rf</span> data/* &amp;&amp; ./download_data.sh</span>.</p>
-<p>Do not download more than <strong>120 MB</strong> total of data files -- Travis is limited to around 1 MB/s, so larger downloads run the risk of timing out.</p>
+<p>You may find it useful to use external text or data files. Put these files in the <span class="docutils literal">data/</span> directory. The total size of the <span class="docutils literal">data/</span> directory should be at most <strong>1 MB</strong>.</p>
+<p>If you do choose to use a list, we highly recommend that you use <a class="reference external" href="https://harvard-cs263.github.io/resources/rockyou-top-25000.txt">this list</a> (RockYou top 25000). You should not need any other list to successfully complete this project.</p>
 </div>
 <p><strong>Compiling</strong>: Run <span class="docutils literal">make cracker</span> to compile your crack function.</p>
 <p><strong>Running</strong>: Run <span class="docutils literal">./cracker deadbeef</span> to run your crack function (replace <span class="docutils literal">deadbeef</span> with the hex of your hash to crack).</p>
@@ -743,7 +747,7 @@ Debugger's willingness to use watchpoint hardware is 1.</pre>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>As in the non-remote cracking exercise, you may use external text or data files, under the same condition of including them in <span class="docutils literal">download_data.sh</span>. In fact, here you will almost certainly need to use such files.</p>
+<p>As in the non-remote cracking exercise, you may use external text or data files under the same directory and size conditions. Again, we highly recommend that you use <a class="reference external" href="rockyou_25k">this list</a> (RockYou top 25000).</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
