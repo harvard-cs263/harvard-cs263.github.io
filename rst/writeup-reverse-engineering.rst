@@ -166,7 +166,7 @@ Write a remote password cracking function in ``network_cracker.py`` according to
 
     Although not supported by the course staff, you may use a language other than Python. See ``network_cracker.sh`` for instructions.
 
-__ rockyou_25k
+__ rockyou_25k_
 
 **Running**: After starting a proton server (say, on port 8080), run ``./network_cracker.sh some_username localhost 8080``, replacing ``some_username`` with the one whose password you want to crack.
 
