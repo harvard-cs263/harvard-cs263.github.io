@@ -163,6 +163,10 @@ Starting from one of your memory corruption exploits, construct an exploit that 
 
 Verify that your exploit works; you will need to re-create ``/home/httpd/grades.txt`` after each successful exploit run.
 
+.. important::
+
+    It's OK to hardcode things -- however, you should be careful that your hardcoded things won't break when we're testing your code. This means, among other things, that your repository's root directory should be ``/home/httpd/lab/``.
+
 **Testing**: ``make test_unlink_exstack`` will check that your exploit unlinks ``/home/httpd/grades.txt`` with an executable stack. Note that this does **not** check ``unlink_exstack.txt``.
 
 .. _foostack:

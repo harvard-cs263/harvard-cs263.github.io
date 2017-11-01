@@ -178,7 +178,7 @@ In this case, the TCP segment **did** contain data. Note that data lines are uni
 
     ICMP: type[ICMP_ECHO] id[18572] seq[3]
 
-**UDP header**: You do not need to log anything for UDP datagrams.
+**UDP header**: You do not need to log anything extra for UDP datagrams.
 
 So, putting it all together, here's an example of what your sniffer might output for a pair of ICMP echo request/echo reply messages::
 

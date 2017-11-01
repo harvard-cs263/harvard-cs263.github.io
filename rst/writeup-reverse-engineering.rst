@@ -120,6 +120,8 @@ Using your reverse-engineered hash function, implement a password cracking funct
 
     If you do choose to use a list, we highly recommend that you use `this list`__ (RockYou top 25000). You should not need any other list to successfully complete this project.
 
+    Finally, any file paths you use in your cracker should be **relative** paths (relative to the repository root), not absolute paths. For example, to open a data file ``test123.txt``, you should do ``fopen("data/test123.txt", ...)``, not ``fopen("/home/username/reverse-engineering/data/test123.txt", ...)``. If you use the latter, Travis tests will undoubtedly fail.
+
 __ rockyou_25k_
 
 **Compiling**: Run ``make cracker`` to compile your crack function.
@@ -160,7 +162,7 @@ Write a remote password cracking function in ``network_cracker.py`` according to
 
 .. important::
 
-    As in the non-remote cracking exercise, you may use external text or data files under the same directory and size conditions. Again, we highly recommend that you use `this list`__ (RockYou top 25000).
+    As in the non-remote cracking exercise, you may use external text or data files under the same directory and size conditions. Again, we highly recommend that you use `this list`__ (RockYou top 25000). Be careful to use relative instead of absolute paths!
 
 .. important::
 

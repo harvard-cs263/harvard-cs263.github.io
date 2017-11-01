@@ -753,6 +753,10 @@ $</pre>
 <h3>Injection Attack</h3>
 <p>Starting from one of your memory corruption exploits, construct an exploit that hijacks control flow of the web server to unlink <span class="docutils literal">/home/httpd/grades.txt</span>. Save this exploit in a file called <span class="docutils literal">unlink_exstack.py</span>. In addition, answer the written questions in <span class="docutils literal">unlink_exstack.txt</span> (save your answers directly in the file).</p>
 <p>Verify that your exploit works; you will need to re-create <span class="docutils literal">/home/httpd/grades.txt</span> after each successful exploit run.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>It's OK to hardcode things -- however, you should be careful that your hardcoded things won't break when we're testing your code. This means, among other things, that your repository's root directory should be <span class="docutils literal">/home/httpd/lab/</span>.</p>
+</div>
 <p><strong>Testing</strong>: <span class="docutils literal">make test_unlink_exstack</span> will check that your exploit unlinks <span class="docutils literal">/home/httpd/grades.txt</span> with an executable stack. Note that this does <strong>not</strong> check <span class="docutils literal">unlink_exstack.txt</span>.</p>
 <div class="admonition tip" id="foostack">
 <p class="admonition-title">Tip</p>

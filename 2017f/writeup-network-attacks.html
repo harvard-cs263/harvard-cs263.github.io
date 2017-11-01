@@ -770,7 +770,7 @@ Connection: Keep
 <p>In this case, the TCP segment <strong>did</strong> contain data. Note that data lines are unindented!</p>
 <p><strong>ICMP header</strong>: If a packet contain ICMP data, then your sniffer should log the type of the message (i.e., <span class="docutils literal"><span class="pre">sniffer.h::ICMP_ECHOREPLY</span></span>, <span class="docutils literal"><span class="pre">sniffer.h::ICMP_ECHO</span></span>, or another type which you can just log as &quot;other&quot;), the id of the message, and the sequence number of the message. Log these values like this:</p>
 <pre class="literal-block">ICMP: type[ICMP_ECHO] id[18572] seq[3]</pre>
-<p><strong>UDP header</strong>: You do not need to log anything for UDP datagrams.</p>
+<p><strong>UDP header</strong>: You do not need to log anything extra for UDP datagrams.</p>
 <p>So, putting it all together, here's an example of what your sniffer might output for a pair of ICMP echo request/echo reply messages:</p>
 <pre class="literal-block">ETHERNET: src[08:00:27:16:b3:17] dst[5b:54:11:12:35:02]
 IP: src[10.0.2.15] dst[192.168.26.3]
