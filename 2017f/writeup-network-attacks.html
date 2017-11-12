@@ -737,7 +737,7 @@ color: red }
 <li><p>1 means that a packet was successfully read.</p></li>
 <li><p>0 means that libpcap's read timeout expired; this is not a hard error, so your sniffer code should just return to the beginning of the sniffing loop.</p></li>
 <li><p>-1 indicates a libpcap error which should cause your sniffer to terminate.</p></li>
-<li><p>-2 means that <span class="docutils literal">pcap_breakloop()</span> has been called, meaning that your sniffer should exit its sniffing loop and gracefully shutdown. We <span class="docutils literal">discuss pcap_breakloop()</span> in more detail in the section <a class="reference internal" href="#handling-signals">Handling Signals</a>.</p></li>
+<li><p>-2 means that <span class="docutils literal">pcap_breakloop()</span> has been called, meaning that your sniffer should exit its sniffing loop and gracefully shutdown. We discuss <span class="docutils literal">pcap_breakloop()</span> in more detail in the section <a class="reference internal" href="#handling-signals">Handling Signals</a>.</p></li>
 </ul>
 <p><span class="docutils literal">sniffer.h</span> defines structs for various types of network headers. For each packet that your sniffer finds, your sniffer should log various pieces of information for each header:</p>
 <p><strong>Ethernet header</strong>: Log the source and destination Ethernet addresses. Log these values like this:</p>
