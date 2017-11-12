@@ -131,7 +131,7 @@ You should use ``pcap_next_ex()`` (**not** ``pcap_loop()`` ) to read a raw packe
 - 1 means that a packet was successfully read.
 - 0 means that libpcap's read timeout expired; this is not a hard error, so your sniffer code should just return to the beginning of the sniffing loop.
 - -1 indicates a libpcap error which should cause your sniffer to terminate.
-- -2 means that ``pcap_breakloop()`` has been called, meaning that your sniffer should exit its sniffing loop and gracefully shutdown. We ``discuss pcap_breakloop()`` in more detail in the section `Handling Signals`_.
+- -2 means that ``pcap_breakloop()`` has been called, meaning that your sniffer should exit its sniffing loop and gracefully shutdown. We discuss ``pcap_breakloop()`` in more detail in the section `Handling Signals`_.
 
 ``sniffer.h`` defines structs for various types of network headers. For each packet that your sniffer finds, your sniffer should log various pieces of information for each header:
 
