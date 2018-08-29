@@ -120,9 +120,9 @@ Now it is time to clone the fork. Go to the GitHub page for your fork (the one *
     Alternatively, you can clone the repository using SSH:
 
     - Make sure you have set up your `SSH keys`__.
-    - Make your key available to `ssh-agent` via `ssh-add ~/.ssh/id_rsa`. If on macOS, adding the `-K` option ensures `ssh-agent` won't "forget" your key.
+    - Make your key available to `ssh-agent` via ``ssh-add ~/.ssh/id_rsa``. If on macOS, adding the ``-K`` option ensures `ssh-agent` won't "forget" your key.
     - Connect to the VM via SSH, with agent forwarding enabled ``ssh -A httpd@192.168.26.3``.
-    - Clone the repository via the link shown under the SSH tab once the "Clone" button is clicked.
+    - Clone the repository using the URL starting with ``git@github.com:``.
 
 __ github_credential_helpers_
 __ ssh_setup_
