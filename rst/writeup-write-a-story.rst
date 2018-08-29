@@ -117,12 +117,11 @@ Now it is time to clone the fork. Go to the GitHub page for your fork (the one *
 
     This command and each subsequent Git command will ask you for your username and password, which might get annoying. If you'd like to avoid this, you might want to consider `credential helpers`__.
 
-    Alternatively, you can clone the repository using SSH:
+    Alternatively, you can clone and interact with the repository using existing SSH keys on your host computer:
 
-    - Make sure you have set up your `SSH keys`__.
-    - Make your key available to `ssh-agent` via ``ssh-add ~/.ssh/id_rsa``. If on macOS, adding the ``-K`` option ensures `ssh-agent` won't "forget" your key.
-    - Connect to the VM via SSH, with agent forwarding enabled ``ssh -A httpd@192.168.26.3``.
-    - Clone the repository using the URL starting with ``git@github.com:``.
+    - Make sure you have your `SSH key`__ set up on your host computer, as well as ``ssh-agent``. 
+    - Connect to the VM via SSH with agent forwarding enabled: ``ssh -A httpd@192.168.26.3``.
+    - Clone the repository on the VM using the URL starting with ``git@github.com:``.
 
 __ github_credential_helpers_
 __ ssh_setup_
