@@ -96,13 +96,11 @@ Click on the provided GitHub Classroom assignment link, login via GitHub if nece
 Clone the Repository
 --------------------
 
-Now it is time to clone the repository. Make sure you run the last command, which checks out a new branch! You should not (and should not be able to) push commits to master.
-Go to ``https://github.com/harvard-cs263/starter-write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL (make sure it begins with ``https://``), and run in your VM::
+Now it is time to clone the repository. 
+Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL (make sure it begins with ``https://``), and run in your VM::
 
     cd
     git clone <repo_url> write-a-story/
-    cd write-a-story
-    git checkout -b <some_branch_name>
 
 .. tip::
 
@@ -117,6 +115,24 @@ Go to ``https://github.com/harvard-cs263/starter-write-a-story-<YOUR-GITHUB-USER
 __ github_credential_helpers_
 __ ssh_setup_
 
+Checkout & Setup
+----------------
+
+For all assignments, all of your work must committed to a non-master branch. You should not (and should not be able to) push commits to master.
+
+All assignments come with a ``pre_setup.sh`` script. **Execute this script before starting each assignment, including this one!**
+
+To summarize, after cloning the repository run the following, replacing ``<some_branch>`` with a branch name of your choosing.::
+
+  cd write-a-story 
+  ./pre_setup.sh
+  git checkout -b <some_branch>
+
+.. caution::
+
+    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master**. If you feel you've messed up your git repository contact the TFs for help. 
+    
+
 Specification
 =============
 
@@ -124,26 +140,18 @@ Specification
 
     For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.
 
-.. caution::
-
-    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master.** Each commit to an open pull request will trigger a remote test, which you can view by clicking the checks which appear on the pull request thread.
-
-All assignments come with a ``pre_setup.sh`` script. Execute this script ( ``./pre_setup.sh`` ) before beginning each assignment, including this one!
-
-As promised, the project itself is trivial. While you should feel free to unleash your inner Shakespeare, for this project you simply need to create a file named ``story.txt`` that is non-empty. You can "test" your "solution" by running ``make test``.
+As promised, the project itself is trivial. While you should feel free to unleash your inner Shakespeare, for this project you simply need to create a file named ``story.txt`` that is non-empty. You can "test" your "solution" by running ``make test``. 
 
 Submitting
 ==========
 
-.. important::
+After committing to ``<some_branch>``, push your changes with ``git push origin <some_branch>``.
 
-    Before submitting, make sure all your work is committed and pushed to a **non-master** branch. 
-
-After pushing to a non-master branch, on your repository's GitHub page you should click the "Compare & pull request" button for your new branch. Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
+After pushing to your branch, click the "Compare & pull request" button on your repository's GitHub page. Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
 If you need to edit your submission before the deadline, just commit and push your new changes to this branch of your repository. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
-Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis failure by clicking on "Details" then "The build failed".
+Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis build by clicking on "Details" then "The build".
 
 .. caution::
 
