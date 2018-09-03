@@ -92,26 +92,17 @@ Project Setup
 
 Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
 
-By accepting the assignment, GitHub should have created a repository for you. You will do your work on a fork of the repository. On the original repository's GitHub page, click "Fork" to create this fork.
 
-.. caution::
+Clone the Repository
+--------------------
 
-    It is important that you **do not** modify this original repository (the one with ``harvard-cs263`` in the URL). Only ever modify the fork. This applies to **all** projects in this course.
-
-Travis Setup
-------------
-
-We will use Travis CI for automated testing in every course project (excluding "Buffer Overflows"). Go to Travis_ and sign in with GitHub. Click on your name in the top-right corner and click "Sync Account".
-
-After the sync completes, you should see your fork near the bottom of the page. Click on the greyed-out slider to enable tests for the fork. Then, go to the fork's Travis settings and turn on "Auto cancel branch builds".
-
-Clone the Fork
---------------
-
-Now it is time to clone the fork. Go to the GitHub page for your fork (the one **without** ``harvard-cs263`` in the URL), copy the URL (make sure it begins with ``https://``), and run in your VM::
+Now it is time to clone the repository. Make sure you run the last command, which checks out a new branch! You should not (and should not be able to) push commits to master.
+Go to ``https://github.com/harvard-cs263/starter-write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL (make sure it begins with ``https://``), and run in your VM::
 
     cd
-    git clone <fork_url> write-a-story/
+    git clone <repo_url> write-a-story/
+    cd write-a-story
+    git checkout -b <some_branch_name>
 
 .. tip::
 
@@ -126,8 +117,6 @@ Now it is time to clone the fork. Go to the GitHub page for your fork (the one *
 __ github_credential_helpers_
 __ ssh_setup_
 
-``cd`` into the repository directory to get started with the project.
-
 Specification
 =============
 
@@ -135,9 +124,11 @@ Specification
 
     For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.
 
-.. tip::
+.. caution::
 
-    For all projects, you may commit and push your changes at your leisure. Each push will trigger a remote test, which you can view on the Travis_ website.
+    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master.** Each commit to an open pull request will trigger a remote test, which you can view by clicking the checks which appear on the pull request thread.
+
+All assignments come with a ``pre_setup.sh`` script. Execute this script ( ``./pre_setup.sh`` ) before beginning each assignment, including this one!
 
 As promised, the project itself is trivial. While you should feel free to unleash your inner Shakespeare, for this project you simply need to create a file named ``story.txt`` that is non-empty. You can "test" your "solution" by running ``make test``.
 
@@ -146,19 +137,21 @@ Submitting
 
 .. important::
 
-    Before submitting, make sure all your work is committed and pushed to the master branch of your fork, and make sure the Travis_ build is passing for master. You can verify by going to your fork's GitHub page, clicking on "commits", and looking for a green checkmark at the top of the list.
+    Before submitting, make sure all your work is committed and pushed to a **non-master** branch. 
 
-On the fork's GitHub page. click on "New pull request". The base fork should be the original repository (prefixed with ``harvard-cs263``), and the head fork should be your fork (prefixed with your GitHub username). Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
+After pushing to a non-master branch, on your repository's GitHub page you should click the "Compare & pull request" button for your new branch. Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
-If you need to edit your submission before the deadline, just commit and push your new changes to the master branch of your fork. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
+If you need to edit your submission before the deadline, just commit and push your new changes to this branch of your repository. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
-.. caution::
-
-    Do **not** click "Merge pull request" after submitting, as this will modify the original repository. We will merge your pull request when grading.
+Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis failure by clicking on "Details" then "The build failed".
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute (based on pull request/push times, not commit times), and the course late policy is a 10% deduction per 8 hours of lateness.
+    Do **not** click "Merge pull request" after submitting, as this will modify the master branch. We will merge your pull request when grading.
+
+.. caution::
+
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute; the last commit before the deadline will be considered as the submission. The course late policy is a 10% deduction per 8 hours of lateness.
 
     Note that the Travis tests can take a while, and no testing-related extensions will be granted.
 
