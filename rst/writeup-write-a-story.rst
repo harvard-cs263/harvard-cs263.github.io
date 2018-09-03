@@ -158,7 +158,7 @@ Ensure that Travis's automatic checks on your pull request run and pass. You can
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute; the last commit before the deadline will be considered as the submission. The course late policy is a 10% deduction per 8 hours of lateness.
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute; the last commit before the deadline will be considered the submission. The course late policy is a 10% deduction per 8 hours of lateness.
 
     Note that the Travis tests can take a while, and no testing-related extensions will be granted.
 
