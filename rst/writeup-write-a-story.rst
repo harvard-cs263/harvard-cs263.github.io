@@ -118,20 +118,19 @@ __ ssh_setup_
 Checkout & Setup
 ----------------
 
-For all assignments, all of your work must committed to a non-master branch. You should not (and should not be able to) push commits to master.
+.. caution::
+
+    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master**. If you feel you've messed up your git repository contact the TFs for help. 
 
 All assignments come with a ``pre_setup.sh`` script. **Execute this script before starting each assignment, including this one!**
+
+For all assignments, all of your work must committed to a non-master branch. You should not (and should not be able to) push commits to master.
 
 To summarize, after cloning the repository run the following, replacing ``<some_branch>`` with a branch name of your choosing.::
 
   cd write-a-story 
   ./pre_setup.sh
   git checkout -b <some_branch>
-
-.. caution::
-
-    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master**. If you feel you've messed up your git repository contact the TFs for help. 
-    
 
 Specification
 =============
