@@ -126,7 +126,7 @@ All assignments come with a ``pre_setup.sh`` script. **Execute this script befor
 
 For all assignments, all of your work must committed to a non-master branch. You should not (and should not be able to) push commits to master.
 
-To summarize, after cloning the repository run the following, replacing ``<some_branch>`` with a branch name of your choosing.::
+To summarize: run the following after cloning the repository, replacing ``<some_branch>`` with a branch name of your choosing::
 
   cd write-a-story 
   ./pre_setup.sh
