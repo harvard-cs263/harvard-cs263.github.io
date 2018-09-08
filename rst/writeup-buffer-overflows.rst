@@ -16,10 +16,11 @@ Project Setup
 =============
 
 - Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
-- Wait for the repository to be created, then create a fork.
 - Login to the VM.
-- ``cd`` to your home directory and run ``git clone <fork_url> lab/`` to clone your fork.
+- ``cd`` to your home directory and run ``git clone <repo_url> lab/`` to clone your repo.
 - Run ``cd lab/`` to enter the project directory.
+- Run ``./pre_setup.sh``.
+- Run ``git checkout -b <some_branch>`` to checkout a new branch.
 
 Refer to Project 0's writeup for elaboration on any of these steps.
 
@@ -27,7 +28,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     Before starting, remember the warning from Project 0:
 
-    It is important that you **do not** modify the original repository created by GitHub Classroom (the one with ``harvard-cs263`` in the URL). Only ever modify the fork. This applies to **all** projects in this course.
+    It is important that you **do not** push directly to master. After committing, push using ``git push origin <some_branch>`` and open a pull request.
 
 .. caution::
 
@@ -75,7 +76,7 @@ In the first part of this lab assignment, you will find buffer overflows in the 
 
 .. tip::
 
-    Since the repository lives on your VM and ``scp`` is a pain, it's probably easiest to download all files in ``articles/`` from your fork's GitHub page.
+    Since the repository lives on your VM and ``scp`` is a pain, it's probably easiest to download all files in ``articles/`` from the repo's GitHub page.
 
 Study the web server's code, and find examples of code that is vulnerable to memory corruption via buffer overflows. Write down a description of each vulnerability in the file ``bugs.txt``; use the format described in that file. For each vulnerability, describe the buffer which may overflow, how you would structure the input to the web server (i.e., the HTTP request) to overflow the buffer, and whether the vulnerability can be prevented using stack canaries. Locate at least 5 different vulnerabilities.
 
@@ -331,7 +332,7 @@ Part 6: Fixing Buffer Overflows
 
 Finally, you will explore fixing some of the vulnerabilities that you have found in this lab assignment. For each buffer overflow vulnerability you have found in ``bugs.txt``, fix the web server's code to prevent the vulnerability in the first place. Above each modified code block, add a comment stating which bug from ``bugs.txt`` is fixed.
 
-Commit these fixes directly to your fork. Don't worry about your fixes breaking your previous exploits, as the test scripts will always use the original (buggy) binaries.
+Commit these fixes directly to your branch. Don't worry about your fixes breaking your previous exploits, as the test scripts will always use the original (buggy) binaries.
 
 **Testing**: on your own.
 
@@ -344,7 +345,7 @@ Submitting
 
 .. important::
 
-    Before submitting, make sure all your work is committed and pushed to the master branch of your fork.
+    Before submitting, make sure all your work is committed and pushed to a non-master branch.
 
 .. caution::
 
@@ -356,9 +357,9 @@ Submitting
     - Login and clone your repository.
     - ``make -k test``
 
-On the fork's GitHub page. click on "New pull request". The base fork should be the original repository (prefixed with ``harvard-cs263``), and the head fork should be your fork (prefixed with your GitHub username). Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
+After pushing, on the repo's GitHub page, click "Compare and pull request". Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
-If you need to edit your submission before the deadline, just commit and push your new changes to the master branch of your fork. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
+If you need to edit your submission before the deadline, just commit and push your new changes to the your branch. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
 .. caution::
 
@@ -366,7 +367,7 @@ If you need to edit your submission before the deadline, just commit and push yo
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute (based on pull request/push times, not commit times), and the course late policy is a 10% deduction per 8 hours of lateness.
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute (the last commit before the deadline is considered the submission), and the course late policy is a 10% deduction per 8 hours of lateness.
 
 Deliverables and Rubric
 =======================
