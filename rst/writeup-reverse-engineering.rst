@@ -1,6 +1,6 @@
 .. footer::
 
-    Copyright |copy| 2017, Harvard University CS263 |---|
+    Copyright |copy| 2018, Harvard University CS263 |---|
     all rights reserved.
 
 .. |copy| unicode:: 0xA9
@@ -196,6 +196,16 @@ Describe your attack in ``exfiltration.txt``. Your description should be thoroug
 
 **Running**/**Testing**: on your own.
 
+
+Part 6: The Ethics of Reverse Engineering
+-----------------------------------------
+Up to this point in the assignment, your motivation for reverse engineering has been a desire to fulfill your destiny as a l33t hAx0r who gets an A in CS 263. However, imagine that you had performed the activities in Parts 1--5 of this assignment because you work for a software company named WidgetCo. WidgetCo's intellectual property had been stolen by cyberattackers; WidgetCo asked you to hack back and discover what the attackers did with the stolen data. The email server that you've been reverse engineering belongs to the attackers.
+
+Now that you have the ability to exfiltrate email from the attacker's email server, you can determine what the attackers did with WidgetCo's stolen data. However, suppose that WidgetCo now asks you to proactively attack the server, to prevent the attackers from launching subsequent malicious activity. WidgetCo wants you to continue to reverse engineer the server, to discover a vulnerability that will allow you to delete all data on the attacker's server. WidgetCo says that performing this hack-back is justified because the attackers appear to be close to launching a new attack on WidgetCo and another company.
+
+How would you respond to the request from WidgetCo to actively destroy the attackers' server? Which arguments from "Ethics of Hacking Back" by Patrick Lin would influence your decision? Place your answer in ``hack-back.txt``.
+
+
 Submitting
 ==========
 
@@ -233,19 +243,21 @@ Deliverables and Rubric
 +---------------------------------------------------+--------+----------------+
 | ``hashpw.c`` (correctness)                        | 7      | Automated      |
 +---------------------------------------------------+--------+----------------+
-| ``hashpw.c`` (reverse engineering description)    | 8      | Manual         |
+| ``hashpw.c`` (reverse engineering description)    | 7      | Manual         |
 +---------------------------------------------------+--------+----------------+
-| ``plaintext-passwords-cracker.csv`` and           | 16     | Automated      |
+| ``plaintext-passwords-cracker.csv`` and           | 14     | Automated      |
 | ``crackpw()`` (correctness/efficiency)            |        |                |
 +---------------------------------------------------+--------+----------------+
 | ``crackpw()`` (brief description)                 | 4      | Manual         |
 +---------------------------------------------------+--------+----------------+
-| ``plaintext-passwords-network-cracker.csv`` and   | 20     | Automated      |
+| ``plaintext-passwords-network-cracker.csv`` and   | 18     | Automated      |
 | ``network_cracker.py`` (correctness/efficiency)   |        |                |
 +---------------------------------------------------+--------+----------------+
 | ``network_cracker.py`` (brief description)        | 5      | Manual         |
 +---------------------------------------------------+--------+----------------+
-| ``exfiltration.txt``                              | 25     | Manual         |
+| ``exfiltration.txt``                              | 24     | Manual         |
++---------------------------------------------------+--------+----------------+
+| ``hack-back.txt``                                 | 6      | Manual         |
 +---------------------------------------------------+--------+----------------+
 
 .. Links follow
