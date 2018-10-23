@@ -16,11 +16,11 @@ Project Setup
 =============
 
 - Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
-- Wait for the repository to be created, then create a fork.
-- Enable Travis_ builds for the fork, and turn on "Auto cancel branch builds".
+- Wait for the repository to be created.
 - Login to the VM.
-- ``cd`` to your home directory and run ``git clone <fork_url> reverse-engineering/`` to clone your fork.
+- ``cd`` to your home directory and run ``git clone <repo_url> reverse-engineering/`` to clone your repo.
 - Run ``cd reverse-engineering/`` to enter the project directory.
+- Run ``git checkout -b submission`` to check out a new branch. **Note we're asking you to checkout a new branch with a specific name: submission**. 
 - Run ``./pre_setup.sh`` to download dependencies.
 
 Refer to Project 0's writeup for elaboration on any of these steps.
@@ -29,7 +29,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     Before starting, remember the warning from Project 0:
 
-    It is important that you **do not** modify the original repository created by GitHub Classroom (the one with ``harvard-cs263`` in the URL). Only ever modify the fork. This applies to **all** projects in this course.
+    It is important that you **do not** push to master. Push to the submission branch.
 
 .. note::
 
@@ -42,6 +42,10 @@ Refer to Project 0's writeup for elaboration on any of these steps.
         sudo apt-get update
         sudo apt-get install -qq tmux
 
+.. caution::
+  
+  This assignment uses Travis for remote builds. Since the class shares a single Travis build queue, there may be some contention, especially close to the deadline. As mentioned later, no testing related extensions will be granted, so you're encouraged to start and test early!
+
 Specification
 =============
 
@@ -51,7 +55,7 @@ Specification
 
 .. tip::
 
-    For all projects, you may commit and push your changes at your leisure. Each push will trigger a remote test, which you can view on the Travis_ website.
+    For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using ``git push origin submission``. Once pushed, open a Pull Request for your branch. Travis builds should trigger on new commits pushed to open PRs. You can view remote builds on the Travis_ website.
 
 Introduction
 ------------
@@ -209,23 +213,25 @@ How would you respond to the request from WidgetCo to actively destroy the attac
 Submitting
 ==========
 
+Push your work using ``git push origin submission``, and open a Pull Request from the submission branch against master.
+
 .. important::
 
-    Before submitting, make sure all your work is committed and pushed to the master branch of your fork, and make sure the Travis_ build is passing for master. You can verify by going to your fork's GitHub page, clicking on "commits", and looking for a green checkmark at the top of the list.
+    Before submitting, make sure all your work is committed and pushed to the submission branch of your repository, and make sure the Travis_ build is passing for your pull request. You can verify by going to your Pull Request and verifying that the latest Travis build shows a green checkmark.
 
-On the fork's GitHub page. click on "New pull request". The base fork should be the original repository (prefixed with ``harvard-cs263``), and the head fork should be your fork (prefixed with your GitHub username). Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
+The title of your PR can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
-If you need to edit your submission before the deadline, just commit and push your new changes to the master branch of your fork. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
-
-.. caution::
-
-    Do **not** click "Merge pull request" after submitting, as this will modify the original repository. We will merge your pull request when grading.
+If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute (based on pull request/push times, not commit times), and the course late policy is a 10% deduction per 8 hours of lateness.
+    Do **not** click "Merge pull request" after submitting, as this will modify your repository. We will merge your pull request when grading.
 
-    Note that the Travis tests can take a while, and no testing-related extensions will be granted.
+.. caution::
+
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.
+
+    Note that the Travis tests can take a while, and no testing-related extensions will be granted. 
 
 Deliverables and Rubric
 =======================
