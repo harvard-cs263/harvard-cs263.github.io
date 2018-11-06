@@ -22,12 +22,11 @@ Project Setup
 =============
 
 - Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
-- Wait for the repository to be created, then create a fork.
-- Enable Travis_ builds for the fork, and turn on "Auto cancel branch builds".
 - Login to the VM.
-- ``cd`` to your home directory and run ``git clone <fork_url> network-attacks/`` to clone your fork.
+- ``cd`` to your home directory and run ``git clone <repo_url> network-attacks/`` to clone your repo.
 - Run ``cd network-attacks/`` to enter the project directory.
 - Run ``./pre_setup.sh`` to download dependencies.
+- Run ``git checkout -b submission`` to switch to your submission branch. As in the previous assignment, the branch name is important!
 
 Refer to Project 0's writeup for elaboration on any of these steps.
 
@@ -35,7 +34,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     Before starting, remember the warning from Project 0:
 
-    It is important that you **do not** modify the original repository created by GitHub Classroom (the one with ``harvard-cs263`` in the URL). Only ever modify the fork. This applies to **all** projects in this course.
+    It is important that you **do not** push to the master branch. This applies to **all** projects in this course. When ready to submit, use ``git push origin submission`` with your submission branch checked out locally.
 
 .. note::
 
@@ -54,7 +53,7 @@ Host Setup
 Because this project involves your host machine as well, you will need to make sure its environment is suitable. Specifically:
 
 - Install Python 2.7.
-- Clone your fork to wherever you'd like.
+- Clone your repo to wherever you'd like.
 - [32-bit Windows only] From the cloned directory, run ``pip install curses-2.2-cp27-none-win32.whl``
 - [64-bit Windows only] From the cloned directory, run ``pip install curses-2.2-cp27-none-win_amd64.whl``
 
@@ -67,7 +66,7 @@ Specification
 
 .. tip::
 
-    For all projects, you may commit and push your changes at your leisure. Each push will trigger a remote test, which you can view on the Travis_ website.
+    For all projects, you may commit and push your changes at your leisure. Each push (on an open Pull Request, against master) will trigger a remote test, which you can view on the Travis_ website.
 
 .. important::
 
@@ -483,11 +482,9 @@ Submitting
 
 .. important::
 
-    Before submitting, make sure all your work is committed and pushed to the master branch of your fork, and make sure the Travis_ build is passing for master. You can verify by going to your fork's GitHub page, clicking on "commits", and looking for a green checkmark at the top of the list.
+    Make sure all your work is committed and pushed to the submission branch of your repository (``git push origin submission``) then create a Pull Request. Make sure the Travis_ build is passing for your Pull Request -- the Travis build should start automatically once you create the PR. You can verify that the Travis build has completed successfully by going to the PR and looking for a green checkmark next to your most recent commit.
 
-On the fork's GitHub page. click on "New pull request". The base fork should be the original repository (prefixed with ``harvard-cs263``), and the head fork should be your fork (prefixed with your GitHub username). Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
-
-If you need to edit your submission before the deadline, just commit and push your new changes to the master branch of your fork. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
+If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch of your repo. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
 .. caution::
 
@@ -495,7 +492,7 @@ If you need to edit your submission before the deadline, just commit and push yo
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute (based on pull request/push times, not commit times), and the course late policy is a 10% deduction per 8 hours of lateness.
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.
 
     Note that the Travis tests can take a while, and no testing-related extensions will be granted.
 
