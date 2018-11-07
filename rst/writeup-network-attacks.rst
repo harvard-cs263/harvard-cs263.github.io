@@ -25,7 +25,7 @@ Project Setup
 - Login to the VM.
 - ``cd`` to your home directory and run ``git clone <repo_url> network-attacks/`` to clone your repo.
 - Run ``cd network-attacks/`` to enter the project directory.
-- Run ``./pre_setup.sh`` to download dependencies.
+- Run ``./pre_setup.sh`` to download dependencies. **Note:** this may take a while -- don't press Ctrl+C! You should see a prompt; the answer you want is **no**.
 - Run ``git checkout -b submission`` to switch to your submission branch. As in the previous assignment, the branch name is important!
 
 Refer to Project 0's writeup for elaboration on any of these steps.
