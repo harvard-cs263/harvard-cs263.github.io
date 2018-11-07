@@ -1,634 +1,757 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title></title><style type="text/css">/******************************************************************************
-The MIT License (MIT)
-
-Copyright (c) 2014 Matthias Eisen
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-******************************************************************************/
-
-/* Modified by Jerry Ma */
-
-body {
-    font-family: Palatino, "Palatino LT STD", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-    font-size: 16px;
-    color: #24292e;
-}
-
-div.document {
-    margin: 0 auto;
-    width: 95%;
-    max-width: 960px;
-}
-
-p {
-    line-height: 120%;
-}
-
-
-/* ========== Headings ========== */
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: normal;
-    margin-top: 1.5em;
-}
-
-h1.section-subtitle, 
-h2.section-subtitle, 
-h3.section-subtitle,
-h4.section-subtitle, 
-h5.section-subtitle, 
-h6.section-subtitle {
-    margin-top: 0.4em;
-}
-
-h1.title {
-    text-align: center;
-}
-
-h2.subtitle {
-    text-align: center;
-}
-
-span.section-subtitle {
-    font-size: 80%,
-}
-
-/* //-------- Headings ---------- */
-
-
-/* ========== Images ========== */
-
-img, 
-.figure, 
-object {
-    display:        block;
-    margin-left:    auto;
-    margin-right:   auto;
-}
-
-div.figure {
-    margin-left:    2em;
-    margin-right:   2em;
-}
-
-img.align-left, .figure.align-left, object.align-left {
-    clear:          left;
-    float:          left;
-    margin-right:   1em;
-}
-
-img.align-right, .figure.align-right, object.align-right {
-    clear:          right;
-    float:          right;
-    margin-left:    1em;
-}
-
-img.align-center, .figure.align-center, object.align-center {
-    display:        block;
-    margin-left:    auto;
-    margin-right:   auto;
-}
-
-/* reset inner alignment in figures */
-div.align-right {
-    text-align: inherit;
-}
-
-object[type="image/svg+xml"], 
-object[type="application/x-shockwave-flash"] {
-    overflow: hidden;
-}
-
-/* //-------- Images ---------- */
-
-
-
-/* ========== Literal Blocks ========== */
-
-pre, tt.literal, span.literal {
-    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
-    font-size: 14px;
-}
-
-tt.literal {
-    background-color: #ffa;
-}
-
-span.literal {
-    background-color: #f3f3f4;
-    border-radius: 0.3em;
-    padding-left: 0.3em;
-    padding-right: 0.3em;
-    white-space: pre;
-}
-
-pre.address {
-    margin-bottom: 0;
-    margin-top: 0;
-    font: inherit;
-}
-
-pre.literal-block {
-    border-left: solid 5px #ccc;
-    background-color: #f6f8fa;
-    padding: 1em;
-}
-
-pre.literal-block, pre.doctest-block, pre.math, pre.code {
-}
-
-span.interpreted {
-}
-
-span.pre {
-    white-space: pre;
-}
-
-pre.code .ln { 
-    color: grey; 
-}
-pre.code, code {
-    border-style: none;
-    padding: 1em 0;
-}
-pre.code .comment, code .comment { 
-    color: #888;
-}
-pre.code .keyword, code .keyword {
-    font-weight: bold; 
-    color: #080;
-}
-pre.code .literal.string, code .literal.string { 
-    color: #d20;
-    background-color: #fff0f0;
-}
-pre.code .literal.number, code .literal.number { 
-    color: #00d;
-}
-pre.code .name.builtin, code .name.builtin {
-    color: #038;
-    color: #820;
-}
-pre.code .name.namespace, code .name.namespace {
-    color: #b06;
-}
-pre.code .deleted, code .deleted {
-    background-color: #fdd;
-}
-pre.code .inserted, code .inserted {
-    background-color: #dfd;
-}
-
-
-/* //-------- Literal Blocks --------- */
-
-
-/* ========== Tables ========== */
-
-table {
-    border-spacing:         0;
-    border-collapse:        collapse;
-    border-style:           none;
-    border-top:             solid 1px #111;
-    border-bottom:          solid 1px #111;
-}
-
-td, 
-th {
-    border: none;
-    padding-left: 0.8em;
-    padding-right: 0.8em;
-    vertical-align:         top;
-}
-
-th {
-    border-top:             solid 1px #111;
-    border-bottom:          solid 1px #111;
-    background-color:       #ddd;
-}
-
-td p {
-    margin: 0;
-    padding: 0;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-
-table.field-list,
-table.footnote,
-table.citation,
-table.option-list {
-    border:                 none;
-}
-table.docinfo {
-    margin:                 2em 4em;
-}
-
-table.docutils {
-    margin:                 1em 0;
-}
-
-table.docutils th.field-name, 
-table.docinfo th.docinfo-name {
-    border:                 none;
-    background:             none;
-    font-weight:            bold ;
-    text-align:             left ;
-    white-space:            nowrap ;
-    padding-left:           0;
-    vertical-align:         middle; 
-}
-
-table.docutils.booktabs {
-    border:                 none;
-    border-top:             2px solid;
-    border-bottom:          2px solid;
-    border-collapse:        collapse;
-}
-
-table.docutils.booktabs * {
-    border:                 0px;
-}
-table.docutils.booktabs th {
-    border-bottom:          thin solid;
-    text-align:             left;
-}
-
-span.option {
-    white-space: nowrap;
-}
-
-table caption {
-    margin-bottom: 2px;
-}
-
-/* //-------- Tables ---------- */
-
-
-/* ========== Lists ========== */
-
-ol.simple, ul.simple {
-    margin-bottom: 1em;
-}
-
-ol.arabic {
-    list-style: decimal;
-}
-
-ol.loweralpha {
-    list-style: lower-alpha;
-}
-
-ol.upperalpha {
-    list-style: upper-alpha;
-}
-
-ol.lowerroman {
-    list-style: lower-roman;
-}
-
-ol.upperroman {
-    list-style: upper-roman;
-}
-
-dl.docutils dd {
-    margin-bottom: 0.5em;
-}
-
-
-dl.docutils dt {
-    font-weight: bold;
-}
-
-li p {
-    margin: 0;
-    padding: 0;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-
-dl {
-    margin: 0;
-    padding: 0;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-
-/* //-------- Lists ---------- */
-
-
-/* ========== Sidebar ========== */
-
-div.sidebar {
-    margin: 0 0 0.5em 1em ;
-    border-left: solid 2px #111;
-    padding: 1em ;
-    width: 40% ;
-    float: right ;
-    clear: right;
-}
-
-div.sidebar {
-    font-size: 14px;
-}
-
-p.sidebar-title {
-    font-size: 16px;
-    font-weight: bold ;
-}
-
-p.sidebar-subtitle {
-    font-weight: bold;
-}
-
-/* //-------- Sidebar ---------- */
-
-
-/* ========== Topic ========== */
-
-div.topic {
-    margin: 2em;
-    padding: 1em 0;
-    border-width: 1px;
-    border-color: #111;
-    border-style: solid none;
-}
-
-div.topic p {
-    padding: 0;
-}
-
-p.topic-title {
-    font-weight: bold;
-}
-
-/* //-------- Topic ---------- */
-
-
-/* ========== Header ========== */
-
-div.header {
-    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-    font-size:          14px;
-    margin:             2em auto 4em auto;
-    max-width:          960px;
-    clear:              both;
-}
-
-hr.header {
-    border:             0;
-    height:             1px;
-    margin-top:         1em;
-    background-color:   #111;
-}
-
-/* //-------- Header ---------- */
-
-
-/* ========== Footer ========== */
-
-div.footer {
-    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-    font-size:          14px;
-    margin:             6em auto 2em auto;
-    max-width:          960px;
-    clear:              both;
-    text-align:         center;
-}
-
-hr.footer {
-    border:             0;
-    height:             1px;
-    margin-bottom:      2em;
-    background-color:   #111;
-}
-
-/* //-------- Footer ---------- */
-
-
-/* ========== Admonitions ========== */
-
-div.admonition, 
-div.attention, 
-div.caution, 
-div.danger, 
-div.error,
-div.hint, 
-div.important, 
-div.note, 
-div.tip, 
-div.warning {
-    margin: 2em;
-    border: solid 1px #111;
-    padding: 0 1em;
-    background-color: #eee;
-}
-
-div.error,
-div.danger {
-    border-color: #a94442;
-    background-color: #f2dede;
-}
-
-div.hint,
-div.tip {
-    border-color: #31708f;
-    background-color: #d9edf7;
-}
-
-div.attention,
-div.caution,
-div.warning {
-    border-color: #8a6d3b;
-    background-color: #fcf8e3; 
-}
-
-div.hint p.admonition-title,
-div.tip p.admonition-title {
-    color: #31708f;
-    font-weight: bold ;
-}
-
-div.note p.admonition-title,
-div.admonition p.admonition-title, 
-div.important p.admonition-title {
-    font-weight: bold ;
-}
-
-div.attention p.admonition-title,
-div.caution p.admonition-title,
-div.warning p.admonition-title {
-    color: #8a6d3b;
-    font-weight: bold ;
-}
-
-div.danger p.admonition-title, 
-div.error p.admonition-title,
-.code .error {
-    color: #a94442;
-    font-weight: bold ;
-}
-
-/* //-------- Admonitions ---------- */
-
-
-/* ========== Table of Contents ========== */
-
-div.contents {
-    margin: 2em 0;
-    border: none;
-}
-
-ul.auto-toc {
-    list-style-type: none;
-}
-
-a.toc-backref {
-    text-decoration: none ;
-    color: #111;
-}
-
-/* //-------- Table of Contents ---------- */
-
-
-
-/* ========== Line Blocks========== */
-
-div.line-block {
-    display: block ;
-    margin-top: 1em ;
-    margin-bottom: 1em;
-}
-
-div.line-block div.line-block {
-    margin-top: 0 ;
-    margin-bottom: 0 ;
-    margin-left: 1.5em;
-}
-
-/* //-------- Line Blocks---------- */
-
-
-/* ========== System Messages ========== */
-
-div.system-messages {
-    margin: 5em;
-}
-
-div.system-messages h1 {
-    color: red;
-}
-
-div.system-message {
-    border: medium outset ;
-    padding: 1em;
-}
-
-div.system-message p.system-message-title {
-    color: red ;
-    font-weight: bold;
-}
-
-/* //-------- System Messages---------- */
-
-
-/* ========== Helpers ========== */
-
-.hidden {
-    display: none;
-}
-
-.align-left {
-    text-align: left;
-}
-
-.align-center {
-    clear: both ;
-    text-align: center;
-}
-
-.align-right {
-    text-align: right;
-}
-
-/* //-------- Helpers---------- */
-
-
-p.caption {
-    font-style: italic;
-    text-align: center;
-}
-
-p.credits {
-font-style: italic ;
-font-size: smaller }
-
-p.label {
-white-space: nowrap }
-
-p.rubric {
-font-weight: bold ;
-font-size: larger ;
-color: maroon ;
-text-align: center }
-
-p.attribution {
-text-align: right ;
-margin-left: 50% }
-
-blockquote.epigraph {
-    margin: 2em 5em;
-}
-
-div.abstract {
-margin: 2em 5em }
-
-div.abstract {
-font-weight: bold ;
-text-align: center }
-
-div.dedication {
-margin: 2em 5em ;
-text-align: center ;
-font-style: italic }
-
-div.dedication {
-font-weight: bold ;
-font-style: normal }
-
-
-span.classifier {
-font-style: oblique }
-
-span.classifier-delimiter {
-font-weight: bold }
-
-span.problematic {
-color: red }
-
-
-
-</style></head><body><h1>Network Attacks</h1><p>Copyright © 2018, Harvard University CS263 —
-all rights reserved.</p><p>In this project, you will use low-level networking primitives to sniff raw network packets, maliciously terminate preexisting TCP streams, and inject attacker-controlled data into preexisting TCP streams. This project will demonstrate the relative ease with which these attacks can be launched.</p><p>More specifically, you will attack TCP streams that flow between two endpoints that reside on your local machine: one endpoint will be within a virtual machine, and the other endpoint will reside on the host machine that runs the VM. This setup is sufficient for you to launch real attacks without endangering the outside world.</p><div class="alert-message block-message warning"><p class="admonition-title">Caution</p><p>Obviously, <strong>YOU SHOULD NOT LAUNCH THESE ATTACKS ON REAL NETWORKS!</strong></p></div><section id="project-setup"><header><h2>Project Setup</h2></header><ul><li><p>Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".</p></li><li><p>Login to the VM.</p></li><li><p><code>cd</code> to your home directory and run <code>git clone &lt;repo_url&gt; network-attacks/</code> to clone your repo.</p></li><li><p>Run <code>cd network-attacks/</code> to enter the project directory.</p></li><li><p>Run <code>./pre_setup.sh</code> to download dependencies. <strong>Note:</strong> this may take a while -- don't press Ctrl+C! You should see a prompt; the answer you want is <strong>no</strong>.</p></li><li><p>Run <code>git checkout -b submission</code> to switch to your submission branch. As in the previous assignment, the branch name is important!</p></li></ul><p>Refer to Project 0's writeup for elaboration on any of these steps.</p><div class="alert-message block-message warning"><p class="admonition-title">Caution</p><p>Before starting, remember the warning from Project 0:</p><p>It is important that you <strong>do not</strong> push to the master branch. This applies to <strong>all</strong> projects in this course. When ready to submit, use <code>git push origin submission</code> with your submission branch checked out locally.</p></div><div class="alert-message block-message info"><p class="admonition-title">Note</p><p>The project may work in other Linux environments; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.</p><p>If you didn't follow the Project 0 setup instructions, some of the constants in the specification won't make sense for your system. In this case, you will need to replace the following:</p><ul><li><p><code>192.168.26.3</code>: The VM's IP on the hypervisor's host-only network</p></li><li><p><code>192.168.26.1</code>: The host's IP on the hypervisor's host-only network</p></li><li><p><code>eth0</code>: The VM's interface to the hypervisor's host-only network</p></li><li><p><code>eth1</code>: The VM's interface with internet access (e.g. NAT).</p></li></ul></div><section id="host-setup"><header><h3>Host Setup</h3></header><p>Because this project involves your host machine as well, you will need to make sure its environment is suitable. Specifically:</p><ul><li><p>Install Python 2.7.</p></li><li><p>Clone your repo to wherever you'd like.</p></li><li><p>[32-bit Windows only] From the cloned directory, run <code>pip install curses-2.2-cp27-none-win32.whl</code></p></li><li><p>[64-bit Windows only] From the cloned directory, run <code>pip install curses-2.2-cp27-none-win_amd64.whl</code></p></li></ul></section></section><section id="specification"><header><h2>Specification</h2></header><div class="alert-message block-message warning"><p class="admonition-title">Caution</p><p>For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.</p></div><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>For all projects, you may commit and push your changes at your leisure. Each push (on an open Pull Request, against master) will trigger a remote test, which you can view on the <a class="reference external" href="https://travis-ci.com/">Travis</a> website.</p></div><div class="alert-message block-message warning"><p class="admonition-title">Important</p><p>Throughout the project, you will probably need to change the <code>Makefile</code>. Although your <code>main()</code> functions should be in the specified <code>.c</code> files, you are free (and encouraged) to create other source and header files as you see fit -- be sure to modify your <code>Makefile</code> accordingly.</p></div><div class="alert-message block-message warning"><p class="admonition-title">Important</p><p><strong>Take a look at</strong> <code>sniffer.h</code> <strong>before continuing to read this document.</strong></p><p>The file <code>sniffer.h</code> defines various data structures and constants that your code should use. For example, <code>sniffer.h::struct tcp_hdr</code> describes the various fields in a TCP header, e.g., the destination port, the source port, the sequence number, and so on.</p></div><div class="alert-message block-message warning"><p class="admonition-title">Important</p><p><strong>Read the entire document before you start coding.</strong></p><p>At various points, the document will suggest ways to efficiently structure your code so that your overall coding effort is minimized. Please follow the suggestions!</p></div><section id="part-1-sniffing-packets"><header><h3>Part 1: Sniffing Packets</h3></header><p>Before you can inject packets into the network, you must learn how to inspect preexisting network traffic. So, your first job is to write a network sniffer. Your sniffer will be a simplified version of tools like <a class="reference external" href="https://www.wireshark.org/">WireShark</a>.</p><p>Place the <code>main()</code> function for your sniffer in <code>sniffer.c</code>. The program should be invocable like this:</p><pre>sniffer [dev_name]</pre><p>Here, <code>dev_name</code> is an optional argument that specifies the network device that the sniffer should attach to. Examples of Linux network devices include <code>eth0</code> (which belongs to a machine's Ethernet card) and <code>lo</code> (the <a class="reference external" href="http://www.tldp.org/LDP/nag/node66.html">loopback device</a>, which is useful for network tests in which a machine sends packets to itself). If this optional argument is not provided, the program should listen to the default Ethernet device.</p><p>The program should read and log each packet on the device according to the section <a class="reference internal" href="#logging-format">Logging Format</a>. Furthermore, it should handle signals according to the section <a class="reference internal" href="#handling-signals">Handling Signals</a>.</p><div class="alert-message block-message warning"><p class="admonition-title">Important</p><p>Note that all programs that you create will require root privileges to run, e.g.:</p><pre>sudo ./sniffer lo</pre><p>The reason is that reading and writing raw packets is a privileged operation.</p></div><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>All programs that you write for this project will require you to use libpcap to sniff packets. So, before you start working on <code>sniffer.c</code>, you should write a utility library which defines functions to open a new <code>pcap_t</code> handle, and close a preexisting <code>pcap_t</code> handle. When you open the handle, you should:</p><ul><li><p>Set the handle to <a class="reference external" href="http://www.tcpdump.org/manpages/pcap_set_promisc.3pcap.html">promiscuous mode</a>, so that your sniffer will receive all of the packets that are transmitted on the wire, not just the ones that are destined for your VM.</p></li><li><p>Set the <a class="reference external" href="http://www.tcpdump.org/manpages/pcap_set_snaplen.3pcap.html">snapshot length</a> to 64KB so that you can capture full packets, including all headers and all data.</p></li></ul><p>For more details on how to open and close PCAP handles, see the <a class="reference external" href="http://www.tcpdump.org/manpages/pcap.3pcap.html">official PCAP documentation</a>.</p></div><section id="logging-format"><header><h4>Logging Format</h4></header><p>You should use <code>pcap_next_ex()</code> (<strong>not</strong> <code>pcap_loop()</code> ) to read a raw packet. <strong>Be sure to handle all of the possible return values for</strong> <code>pcap_next_ex()</code>:</p><ul><li><p>1 means that a packet was successfully read.</p></li><li><p>0 means that libpcap's read timeout expired; this is not a hard error, so your sniffer code should just return to the beginning of the sniffing loop.</p></li><li><p>-1 indicates a libpcap error which should cause your sniffer to terminate.</p></li><li><p>-2 means that <code>pcap_breakloop()</code> has been called, meaning that your sniffer should exit its sniffing loop and gracefully shutdown. We discuss <code>pcap_breakloop()</code> in more detail in the section <a class="reference internal" href="#handling-signals">Handling Signals</a>.</p></li></ul><p><code>sniffer.h</code> defines structs for various types of network headers. For each packet that your sniffer finds, your sniffer should log various pieces of information for each header:</p><p><strong>Ethernet header</strong>: Log the source and destination Ethernet addresses. Log these values like this:</p><pre>ETHERNET: src[02:63:de:ad:be:ef] dst[02:63:fe:ed:fa:ce]</pre><p><strong>IP header</strong>: Log the source and destination IP addresses; the length of the IP header; the length of the data (i.e., non-header) part of the IP packet; and the protocol (which will be either <code>sniffer.h::IP_ICMP</code>, <code>sniffer.h::IP_TCP</code>, <code>sniffer.h::IP_UDP</code>, or another protocol which you can just log as "other"). Log these values like this:</p><pre>IP: src[26.3.26.3] dst[3.26.3.26]
-    ip_hdr_len[20] ip_data_len[24] Protocol: IP_TCP</pre><p>Note the indent of the second line!</p><p><strong>TCP header</strong>: If a packet contains TCP data, then your sniffer should log the source and destination port, the sequence and acknowledgment number for the packet, the length of the TCP header, the length of the data (i.e., non-header) part of the packet, and any flags that the TCP header has (e.g., <code>sniffer.h::TCP_SYN</code>). If the TCP segment contains any data, you should also log that data, writing one or more lines in which each line contains 16 characters of TCP data printed using the <code>"%c"</code> <code>printf()</code> modifier. For example, here's an example line of output that your sniffer might generate for the final message in the 3-way TCP handshake:</p><pre>TCP: src_port[8181] dst_port[42870]
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<title>Network Attacks</title>
+<style type="text/css">
+
+/******************************************************************************
+The MIT License (MIT)
+
+Copyright (c) 2014 Matthias Eisen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+******************************************************************************/
+
+/* Modified by Jerry Ma */
+
+body {
+    font-family: Palatino, "Palatino LT STD", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-size: 16px;
+    color: #24292e;
+}
+
+div.document {
+    margin: 0 auto;
+    width: 95%;
+    max-width: 960px;
+}
+
+p {
+    line-height: 120%;
+}
+
+
+/* ========== Headings ========== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    margin-top: 1.5em;
+}
+
+h1.section-subtitle, 
+h2.section-subtitle, 
+h3.section-subtitle,
+h4.section-subtitle, 
+h5.section-subtitle, 
+h6.section-subtitle {
+    margin-top: 0.4em;
+}
+
+h1.title {
+    text-align: center;
+}
+
+h2.subtitle {
+    text-align: center;
+}
+
+span.section-subtitle {
+    font-size: 80%,
+}
+
+/* //-------- Headings ---------- */
+
+
+/* ========== Images ========== */
+
+img, 
+.figure, 
+object {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+div.figure {
+    margin-left:    2em;
+    margin-right:   2em;
+}
+
+img.align-left, .figure.align-left, object.align-left {
+    clear:          left;
+    float:          left;
+    margin-right:   1em;
+}
+
+img.align-right, .figure.align-right, object.align-right {
+    clear:          right;
+    float:          right;
+    margin-left:    1em;
+}
+
+img.align-center, .figure.align-center, object.align-center {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+/* reset inner alignment in figures */
+div.align-right {
+    text-align: inherit;
+}
+
+object[type="image/svg+xml"], 
+object[type="application/x-shockwave-flash"] {
+    overflow: hidden;
+}
+
+/* //-------- Images ---------- */
+
+
+
+/* ========== Literal Blocks ========== */
+
+pre, tt.literal, span.literal {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    font-size: 14px;
+}
+
+tt.literal {
+    background-color: #ffa;
+}
+
+span.literal {
+    background-color: #f3f3f4;
+    border-radius: 0.3em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    white-space: pre;
+}
+
+pre.address {
+    margin-bottom: 0;
+    margin-top: 0;
+    font: inherit;
+}
+
+pre.literal-block {
+    border-left: solid 5px #ccc;
+    background-color: #f6f8fa;
+    padding: 1em;
+}
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+}
+
+span.interpreted {
+}
+
+span.pre {
+    white-space: pre;
+}
+
+pre.code .ln { 
+    color: grey; 
+}
+pre.code, code {
+    border-style: none;
+    padding: 1em 0;
+}
+pre.code .comment, code .comment { 
+    color: #888;
+}
+pre.code .keyword, code .keyword {
+    font-weight: bold; 
+    color: #080;
+}
+pre.code .literal.string, code .literal.string { 
+    color: #d20;
+    background-color: #fff0f0;
+}
+pre.code .literal.number, code .literal.number { 
+    color: #00d;
+}
+pre.code .name.builtin, code .name.builtin {
+    color: #038;
+    color: #820;
+}
+pre.code .name.namespace, code .name.namespace {
+    color: #b06;
+}
+pre.code .deleted, code .deleted {
+    background-color: #fdd;
+}
+pre.code .inserted, code .inserted {
+    background-color: #dfd;
+}
+
+
+/* //-------- Literal Blocks --------- */
+
+
+/* ========== Tables ========== */
+
+table {
+    border-spacing:         0;
+    border-collapse:        collapse;
+    border-style:           none;
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+}
+
+td, 
+th {
+    border: none;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    vertical-align:         top;
+}
+
+th {
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+    background-color:       #ddd;
+}
+
+td p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+table.field-list,
+table.footnote,
+table.citation,
+table.option-list {
+    border:                 none;
+}
+table.docinfo {
+    margin:                 2em 4em;
+}
+
+table.docutils {
+    margin:                 1em 0;
+}
+
+table.docutils th.field-name, 
+table.docinfo th.docinfo-name {
+    border:                 none;
+    background:             none;
+    font-weight:            bold ;
+    text-align:             left ;
+    white-space:            nowrap ;
+    padding-left:           0;
+    vertical-align:         middle; 
+}
+
+table.docutils.booktabs {
+    border:                 none;
+    border-top:             2px solid;
+    border-bottom:          2px solid;
+    border-collapse:        collapse;
+}
+
+table.docutils.booktabs * {
+    border:                 0px;
+}
+table.docutils.booktabs th {
+    border-bottom:          thin solid;
+    text-align:             left;
+}
+
+span.option {
+    white-space: nowrap;
+}
+
+table caption {
+    margin-bottom: 2px;
+}
+
+/* //-------- Tables ---------- */
+
+
+/* ========== Lists ========== */
+
+ol.simple, ul.simple {
+    margin-bottom: 1em;
+}
+
+ol.arabic {
+    list-style: decimal;
+}
+
+ol.loweralpha {
+    list-style: lower-alpha;
+}
+
+ol.upperalpha {
+    list-style: upper-alpha;
+}
+
+ol.lowerroman {
+    list-style: lower-roman;
+}
+
+ol.upperroman {
+    list-style: upper-roman;
+}
+
+dl.docutils dd {
+    margin-bottom: 0.5em;
+}
+
+
+dl.docutils dt {
+    font-weight: bold;
+}
+
+li p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+dl {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* //-------- Lists ---------- */
+
+
+/* ========== Sidebar ========== */
+
+div.sidebar {
+    margin: 0 0 0.5em 1em ;
+    border-left: solid 2px #111;
+    padding: 1em ;
+    width: 40% ;
+    float: right ;
+    clear: right;
+}
+
+div.sidebar {
+    font-size: 14px;
+}
+
+p.sidebar-title {
+    font-size: 16px;
+    font-weight: bold ;
+}
+
+p.sidebar-subtitle {
+    font-weight: bold;
+}
+
+/* //-------- Sidebar ---------- */
+
+
+/* ========== Topic ========== */
+
+div.topic {
+    margin: 2em;
+    padding: 1em 0;
+    border-width: 1px;
+    border-color: #111;
+    border-style: solid none;
+}
+
+div.topic p {
+    padding: 0;
+}
+
+p.topic-title {
+    font-weight: bold;
+}
+
+/* //-------- Topic ---------- */
+
+
+/* ========== Header ========== */
+
+div.header {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             2em auto 4em auto;
+    max-width:          960px;
+    clear:              both;
+}
+
+hr.header {
+    border:             0;
+    height:             1px;
+    margin-top:         1em;
+    background-color:   #111;
+}
+
+/* //-------- Header ---------- */
+
+
+/* ========== Footer ========== */
+
+div.footer {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             6em auto 2em auto;
+    max-width:          960px;
+    clear:              both;
+    text-align:         center;
+}
+
+hr.footer {
+    border:             0;
+    height:             1px;
+    margin-bottom:      2em;
+    background-color:   #111;
+}
+
+/* //-------- Footer ---------- */
+
+
+/* ========== Admonitions ========== */
+
+div.admonition, 
+div.attention, 
+div.caution, 
+div.danger, 
+div.error,
+div.hint, 
+div.important, 
+div.note, 
+div.tip, 
+div.warning {
+    margin: 2em;
+    border: solid 1px #111;
+    padding: 0 1em;
+    background-color: #eee;
+}
+
+div.error,
+div.danger {
+    border-color: #a94442;
+    background-color: #f2dede;
+}
+
+div.hint,
+div.tip {
+    border-color: #31708f;
+    background-color: #d9edf7;
+}
+
+div.attention,
+div.caution,
+div.warning {
+    border-color: #8a6d3b;
+    background-color: #fcf8e3; 
+}
+
+div.hint p.admonition-title,
+div.tip p.admonition-title {
+    color: #31708f;
+    font-weight: bold ;
+}
+
+div.note p.admonition-title,
+div.admonition p.admonition-title, 
+div.important p.admonition-title {
+    font-weight: bold ;
+}
+
+div.attention p.admonition-title,
+div.caution p.admonition-title,
+div.warning p.admonition-title {
+    color: #8a6d3b;
+    font-weight: bold ;
+}
+
+div.danger p.admonition-title, 
+div.error p.admonition-title,
+.code .error {
+    color: #a94442;
+    font-weight: bold ;
+}
+
+/* //-------- Admonitions ---------- */
+
+
+/* ========== Table of Contents ========== */
+
+div.contents {
+    margin: 2em 0;
+    border: none;
+}
+
+ul.auto-toc {
+    list-style-type: none;
+}
+
+a.toc-backref {
+    text-decoration: none ;
+    color: #111;
+}
+
+/* //-------- Table of Contents ---------- */
+
+
+
+/* ========== Line Blocks========== */
+
+div.line-block {
+    display: block ;
+    margin-top: 1em ;
+    margin-bottom: 1em;
+}
+
+div.line-block div.line-block {
+    margin-top: 0 ;
+    margin-bottom: 0 ;
+    margin-left: 1.5em;
+}
+
+/* //-------- Line Blocks---------- */
+
+
+/* ========== System Messages ========== */
+
+div.system-messages {
+    margin: 5em;
+}
+
+div.system-messages h1 {
+    color: red;
+}
+
+div.system-message {
+    border: medium outset ;
+    padding: 1em;
+}
+
+div.system-message p.system-message-title {
+    color: red ;
+    font-weight: bold;
+}
+
+/* //-------- System Messages---------- */
+
+
+/* ========== Helpers ========== */
+
+.hidden {
+    display: none;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    clear: both ;
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/* //-------- Helpers---------- */
+
+
+p.caption {
+    font-style: italic;
+    text-align: center;
+}
+
+p.credits {
+font-style: italic ;
+font-size: smaller }
+
+p.label {
+white-space: nowrap }
+
+p.rubric {
+font-weight: bold ;
+font-size: larger ;
+color: maroon ;
+text-align: center }
+
+p.attribution {
+text-align: right ;
+margin-left: 50% }
+
+blockquote.epigraph {
+    margin: 2em 5em;
+}
+
+div.abstract {
+margin: 2em 5em }
+
+div.abstract {
+font-weight: bold ;
+text-align: center }
+
+div.dedication {
+margin: 2em 5em ;
+text-align: center ;
+font-style: italic }
+
+div.dedication {
+font-weight: bold ;
+font-style: normal }
+
+
+span.classifier {
+font-style: oblique }
+
+span.classifier-delimiter {
+font-weight: bold }
+
+span.problematic {
+color: red }
+
+
+
+
+</style>
+</head>
+<body>
+<div class="document" id="network-attacks">
+<h1 class="title">Network Attacks</h1>
+
+<p>In this project, you will use low-level networking primitives to sniff raw network packets, maliciously terminate preexisting TCP streams, and inject attacker-controlled data into preexisting TCP streams. This project will demonstrate the relative ease with which these attacks can be launched.</p>
+<p>More specifically, you will attack TCP streams that flow between two endpoints that reside on your local machine: one endpoint will be within a virtual machine, and the other endpoint will reside on the host machine that runs the VM. This setup is sufficient for you to launch real attacks without endangering the outside world.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Obviously, <strong>YOU SHOULD NOT LAUNCH THESE ATTACKS ON REAL NETWORKS!</strong></p>
+</div>
+<div class="section" id="project-setup">
+<h1>Project Setup</h1>
+<ul class="simple">
+<li><p>Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</p></li>
+<li><p>Login to the VM.</p></li>
+<li><p><span class="docutils literal">cd</span> to your home directory and run <span class="docutils literal">git clone &lt;repo_url&gt; <span class="pre">network-attacks/</span></span> to clone your repo.</p></li>
+<li><p>Run <span class="docutils literal">cd <span class="pre">network-attacks/</span></span> to enter the project directory.</p></li>
+<li><p>Run <span class="docutils literal">./pre_setup.sh</span> to download dependencies. <strong>Note:</strong> this may take a while -- don't press Ctrl+C! You should see a prompt; the answer you want is <strong>no</strong>.</p></li>
+<li><p>Run <span class="docutils literal">git checkout <span class="pre">-b</span> submission</span> to switch to your submission branch. As in the previous assignment, the branch name is important!</p></li>
+</ul>
+<p>Refer to Project 0's writeup for elaboration on any of these steps.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Before starting, remember the warning from Project 0:</p>
+<p>It is important that you <strong>do not</strong> push to the master branch. This applies to <strong>all</strong> projects in this course. When ready to submit, use <span class="docutils literal">git push origin submission</span> with your submission branch checked out locally.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The project may work in other Linux environments; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.</p>
+<p>If you didn't follow the Project 0 setup instructions, some of the constants in the specification won't make sense for your system. In this case, you will need to replace the following:</p>
+<ul class="simple">
+<li><p><span class="docutils literal">192.168.26.3</span>: The VM's IP on the hypervisor's host-only network</p></li>
+<li><p><span class="docutils literal">192.168.26.1</span>: The host's IP on the hypervisor's host-only network</p></li>
+<li><p><span class="docutils literal">eth0</span>: The VM's interface to the hypervisor's host-only network</p></li>
+<li><p><span class="docutils literal">eth1</span>: The VM's interface with internet access (e.g. NAT).</p></li>
+</ul>
+</div>
+<div class="section" id="host-setup">
+<h2>Host Setup</h2>
+<p>Because this project involves your host machine as well, you will need to make sure its environment is suitable. Specifically:</p>
+<ul class="simple">
+<li><p>Install Python 2.7.</p></li>
+<li><p>Clone your repo to wherever you'd like.</p></li>
+<li><p>[32-bit Windows only] From the cloned directory, run <span class="docutils literal">pip install <span class="pre">curses-2.2-cp27-none-win32.whl</span></span></p></li>
+<li><p>[64-bit Windows only] From the cloned directory, run <span class="docutils literal">pip install <span class="pre">curses-2.2-cp27-none-win_amd64.whl</span></span></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="specification">
+<h1>Specification</h1>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For all projects, you may commit and push your changes at your leisure. Each push (on an open Pull Request, against master) will trigger a remote test, which you can view on the <a class="reference external" href="https://travis-ci.com/">Travis</a> website.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Throughout the project, you will probably need to change the <span class="docutils literal">Makefile</span>. Although your <span class="docutils literal">main()</span> functions should be in the specified <span class="docutils literal">.c</span> files, you are free (and encouraged) to create other source and header files as you see fit -- be sure to modify your <span class="docutils literal">Makefile</span> accordingly.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Take a look at</strong> <span class="docutils literal">sniffer.h</span> <strong>before continuing to read this document.</strong></p>
+<p>The file <span class="docutils literal">sniffer.h</span> defines various data structures and constants that your code should use. For example, <span class="docutils literal"><span class="pre">sniffer.h::struct</span> tcp_hdr</span> describes the various fields in a TCP header, e.g., the destination port, the source port, the sequence number, and so on.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Read the entire document before you start coding.</strong></p>
+<p>At various points, the document will suggest ways to efficiently structure your code so that your overall coding effort is minimized. Please follow the suggestions!</p>
+</div>
+<div class="section" id="part-1-sniffing-packets">
+<h2>Part 1: Sniffing Packets</h2>
+<p>Before you can inject packets into the network, you must learn how to inspect preexisting network traffic. So, your first job is to write a network sniffer. Your sniffer will be a simplified version of tools like <a class="reference external" href="https://www.wireshark.org/">WireShark</a>.</p>
+<p>Place the <span class="docutils literal">main()</span> function for your sniffer in <span class="docutils literal">sniffer.c</span>. The program should be invocable like this:</p>
+<pre class="literal-block">sniffer [dev_name]</pre>
+<p>Here, <span class="docutils literal">dev_name</span> is an optional argument that specifies the network device that the sniffer should attach to. Examples of Linux network devices include <span class="docutils literal">eth0</span> (which belongs to a machine's Ethernet card) and <span class="docutils literal">lo</span> (the <a class="reference external" href="http://www.tldp.org/LDP/nag/node66.html">loopback device</a>, which is useful for network tests in which a machine sends packets to itself). If this optional argument is not provided, the program should listen to the default Ethernet device.</p>
+<p>The program should read and log each packet on the device according to the section <a class="reference internal" href="#logging-format">Logging Format</a>. Furthermore, it should handle signals according to the section <a class="reference internal" href="#handling-signals">Handling Signals</a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Note that all programs that you create will require root privileges to run, e.g.:</p>
+<pre class="literal-block">sudo ./sniffer lo</pre>
+<p>The reason is that reading and writing raw packets is a privileged operation.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>All programs that you write for this project will require you to use libpcap to sniff packets. So, before you start working on <span class="docutils literal">sniffer.c</span>, you should write a utility library which defines functions to open a new <span class="docutils literal">pcap_t</span> handle, and close a preexisting <span class="docutils literal">pcap_t</span> handle. When you open the handle, you should:</p>
+<ul class="simple">
+<li><p>Set the handle to <a class="reference external" href="http://www.tcpdump.org/manpages/pcap_set_promisc.3pcap.html">promiscuous mode</a>, so that your sniffer will receive all of the packets that are transmitted on the wire, not just the ones that are destined for your VM.</p></li>
+<li><p>Set the <a class="reference external" href="http://www.tcpdump.org/manpages/pcap_set_snaplen.3pcap.html">snapshot length</a> to 64KB so that you can capture full packets, including all headers and all data.</p></li>
+</ul>
+<p>For more details on how to open and close PCAP handles, see the <a class="reference external" href="http://www.tcpdump.org/manpages/pcap.3pcap.html">official PCAP documentation</a>.</p>
+</div>
+<div class="section" id="logging-format">
+<h3>Logging Format</h3>
+<p>You should use <span class="docutils literal">pcap_next_ex()</span> (<strong>not</strong> <span class="docutils literal">pcap_loop()</span> ) to read a raw packet. <strong>Be sure to handle all of the possible return values for</strong> <span class="docutils literal">pcap_next_ex()</span>:</p>
+<ul class="simple">
+<li><p>1 means that a packet was successfully read.</p></li>
+<li><p>0 means that libpcap's read timeout expired; this is not a hard error, so your sniffer code should just return to the beginning of the sniffing loop.</p></li>
+<li><p>-1 indicates a libpcap error which should cause your sniffer to terminate.</p></li>
+<li><p>-2 means that <span class="docutils literal">pcap_breakloop()</span> has been called, meaning that your sniffer should exit its sniffing loop and gracefully shutdown. We discuss <span class="docutils literal">pcap_breakloop()</span> in more detail in the section <a class="reference internal" href="#handling-signals">Handling Signals</a>.</p></li>
+</ul>
+<p><span class="docutils literal">sniffer.h</span> defines structs for various types of network headers. For each packet that your sniffer finds, your sniffer should log various pieces of information for each header:</p>
+<p><strong>Ethernet header</strong>: Log the source and destination Ethernet addresses. Log these values like this:</p>
+<pre class="literal-block">ETHERNET: src[02:63:de:ad:be:ef] dst[02:63:fe:ed:fa:ce]</pre>
+<p><strong>IP header</strong>: Log the source and destination IP addresses; the length of the IP header; the length of the data (i.e., non-header) part of the IP packet; and the protocol (which will be either <span class="docutils literal"><span class="pre">sniffer.h::IP_ICMP</span></span>, <span class="docutils literal"><span class="pre">sniffer.h::IP_TCP</span></span>, <span class="docutils literal"><span class="pre">sniffer.h::IP_UDP</span></span>, or another protocol which you can just log as &quot;other&quot;). Log these values like this:</p>
+<pre class="literal-block">IP: src[26.3.26.3] dst[3.26.3.26]
+    ip_hdr_len[20] ip_data_len[24] Protocol: IP_TCP</pre>
+<p>Note the indent of the second line!</p>
+<p><strong>TCP header</strong>: If a packet contains TCP data, then your sniffer should log the source and destination port, the sequence and acknowledgment number for the packet, the length of the TCP header, the length of the data (i.e., non-header) part of the packet, and any flags that the TCP header has (e.g., <span class="docutils literal"><span class="pre">sniffer.h::TCP_SYN</span></span>). If the TCP segment contains any data, you should also log that data, writing one or more lines in which each line contains 16 characters of TCP data printed using the <span class="docutils literal">&quot;%c&quot;</span> <span class="docutils literal">printf()</span> modifier. For example, here's an example line of output that your sniffer might generate for the final message in the 3-way TCP handshake:</p>
+<pre class="literal-block">TCP: src_port[8181] dst_port[42870]
      seq_num[205568001] ack_num[3018600331]
-     tcp_hdr_len[24] tcp_data_len[0] flags: SYN ACK</pre><p>Note the indent of the second and third lines! Also note that, in this case, the TCP segment contained no data.</p><p>Here's the line that your sniffer might generate for the initial part of an HTTP request:</p><pre>TCP: src_port[36696] dst_port[80]
+     tcp_hdr_len[24] tcp_data_len[0] flags: SYN ACK</pre>
+<p>Note the indent of the second and third lines! Also note that, in this case, the TCP segment contained no data.</p>
+<p>Here's the line that your sniffer might generate for the initial part of an HTTP request:</p>
+<pre class="literal-block">TCP: src_port[36696] dst_port[80]
      seq_num[1566988577] ack_num[19264002]
      tcp_hdr_len[20] tcp_data_len[138] flags: PUSH ACK
 User-Agent: Wget
@@ -642,7 +765,13 @@ Hos
 t: www.cnn.com
 
 Connection: Keep
--Alive</pre><p>In this case, the TCP segment <strong>did</strong> contain data. Note that data lines are unindented!</p><p><strong>ICMP header</strong>: If a packet contain ICMP data, then your sniffer should log the type of the message (i.e., <code>sniffer.h::ICMP_ECHOREPLY</code>, <code>sniffer.h::ICMP_ECHO</code>, or another type which you can just log as "other"), the id of the message, and the sequence number of the message. Log these values like this:</p><pre>ICMP: type[ICMP_ECHO] id[18572] seq[3]</pre><p><strong>UDP header</strong>: You do not need to log anything extra for UDP datagrams.</p><p>So, putting it all together, here's an example of what your sniffer might output for a pair of ICMP echo request/echo reply messages:</p><pre>ETHERNET: src[08:00:27:16:b3:17] dst[5b:54:11:12:35:02]
+-Alive</pre>
+<p>In this case, the TCP segment <strong>did</strong> contain data. Note that data lines are unindented!</p>
+<p><strong>ICMP header</strong>: If a packet contain ICMP data, then your sniffer should log the type of the message (i.e., <span class="docutils literal"><span class="pre">sniffer.h::ICMP_ECHOREPLY</span></span>, <span class="docutils literal"><span class="pre">sniffer.h::ICMP_ECHO</span></span>, or another type which you can just log as &quot;other&quot;), the id of the message, and the sequence number of the message. Log these values like this:</p>
+<pre class="literal-block">ICMP: type[ICMP_ECHO] id[18572] seq[3]</pre>
+<p><strong>UDP header</strong>: You do not need to log anything extra for UDP datagrams.</p>
+<p>So, putting it all together, here's an example of what your sniffer might output for a pair of ICMP echo request/echo reply messages:</p>
+<pre class="literal-block">ETHERNET: src[08:00:27:16:b3:17] dst[5b:54:11:12:35:02]
 IP: src[10.0.2.15] dst[192.168.26.3]
 ip_hdr_len[20] ip_data_len[64] Protocol: IP_ICMP
 ICMP: type[ICMP_ECHO] id[18617] seq[3]
@@ -650,7 +779,9 @@ ICMP: type[ICMP_ECHO] id[18617] seq[3]
 ETHERNET: src[5a:54:11:12:35:02] dst[08:00:27:16:b3:17]
 IP: src[192.168.26.3] dst[10.0.2.15]
 ip_hdr_len[20] ip_data_len[64] Protocol: IP_ICMP
-ICMP: type[ICMP_ECHOREPLY] id[18617] seq[3]</pre><p>As another example, suppose that you issue the command <code>wget www.cnn.com</code>. That command will use the HTTP protocol to fetch the CNN homepage. Your sniffer will capture the 3-way TCP handshake, as well as the raw TCP data that represents the HTTP request and response. For example, the first five packets that your sniffer logs will look something like the following:</p><pre>ETHERNET: src[08:00:27:16:b8:30] dst[52:54:00:12:35:02]
+ICMP: type[ICMP_ECHOREPLY] id[18617] seq[3]</pre>
+<p>As another example, suppose that you issue the command <span class="docutils literal">wget www.cnn.com</span>. That command will use the HTTP protocol to fetch the CNN homepage. Your sniffer will capture the 3-way TCP handshake, as well as the raw TCP data that represents the HTTP request and response. For example, the first five packets that your sniffer logs will look something like the following:</p>
+<pre class="literal-block">ETHERNET: src[08:00:27:16:b8:30] dst[52:54:00:12:35:02]
 IP: src[10.0.2.15] dst[151.101.116.73]
     ip_hdr_len[20] ip_data_len[40] Protocol: IP_TCP
 TCP: src_port[36696] dst_port[80]
@@ -689,7 +820,95 @@ Hos
 t: www.cnn.com
 
 Connection: Keep
--Alive</pre><p>As you build your sniffer, remember to think about <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Glossary/Endianness">byte endianness</a>! When you print a number inside a network header that was captured by libpcap, you'll often need to convert that number into the host byte order using a function like <code>ntohs()</code> or <code>ntohl()</code>. Functions like <code>inet_ntoa()</code> may also be useful when you need to print IP addresses in dotted quad notation like <code>127.0.0.1</code>. Be careful <strong>not</strong> to use <code>ether_ntoa()</code>, as this will fail to print the leading zero for each Ethernet address byte.</p><p>Many of you will be SSH'ing into the VM so that you can develop and test your code. By default, your scanner would log the TCP traffic that belongs to your SSH session! This SSH traffic would add a bunch of noise to your sniffer's output logs. So, <code>sniffer.c</code> should use <code>pcap_setfilter()</code> to ignore TCP traffic that involves port 22 (i.e., the SSH port).</p><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>We recommend that you place your header extraction code and your logging code in two separate utility libraries. For example, the header extraction library would define functions that take a <code>u_char *</code> pointer to raw packet data and return pointers to various network headers. The logging code would define functions that take in a pointer to a network header and print the relevant parts of the header. By placing the header extraction and logging code in libraries, you make it easy for your attack programs to use the header extraction and logging functionality.</p></div></section><section id="handling-signals"><header><h4>Handling Signals</h4></header><p>Your sniffer program should handle the <code>SIGINT</code> and <code>SIGQUIT</code> signals gracefully. To do so, use <code>sigaction()</code> from the Linux <code>&lt;signal.h&gt;</code> header to register a signal handler for the signals. The signal handler should simply call <code>pcap_breakloop()</code>. <code>pcap_breakloop()</code> will cause <code>pcap_next_ex()</code> to return -2. In turn, this should cause your packet sniffing loop to exit, at which point you can gracefully close the <code>pcap_t</code> handle and deallocate any other resources that were created during the sniffing session.</p><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>You should put your code for signal handling into a separate library, so that it can be used by your attacks as well.</p></div></section><section id="testing-your-sniffer"><header><h4>Testing Your Sniffer</h4></header><p>First of all, <code>make sniffer</code> should successfully compile the program.</p><p>Try the following experiments to test your packet sniffer:</p><ul><li><p>Bind your sniffer to the <code>lo</code> interface, and then issue a <code>ping localhost</code> command. Your sniffer should log ICMP echo request and echo reply messages. Note that ping tools often use the PID of the ping process as the "id" field in the echo request.</p></li><li><p>Bind your sniffer to the lo interface, and then run <code>./tcp-test.py &lt;some_port_number&gt;</code>. The program generates a localhost TCP server and a localhost TCP client, and then has the server send a bunch of <code>'x'</code> characters to the client. You should see the 3-way TCP handshake, the server sending <code>'x'</code> characters, the client acknowledging those characters, and then the TCP teardown sequence.</p></li><li><p>Bind your sniffer to <code>eth1</code> and then issue a <code>ping www.google.com</code>. Your sniffer should log the request and response messages.</p></li><li><p>Bind your sniffer to <code>eth1</code>, and then issue a <code>wget</code> command like <code>wget www.cnn.com -O /dev/null</code>. Your sniffer should log the 3-way TCP handshake, the HTTP request, the HTTP response, and then the TCP teardown sequence.</p></li></ul><p>Finally, run <code>make test_sniffer</code>, which is not a comprehensive test but should verify basic functionality.</p></section></section><section id="part-2-forced-disconnects-via-tcp-rst"><header><h3>Part 2: Forced Disconnects via TCP RST</h3></header><p>Now, you will implement a TCP RST attack to maliciously destroy a preexisting TCP stream. The attack will involve three parties: a web server, a web client, and the attacker. The web server will live on the host machine, whereas the web client and the attacker will live on the VM. This setup emulates a scenario in which the web client and the attacker reside on the same subnet, such that the attacker can sniff the web traffic that is sent by the client. The attacker's goal is to force a client HTTP request to fail by injecting TCP RST packets into the network.</p><p>The paper "<a class="reference external" href="http://www.icir.org/vern/papers/reset-injection.ndss09.pdf">Detecting Forged TCP Reset Packets</a>" provides a nice overview of TCP RST attacks; the entire paper is interesting, but for the purposes of this project, Section 4 of the paper is the most relevant:</p><blockquote><p>The crucial field in a RST is its <em>sequence number</em>, which must be chosen correctly for the packet to be accepted by the destination. Per the RFC, when aborting a connection the sender should send an <em>in-sequence</em> RST, i.e., set the sequence number to the next available octet in sequence space if terminating an active connection.</p></blockquote><p>So, at a high level, your attack should listen for <strong>incoming</strong> traffic from the server which has the TCP ACK flag set. Those packets represent HTTP response packets from the server. When your attack detects such packets, it should send an <strong>outgoing</strong> TCP RST packet to the server.</p><section id="libnet"><header><h4>Libnet</h4></header><p>Now that you know how to sniff preexisting packets, you will learn how to use libnet to inject new packets into the network. Here are some tutorials on how to use libnet:</p><ul><li><p>"<a class="reference external" href="http://packetfactory.openwall.net/projects/libnet/2004_RSA/eol-1.0.pdf">The Evolution of Libnet</a>"</p></li><li><p>"<a class="reference external" href="https://repolinux.wordpress.com/2011/09/18/libnet-1-1-tutorial/">Libnet 1.1 tutorial</a>"</p></li><li><p>"<a class="reference external" href="http://www.cas.mcmaster.ca/~rzheng/course/COSC6397sp2008/Libpcap_libnet.pdf">Libpcap and Libnet</a>"</p></li></ul><p>Some of these tutorials are a bit out-of-date. Fortunately, the comments in the primary libnet header file are excellent -- see <code>/usr/include/libnet/libnet-functions.h</code>. That header file, and the rest of the libnet headers, should be treated as the canonical documentation for libnet.</p><p>libnet acts as a higher-level interface to an operating system's facilities for writing raw packets. For example, on Linux, libnet acts as a wrapper around the <a class="reference external" href="http://man7.org/linux/man-pages/man7/raw.7.html">raw socket interface</a>. Other operating systems define different interfaces for writing raw packets, so libnet acts as an abstraction layer which allows you to create portable code for injecting new packets into the network.</p><p>In libnet, a new packet is constructed by calling <code>libnet_build_XXX()</code> functions, where "XXX" is the name of a network layer like "tcp". For your attacks, you'll be constructing raw TCP packets, so you'll need to call <code>libnet_build_tcp()</code> and <code>libnet_build_ipv4()</code> to construct the necessary packet, and then <code>libnet_write()</code> to inject the packet into the network.</p><div class="alert-message block-message warning"><p class="admonition-title">Important</p><p>You will <strong>not</strong> need to call <code>libnet_build_ethernet()</code>; by omitting that call, you instruct libnet to construct the appropriate Ethernet header for you. However, <code>libnet_build_tcp()</code> <strong>must</strong> be called before <code>libnet_build_ipv4()</code>, since libnet requires a new packet to be built from the top of the <a class="reference external" href="https://en.wikipedia.org/wiki/OSI_model">OSI stack</a>.</p><p>Also, you should call <code>libnet_clear_packet()</code> before you start building a new packet.</p></div><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>Like libpcap, libnet requires various incantations to create and destroy a libnet handle. You should create a utility library which provides a higher-level interface to those incantations. This library can be used by all of your attacks.</p></div></section><section id="http-client-server"><header><h4>HTTP Client/Server</h4></header><p>To run a web server on your host, simply use Python's built-in web server like this:</p><pre>python2 -m SimpleHTTPServer 9263</pre><p>Here, 9263 is the TCP port on which the server will listen for HTTP requests (feel free to change). The web server will look for requested files in the server's working directory. You should place a large file in that directory. For example, you can generate 32 MB of dummy file data like this:</p><pre>python -c "print('x' * (2 ** 25))" &gt; tmp.txt</pre><p>You will launch your RST attack against an HTTP fetch of that file. Making the file large lowers the barrier to a RST attack, since the attacker has more opportunities to generate RST packets for ACK-bearing data packets that are sent by the server.</p><p>To run a web client within the VM, you can use the <code>wget</code> command like this:</p><pre>wget -t 1 -O /dev/null -- http://192.168.26.1:9263/tmp.txt</pre><p>Here, the <code>-t 1</code> means no retries, and the <code>-O /dev/null</code> means to throw away the received bytes.</p></section><section id="writing-your-rst-attack"><header><h4>Writing Your RST Attack</h4></header><p>Place the <code>main()</code> function for your attack in <code>rst_http.c</code>. The program should be invocable like this:</p><pre>rst_http server_port [dev_name]</pre><p>Here, <code>server_port</code> is a required argument that specifies the TCP port of the victim server. <code>dev_name</code> should be handled in the same manner as in <code>sniffer</code>.</p><p><strong>Make sure</strong> to do the following:</p><ul><li><p>At initialization time, register signal handlers for <code>SIGINT</code> and <code>SIGQUIT</code> so that <code>rst_http</code> will shut down gracefully.</p></li><li><p>At initialization time, use a <code>pcap_setfilter()</code> so that libpcap will only deliver <strong>incoming</strong> TCP traffic whose <strong>source</strong> port is <code>server_port</code> and which has the TCP ACK flag set.</p></li></ul><p>Then, when <code>rst_http</code> detects a packet on the device, it should inspect the headers in the packet, generate a RST packet with the appropriate sequence number (and other info) using libnet, and then inject that packet into the network to destroy the client/server HTTP connection.</p></section><section id="testing-your-rst-attack"><header><h4>Testing Your RST Attack</h4></header><p>First of all, <code>make rst_http</code> should successfully compile the program.</p><p>Make sure the web server is running on the host (with a giant <code>tmp.txt</code> file), as described above.</p><p>From the VM, run:</p><pre>sudo ./rst_http 9263 eth0</pre><p>If the attack works, then running <code>wget</code> from the VM (as described above) will fail or hang, providing an error message like this:</p><pre>$ wget -t 1 -O /dev/null -- http://192.168.26.1:9263/tmp.txt
+-Alive</pre>
+<p>As you build your sniffer, remember to think about <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Glossary/Endianness">byte endianness</a>! When you print a number inside a network header that was captured by libpcap, you'll often need to convert that number into the host byte order using a function like <span class="docutils literal">ntohs()</span> or <span class="docutils literal">ntohl()</span>. Functions like <span class="docutils literal">inet_ntoa()</span> may also be useful when you need to print IP addresses in dotted quad notation like <span class="docutils literal">127.0.0.1</span>. Be careful <strong>not</strong> to use <span class="docutils literal">ether_ntoa()</span>, as this will fail to print the leading zero for each Ethernet address byte.</p>
+<p>Many of you will be SSH'ing into the VM so that you can develop and test your code. By default, your scanner would log the TCP traffic that belongs to your SSH session! This SSH traffic would add a bunch of noise to your sniffer's output logs. So, <span class="docutils literal">sniffer.c</span> should use <span class="docutils literal">pcap_setfilter()</span> to ignore TCP traffic that involves port 22 (i.e., the SSH port).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We recommend that you place your header extraction code and your logging code in two separate utility libraries. For example, the header extraction library would define functions that take a <span class="docutils literal">u_char *</span> pointer to raw packet data and return pointers to various network headers. The logging code would define functions that take in a pointer to a network header and print the relevant parts of the header. By placing the header extraction and logging code in libraries, you make it easy for your attack programs to use the header extraction and logging functionality.</p>
+</div>
+</div>
+<div class="section" id="handling-signals">
+<h3>Handling Signals</h3>
+<p>Your sniffer program should handle the <span class="docutils literal">SIGINT</span> and <span class="docutils literal">SIGQUIT</span> signals gracefully. To do so, use <span class="docutils literal">sigaction()</span> from the Linux <span class="docutils literal">&lt;signal.h&gt;</span> header to register a signal handler for the signals. The signal handler should simply call <span class="docutils literal">pcap_breakloop()</span>. <span class="docutils literal">pcap_breakloop()</span> will cause <span class="docutils literal">pcap_next_ex()</span> to return -2. In turn, this should cause your packet sniffing loop to exit, at which point you can gracefully close the <span class="docutils literal">pcap_t</span> handle and deallocate any other resources that were created during the sniffing session.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You should put your code for signal handling into a separate library, so that it can be used by your attacks as well.</p>
+</div>
+</div>
+<div class="section" id="testing-your-sniffer">
+<h3>Testing Your Sniffer</h3>
+<p>First of all, <span class="docutils literal">make sniffer</span> should successfully compile the program.</p>
+<p>Try the following experiments to test your packet sniffer:</p>
+<ul class="simple">
+<li><p>Bind your sniffer to the <span class="docutils literal">lo</span> interface, and then issue a <span class="docutils literal">ping localhost</span> command. Your sniffer should log ICMP echo request and echo reply messages. Note that ping tools often use the PID of the ping process as the &quot;id&quot; field in the echo request.</p></li>
+<li><p>Bind your sniffer to the lo interface, and then run <span class="docutils literal"><span class="pre">./tcp-test.py</span> &lt;some_port_number&gt;</span>. The program generates a localhost TCP server and a localhost TCP client, and then has the server send a bunch of <span class="docutils literal">'x'</span> characters to the client. You should see the 3-way TCP handshake, the server sending <span class="docutils literal">'x'</span> characters, the client acknowledging those characters, and then the TCP teardown sequence.</p></li>
+<li><p>Bind your sniffer to <span class="docutils literal">eth1</span> and then issue a <span class="docutils literal">ping www.google.com</span>. Your sniffer should log the request and response messages.</p></li>
+<li><p>Bind your sniffer to <span class="docutils literal">eth1</span>, and then issue a <span class="docutils literal">wget</span> command like <span class="docutils literal">wget www.cnn.com <span class="pre">-O</span> /dev/null</span>. Your sniffer should log the 3-way TCP handshake, the HTTP request, the HTTP response, and then the TCP teardown sequence.</p></li>
+</ul>
+<p>Finally, run <span class="docutils literal">make test_sniffer</span>, which is not a comprehensive test but should verify basic functionality.</p>
+</div>
+</div>
+<div class="section" id="part-2-forced-disconnects-via-tcp-rst">
+<h2>Part 2: Forced Disconnects via TCP RST</h2>
+<p>Now, you will implement a TCP RST attack to maliciously destroy a preexisting TCP stream. The attack will involve three parties: a web server, a web client, and the attacker. The web server will live on the host machine, whereas the web client and the attacker will live on the VM. This setup emulates a scenario in which the web client and the attacker reside on the same subnet, such that the attacker can sniff the web traffic that is sent by the client. The attacker's goal is to force a client HTTP request to fail by injecting TCP RST packets into the network.</p>
+<p>The paper &quot;<a class="reference external" href="http://www.icir.org/vern/papers/reset-injection.ndss09.pdf">Detecting Forged TCP Reset Packets</a>&quot; provides a nice overview of TCP RST attacks; the entire paper is interesting, but for the purposes of this project, Section 4 of the paper is the most relevant:</p>
+<blockquote>
+<p>The crucial field in a RST is its <em>sequence number</em>, which must be chosen correctly for the packet to be accepted by the destination. Per the RFC, when aborting a connection the sender should send an <em>in-sequence</em> RST, i.e., set the sequence number to the next available octet in sequence space if terminating an active connection.</p>
+</blockquote>
+<p>So, at a high level, your attack should listen for <strong>incoming</strong> traffic from the server which has the TCP ACK flag set. Those packets represent HTTP response packets from the server. When your attack detects such packets, it should send an <strong>outgoing</strong> TCP RST packet to the server.</p>
+<div class="section" id="libnet">
+<h3>Libnet</h3>
+<p>Now that you know how to sniff preexisting packets, you will learn how to use libnet to inject new packets into the network. Here are some tutorials on how to use libnet:</p>
+<ul class="simple">
+<li><p>&quot;<a class="reference external" href="http://packetfactory.openwall.net/projects/libnet/2004_RSA/eol-1.0.pdf">The Evolution of Libnet</a>&quot;</p></li>
+<li><p>&quot;<a class="reference external" href="https://repolinux.wordpress.com/2011/09/18/libnet-1-1-tutorial/">Libnet 1.1 tutorial</a>&quot;</p></li>
+<li><p>&quot;<a class="reference external" href="http://www.cas.mcmaster.ca/~rzheng/course/COSC6397sp2008/Libpcap_libnet.pdf">Libpcap and Libnet</a>&quot;</p></li>
+</ul>
+<p>Some of these tutorials are a bit out-of-date. Fortunately, the comments in the primary libnet header file are excellent -- see <span class="docutils literal"><span class="pre">/usr/include/libnet/libnet-functions.h</span></span>. That header file, and the rest of the libnet headers, should be treated as the canonical documentation for libnet.</p>
+<p>libnet acts as a higher-level interface to an operating system's facilities for writing raw packets. For example, on Linux, libnet acts as a wrapper around the <a class="reference external" href="http://man7.org/linux/man-pages/man7/raw.7.html">raw socket interface</a>. Other operating systems define different interfaces for writing raw packets, so libnet acts as an abstraction layer which allows you to create portable code for injecting new packets into the network.</p>
+<p>In libnet, a new packet is constructed by calling <span class="docutils literal">libnet_build_XXX()</span> functions, where &quot;XXX&quot; is the name of a network layer like &quot;tcp&quot;. For your attacks, you'll be constructing raw TCP packets, so you'll need to call <span class="docutils literal">libnet_build_tcp()</span> and <span class="docutils literal">libnet_build_ipv4()</span> to construct the necessary packet, and then <span class="docutils literal">libnet_write()</span> to inject the packet into the network.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You will <strong>not</strong> need to call <span class="docutils literal">libnet_build_ethernet()</span>; by omitting that call, you instruct libnet to construct the appropriate Ethernet header for you. However, <span class="docutils literal">libnet_build_tcp()</span> <strong>must</strong> be called before <span class="docutils literal">libnet_build_ipv4()</span>, since libnet requires a new packet to be built from the top of the <a class="reference external" href="https://en.wikipedia.org/wiki/OSI_model">OSI stack</a>.</p>
+<p>Also, you should call <span class="docutils literal">libnet_clear_packet()</span> before you start building a new packet.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Like libpcap, libnet requires various incantations to create and destroy a libnet handle. You should create a utility library which provides a higher-level interface to those incantations. This library can be used by all of your attacks.</p>
+</div>
+</div>
+<div class="section" id="http-client-server">
+<h3>HTTP Client/Server</h3>
+<p>To run a web server on your host, simply use Python's built-in web server like this:</p>
+<pre class="literal-block">python2 -m SimpleHTTPServer 9263</pre>
+<p>Here, 9263 is the TCP port on which the server will listen for HTTP requests (feel free to change). The web server will look for requested files in the server's working directory. You should place a large file in that directory. For example, you can generate 32 MB of dummy file data like this:</p>
+<pre class="literal-block">python -c &quot;print('x' * (2 ** 25))&quot; &gt; tmp.txt</pre>
+<p>You will launch your RST attack against an HTTP fetch of that file. Making the file large lowers the barrier to a RST attack, since the attacker has more opportunities to generate RST packets for ACK-bearing data packets that are sent by the server.</p>
+<p>To run a web client within the VM, you can use the <span class="docutils literal">wget</span> command like this:</p>
+<pre class="literal-block">wget -t 1 -O /dev/null -- http://192.168.26.1:9263/tmp.txt</pre>
+<p>Here, the <span class="docutils literal"><span class="pre">-t</span> 1</span> means no retries, and the <span class="docutils literal"><span class="pre">-O</span> /dev/null</span> means to throw away the received bytes.</p>
+</div>
+<div class="section" id="writing-your-rst-attack">
+<h3>Writing Your RST Attack</h3>
+<p>Place the <span class="docutils literal">main()</span> function for your attack in <span class="docutils literal">rst_http.c</span>. The program should be invocable like this:</p>
+<pre class="literal-block">rst_http server_port [dev_name]</pre>
+<p>Here, <span class="docutils literal">server_port</span> is a required argument that specifies the TCP port of the victim server. <span class="docutils literal">dev_name</span> should be handled in the same manner as in <span class="docutils literal">sniffer</span>.</p>
+<p><strong>Make sure</strong> to do the following:</p>
+<ul class="simple">
+<li><p>At initialization time, register signal handlers for <span class="docutils literal">SIGINT</span> and <span class="docutils literal">SIGQUIT</span> so that <span class="docutils literal">rst_http</span> will shut down gracefully.</p></li>
+<li><p>At initialization time, use a <span class="docutils literal">pcap_setfilter()</span> so that libpcap will only deliver <strong>incoming</strong> TCP traffic whose <strong>source</strong> port is <span class="docutils literal">server_port</span> and which has the TCP ACK flag set.</p></li>
+</ul>
+<p>Then, when <span class="docutils literal">rst_http</span> detects a packet on the device, it should inspect the headers in the packet, generate a RST packet with the appropriate sequence number (and other info) using libnet, and then inject that packet into the network to destroy the client/server HTTP connection.</p>
+</div>
+<div class="section" id="testing-your-rst-attack">
+<h3>Testing Your RST Attack</h3>
+<p>First of all, <span class="docutils literal">make rst_http</span> should successfully compile the program.</p>
+<p>Make sure the web server is running on the host (with a giant <span class="docutils literal">tmp.txt</span> file), as described above.</p>
+<p>From the VM, run:</p>
+<pre class="literal-block">sudo ./rst_http 9263 eth0</pre>
+<p>If the attack works, then running <span class="docutils literal">wget</span> from the VM (as described above) will fail or hang, providing an error message like this:</p>
+<pre class="literal-block">$ wget -t 1 -O /dev/null -- http://192.168.26.1:9263/tmp.txt
 --2000-01-01 00:02:63-- http://192.168.26.1:9263/tmp.txt
 Connecting to 192.168.26.1:9263 ... connected.
 HTTP request sent, awaiting response... 200 OK
@@ -698,20 +917,136 @@ Saving to: ‘/dev/null’
 
 /dev/null 0%[ ] 2.63K --.-KB/s in 0s
 
-2000-01-01 00:02:63 (263 MB/s) - Read error at byte 2630/33554433 (Connection reset by peer). Giving up.</pre><p>On the web server, you should see console output like this:</p><pre>Exception happened during processing of request from ('192.168.26.3', 49263)
+2000-01-01 00:02:63 (263 MB/s) - Read error at byte 2630/33554433 (Connection reset by peer). Giving up.</pre>
+<p>On the web server, you should see console output like this:</p>
+<pre class="literal-block">Exception happened during processing of request from ('192.168.26.3', 49263)
 Traceback (most recent call last):
-File "C:\Python27\lib\SocketServer.py", line 295, in _handle_request_noblock
+File &quot;C:\Python27\lib\SocketServer.py&quot;, line 295, in _handle_request_noblock
 self.process_request(request, client_address)
-File "C:\Python27\lib\SocketServer.py", line 321, in process_request
+File &quot;C:\Python27\lib\SocketServer.py&quot;, line 321, in process_request
 self.finish_request(request, client_address)
-File "C:\Python27\lib\SocketServer.py", line 334, in finish_request
+File &quot;C:\Python27\lib\SocketServer.py&quot;, line 334, in finish_request
 self.RequestHandlerClass(request, client_address, self)
-File "C:\Python27\lib\SocketServer.py", line 657, in __init__
+File &quot;C:\Python27\lib\SocketServer.py&quot;, line 657, in __init__
 self.finish()
-File "C:\Python27\lib\SocketServer.py", line 716, in finish
+File &quot;C:\Python27\lib\SocketServer.py&quot;, line 716, in finish
 self.wfile.close()
-File "C:\Python27\lib\socket.py", line 283, in close
+File &quot;C:\Python27\lib\socket.py&quot;, line 283, in close
 self.flush()
-File "C:\Python27\lib\socket.py", line 307, in flush
+File &quot;C:\Python27\lib\socket.py&quot;, line 307, in flush
 self._sock.sendall(view[write_offset:write_offset+buffer_size])
-error: [Errno 10054] An existing connection was forcibly closed by the remote host</pre><p>Finally, run <code>make test_rst_http</code>, which is not a comprehensive test but should verify basic functionality.</p><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>To debug problems with your attack, you can use your sniffer to log the interactions between <code>rst_http</code>, the web client, and the web server.</p></div></section></section><section id="part-3-telnet-hijacking-via-tcp-injection"><header><h3>Part 3: Telnet Hijacking via TCP Injection</h3></header><p>In the final part of this project, you will inject new traffic into a preexisting TCP stream. In particular, you will inject traffic into a telnet connection. <a class="reference external" href="https://en.wikipedia.org/wiki/Telnet">Telnet</a> is a well-known, simple protocol which allows a client to send commands to a server over TCP. Telnet does not encrypt traffic; thus, telnet has become much less popular with the advent of more secure approaches like ssh. Nevertheless, because telnet is just a thin protocol layer atop TCP, network admins often use telnet clients as simple testing tools, e.g., to <a class="reference external" href="http://blog.industrialnetworking.com/2011/09/using-telnet-to-test-open-ports.html">test if a particular server port is open</a>, or to <a class="reference external" href="https://www.thomas-krenn.com/en/wiki/Check_TCP_Port_80_(http)_with_telnet">see whether an HTTP server is responding to commands</a>.</p><p>If you're curious about the details of the telnet protocol, you can read these documents:</p><ul><li><p>"<a class="reference external" href="http://mars.netanya.ac.il/~unesco/cdrom/booklet/HTML/NETWORKING/node300.html">The Telnet Protocol</a>"</p></li><li><p>"<a class="reference external" href="http://www.tcpipguide.com/free/t_TelnetProtocol.htm">TCP/IP Guide - Telnet Protocol</a>"</p></li><li><p>"<a class="reference external" href="https://www.ietf.org/rfc/rfc854.txt">IETF RFC 854</a>"</p></li></ul><p>However, for the purposes of this project, you can ignore the details of how a telnet client and telnet server negotiate session parameters at the beginning of a TCP connection. As we explain in the next section, you only need to focus on what happens once the parameters have been negotiated, and the client issues a command to the server.</p><section id="our-telnet-server"><header><h4>Our Telnet Server</h4></header><p>On your host machine, you can run the project's telnet server like this:</p><pre>./telnet_server.py 8263</pre><p>Inside your VM, you can connect to the server using this command:</p><pre>telnet 192.168.26.1 8263</pre><p>The telnet client will present you with a prompt. If you invoke the <code>echo</code> command, e.g.:</p><pre>proj3 server&gt; echo hello</pre><p>then the telnet server will return a copy of the argument (which in this case is "hello"). If you enter the <code>boom</code> command, the telnet server will print <code>BOOM!</code> and then terminate. If you enter Control-D into your telnet client, the client will gracefully shut down its connection to the server, but the server will continue to run.</p><div class="alert-message block-message info"><p class="admonition-title">Note</p><p>The Windows implementation of the curses library has some quirks, so if you run the telnet server on a Windows host, the server may not be able to successfully handle the telnet user hitting the backspace key or the left-arrow key.</p></div><p>Using your sniffer, look at the packets that the client and server exchange in response to the user typing <code>echo hello</code> and <code>boom</code>. Make sure that you understand how sequence and acknowledgment numbers are being set, and what data is being placed in each TCP segment.</p></section><section id="writing-your-hijacking-attack"><header><h4>Writing Your Hijacking Attack</h4></header><p>Place the <code>main()</code> function for your attack in <code>hijack_telnet.c</code>. The program should be invocable like this:</p><pre>hijack_telnet server_name server_port [dev_name]</pre><p>Here, <code>server_name</code> is a required argument that specifies the hostname or IP address of the victim server. <code>server_port</code> and <code>dev_name</code> should be handled in the same manner as in <code>rst_http</code>.</p><p>Your attack should listen only for telnet traffic involving the appropriate server hostname and port (via <code>pcap_setfilter()</code>). You may assume that, at any given time, there is at most one live telnet stream for your attack to sniff. As your attack encounters telnet packets, it should record the necessary information about the TCP headers in the stream.</p><p>Your attack should handle <code>SIGINT</code> and <code>SIGQUIT</code> -- upon catching one of these signals, it should inject the command <code>boom</code> into the preexisting telnet stream. You must use the recorded TCP information to guide the construction of the injected packets, so that the telnet server's network stack will accept the injected packets as legitimate.</p></section><section id="testing-your-hijacking-attack"><header><h4>Testing Your Hijacking Attack</h4></header><p>First of all, <code>make hijack_telnet</code> should successfully compile the program.</p><p>Make sure the telnet server is running on the host (as described above).</p><p>From the VM, run:</p><pre>sudo ./hijack_telnet 192.168.26.1 8263 eth0</pre><p>From the VM (in a different terminal), connect to the server (as described above). Once the client has reached the <code>server&gt;</code> prompt, go to the terminal window for <code>hijack_telnet</code> and press Control-C. If your attack works, then the telnet server on the host will print <code>BOOM!</code> and exit. The telnet client will probably hang or otherwise act strangely, since its TCP connection has now become desynchronized! So, you may have to kill the poor client from another terminal window using a command like <code>pkill telnet</code>.</p><p>Your attack should work regardless of what the user might have previously entered in the telnet client (other than <code>boom</code>, of course).</p><p>Finally, run <code>make test_hijack_telnet</code>, which is not a comprehensive test but should verify basic functionality.</p><div class="alert-message block-message info"><p class="admonition-title">Tip</p><p>As you debug your attack, remember that you can use your sniffer to explore why your attack might be failing!</p></div></section></section></section><section id="submitting"><header><h2>Submitting</h2></header><div class="alert-message block-message warning"><p class="admonition-title">Important</p><p>Make sure all your work is committed and pushed to the submission branch of your repository (<code>git push origin submission</code>) then create a Pull Request. Make sure the <a class="reference external" href="https://travis-ci.com/">Travis</a> build is passing for your Pull Request -- the Travis build should start automatically once you create the PR. You can verify that the Travis build has completed successfully by going to the PR and looking for a green checkmark next to your most recent commit.</p></div><p>If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch of your repo. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p><div class="alert-message block-message warning"><p class="admonition-title">Caution</p><p>Do <strong>not</strong> click "Merge pull request" after submitting, as this will modify the original repository. We will merge your pull request when grading.</p></div><div class="alert-message block-message warning"><p class="admonition-title">Caution</p><p>The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.</p><p>Note that the Travis tests can take a while, and no testing-related extensions will be granted.</p></div></section><section id="deliverables-and-rubric"><header><h2>Deliverables and Rubric</h2></header><p>"Mixed" grading means we will assign some points based on the result of the Travis test case(s). However, for this project, the tests do not fully cover the specification (for example, they only operate on <code>lo</code>), so we will also assign some points based on manual inspection and testing.</p><table><thead><tr><th><p>Criteria</p></th><th><p>Points</p></th><th><p>Grading method</p></th></tr></thead><tbody><tr><td><p><code>sniffer.c</code></p></td><td><p>30</p></td><td><p>Mixed</p></td></tr><tr><td><p><code>rst_http.c</code></p></td><td><p>35</p></td><td><p>Mixed</p></td></tr><tr><td><p><code>hijack_telnet.c</code></p></td><td><p>35</p></td><td><p>Mixed</p></td></tr></tbody></table></section></body></html>
+error: [Errno 10054] An existing connection was forcibly closed by the remote host</pre>
+<p>Finally, run <span class="docutils literal">make test_rst_http</span>, which is not a comprehensive test but should verify basic functionality.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To debug problems with your attack, you can use your sniffer to log the interactions between <span class="docutils literal">rst_http</span>, the web client, and the web server.</p>
+</div>
+</div>
+</div>
+<div class="section" id="part-3-telnet-hijacking-via-tcp-injection">
+<h2>Part 3: Telnet Hijacking via TCP Injection</h2>
+<p>In the final part of this project, you will inject new traffic into a preexisting TCP stream. In particular, you will inject traffic into a telnet connection. <a class="reference external" href="https://en.wikipedia.org/wiki/Telnet">Telnet</a> is a well-known, simple protocol which allows a client to send commands to a server over TCP. Telnet does not encrypt traffic; thus, telnet has become much less popular with the advent of more secure approaches like ssh. Nevertheless, because telnet is just a thin protocol layer atop TCP, network admins often use telnet clients as simple testing tools, e.g., to <a class="reference external" href="http://blog.industrialnetworking.com/2011/09/using-telnet-to-test-open-ports.html">test if a particular server port is open</a>, or to <a class="reference external" href="https://www.thomas-krenn.com/en/wiki/Check_TCP_Port_80_(http)_with_telnet">see whether an HTTP server is responding to commands</a>.</p>
+<p>If you're curious about the details of the telnet protocol, you can read these documents:</p>
+<ul class="simple">
+<li><p>&quot;<a class="reference external" href="http://mars.netanya.ac.il/~unesco/cdrom/booklet/HTML/NETWORKING/node300.html">The Telnet Protocol</a>&quot;</p></li>
+<li><p>&quot;<a class="reference external" href="http://www.tcpipguide.com/free/t_TelnetProtocol.htm">TCP/IP Guide - Telnet Protocol</a>&quot;</p></li>
+<li><p>&quot;<a class="reference external" href="https://www.ietf.org/rfc/rfc854.txt">IETF RFC 854</a>&quot;</p></li>
+</ul>
+<p>However, for the purposes of this project, you can ignore the details of how a telnet client and telnet server negotiate session parameters at the beginning of a TCP connection. As we explain in the next section, you only need to focus on what happens once the parameters have been negotiated, and the client issues a command to the server.</p>
+<div class="section" id="our-telnet-server">
+<h3>Our Telnet Server</h3>
+<p>On your host machine, you can run the project's telnet server like this:</p>
+<pre class="literal-block">./telnet_server.py 8263</pre>
+<p>Inside your VM, you can connect to the server using this command:</p>
+<pre class="literal-block">telnet 192.168.26.1 8263</pre>
+<p>The telnet client will present you with a prompt. If you invoke the <span class="docutils literal">echo</span> command, e.g.:</p>
+<pre class="literal-block">proj3 server&gt; echo hello</pre>
+<p>then the telnet server will return a copy of the argument (which in this case is &quot;hello&quot;). If you enter the <span class="docutils literal">boom</span> command, the telnet server will print <span class="docutils literal">BOOM!</span> and then terminate. If you enter Control-D into your telnet client, the client will gracefully shut down its connection to the server, but the server will continue to run.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Windows implementation of the curses library has some quirks, so if you run the telnet server on a Windows host, the server may not be able to successfully handle the telnet user hitting the backspace key or the left-arrow key.</p>
+</div>
+<p>Using your sniffer, look at the packets that the client and server exchange in response to the user typing <span class="docutils literal">echo hello</span> and <span class="docutils literal">boom</span>. Make sure that you understand how sequence and acknowledgment numbers are being set, and what data is being placed in each TCP segment.</p>
+</div>
+<div class="section" id="writing-your-hijacking-attack">
+<h3>Writing Your Hijacking Attack</h3>
+<p>Place the <span class="docutils literal">main()</span> function for your attack in <span class="docutils literal">hijack_telnet.c</span>. The program should be invocable like this:</p>
+<pre class="literal-block">hijack_telnet server_name server_port [dev_name]</pre>
+<p>Here, <span class="docutils literal">server_name</span> is a required argument that specifies the hostname or IP address of the victim server. <span class="docutils literal">server_port</span> and <span class="docutils literal">dev_name</span> should be handled in the same manner as in <span class="docutils literal">rst_http</span>.</p>
+<p>Your attack should listen only for telnet traffic involving the appropriate server hostname and port (via <span class="docutils literal">pcap_setfilter()</span>). You may assume that, at any given time, there is at most one live telnet stream for your attack to sniff. As your attack encounters telnet packets, it should record the necessary information about the TCP headers in the stream.</p>
+<p>Your attack should handle <span class="docutils literal">SIGINT</span> and <span class="docutils literal">SIGQUIT</span> -- upon catching one of these signals, it should inject the command <span class="docutils literal">boom</span> into the preexisting telnet stream. You must use the recorded TCP information to guide the construction of the injected packets, so that the telnet server's network stack will accept the injected packets as legitimate.</p>
+</div>
+<div class="section" id="testing-your-hijacking-attack">
+<h3>Testing Your Hijacking Attack</h3>
+<p>First of all, <span class="docutils literal">make hijack_telnet</span> should successfully compile the program.</p>
+<p>Make sure the telnet server is running on the host (as described above).</p>
+<p>From the VM, run:</p>
+<pre class="literal-block">sudo ./hijack_telnet 192.168.26.1 8263 eth0</pre>
+<p>From the VM (in a different terminal), connect to the server (as described above). Once the client has reached the <span class="docutils literal">server&gt;</span> prompt, go to the terminal window for <span class="docutils literal">hijack_telnet</span> and press Control-C. If your attack works, then the telnet server on the host will print <span class="docutils literal">BOOM!</span> and exit. The telnet client will probably hang or otherwise act strangely, since its TCP connection has now become desynchronized! So, you may have to kill the poor client from another terminal window using a command like <span class="docutils literal">pkill telnet</span>.</p>
+<p>Your attack should work regardless of what the user might have previously entered in the telnet client (other than <span class="docutils literal">boom</span>, of course).</p>
+<p>Finally, run <span class="docutils literal">make test_hijack_telnet</span>, which is not a comprehensive test but should verify basic functionality.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>As you debug your attack, remember that you can use your sniffer to explore why your attack might be failing!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="submitting">
+<h1>Submitting</h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Make sure all your work is committed and pushed to the submission branch of your repository (<span class="docutils literal">git push origin submission</span>) then create a Pull Request. Make sure the <a class="reference external" href="https://travis-ci.com/">Travis</a> build is passing for your Pull Request -- the Travis build should start automatically once you create the PR. You can verify that the Travis build has completed successfully by going to the PR and looking for a green checkmark next to your most recent commit.</p>
+</div>
+<p>If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch of your repo. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify the original repository. We will merge your pull request when grading.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution!</p>
+<p>The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.</p>
+<p>Note that the Travis tests can take a while, and no testing-related extensions will be granted.</p>
+</div>
+</div>
+<div class="section" id="deliverables-and-rubric">
+<h1>Deliverables and Rubric</h1>
+<p>&quot;Mixed&quot; grading means we will assign some points based on the result of the Travis test case(s). However, for this project, the tests do not fully cover the specification (for example, they only operate on <span class="docutils literal">lo</span>), so we will also assign some points based on manual inspection and testing.</p>
+<table>
+<colgroup>
+<col style="width: 68%" />
+<col style="width: 11%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr><th class="head"><p>Criteria</p></th>
+<th class="head"><p>Points</p></th>
+<th class="head"><p>Grading method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><p><span class="docutils literal">sniffer.c</span></p></td>
+<td><p>30</p></td>
+<td><p>Mixed</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">rst_http.c</span></p></td>
+<td><p>35</p></td>
+<td><p>Mixed</p></td>
+</tr>
+<tr><td><p><span class="docutils literal">hijack_telnet.c</span></p></td>
+<td><p>35</p></td>
+<td><p>Mixed</p></td>
+</tr>
+</tbody>
+</table>
+<!-- Links follow -->
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+<p>Copyright © 2018, Harvard University CS263 —
+all rights reserved.</p>
+
+</div>
+</body>
+</html>
