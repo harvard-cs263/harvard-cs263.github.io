@@ -124,13 +124,13 @@ Checkout & Setup
 
 All assignments come with a ``pre_setup.sh`` script. **Execute this script before starting each assignment, including this one!**
 
-For all assignments, all of your work must committed to a non-master branch. You should not (and should not be able to) push commits to master.
+For all assignments, all of your work must committed to a non-master branch. Specifically, commits should be committed and pushed to the ``submission`` branch. You should not (and should not be able to) push commits to master.
 
-To summarize: run the following after cloning the repository, replacing ``<some_branch>`` with a branch name of your choosing::
+To summarize: run the following after cloning the repository:
 
   cd write-a-story 
   ./pre_setup.sh
-  git checkout -b <some_branch>
+  git checkout -b submission
 
 Specification
 =============
@@ -144,7 +144,7 @@ As promised, the project itself is trivial. While you should feel free to unleas
 Submitting
 ==========
 
-After committing to ``<some_branch>``, push your changes with ``git push origin <some_branch>``.
+After committing to ``submission``, push your changes with ``git push origin submission``.
 
 After pushing to your branch, click the "Compare & pull request" button on your repository's GitHub page. Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 

@@ -20,7 +20,7 @@ Project Setup
 - Login to the VM.
 - ``cd`` to your home directory and run ``git clone <repo_url> reverse-engineering/`` to clone your repo.
 - Run ``cd reverse-engineering/`` to enter the project directory.
-- Run ``git checkout -b submission`` to check out a new branch. **Note we're asking you to checkout a new branch with a specific name: submission**. 
+- Run ``git checkout -b submission`` to check out a new branch. 
 - Run ``./pre_setup.sh`` to download dependencies.
 
 Refer to Project 0's writeup for elaboration on any of these steps.

@@ -20,7 +20,7 @@ Project Setup
 - ``cd`` to your home directory and run ``git clone <repo_url> lab/`` to clone your repo.
 - Run ``cd lab/`` to enter the project directory.
 - Run ``./pre_setup.sh``.
-- Run ``git checkout -b <some_branch>`` to checkout a new branch.
+- Run ``git checkout -b submission`` to checkout your new branch.
 
 Refer to Project 0's writeup for elaboration on any of these steps.
 
@@ -28,7 +28,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     Before starting, remember the warning from Project 0:
 
-    It is important that you **do not** push directly to master. After committing, push using ``git push origin <some_branch>`` and open a pull request.
+    It is important that you **do not** push directly to master. After committing, push using ``git push origin submission`` and open a pull request.
 
 .. caution::
 
@@ -345,7 +345,7 @@ Submitting
 
 .. important::
 
-    Before submitting, make sure all your work is committed and pushed to a non-master branch.
+    Before submitting, make sure all your work is committed and pushed to the ``submission`` branch.
 
 .. caution::
 
