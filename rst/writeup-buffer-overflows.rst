@@ -90,7 +90,7 @@ Now, you will start developing exploits to take advantage of the buffer overflow
     httpd@vm263:~/lab$ ./clean-env.sh ./zookld zook-exstack.conf
 
     (in another terminal session)
-    httpd@vm263:~/lab$ ./exploit-template.py localhost 8080
+    httpd@vm263:~/lab$ ./exploit_template.py localhost 8080
     HTTP request:
     GET / HTTP/1.0
 
