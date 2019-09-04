@@ -47,6 +47,7 @@ This guide is for VirtualBox 5.1.22, although it will probably work for other Vi
 - Open VirtualBox.
 - Set up a host-only network:
     - In VirtualBox preferences, under "Network", go to "Host-only" and click the green add button.
+    - This may also be under "File->Host Network Manager..."
     - Right-click the newly-created network (should be named something like ``vboxnet0``) and click "Edit".
     - Enter the following settings:
         - IPv4 Address: 192.168.26.1
@@ -96,7 +97,7 @@ Click on the provided GitHub Classroom assignment link, login via GitHub if nece
 Clone the Repository
 --------------------
 
-Now it is time to clone the repository. 
+Now it is time to clone the repository.
 Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL (make sure it begins with ``https://``), and run in your VM::
 
     cd
@@ -108,7 +109,7 @@ Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``,
 
     Alternatively, you can clone and interact with repositories on the VM using existing SSH keys on your host computer:
 
-    - Make sure your `SSH key`__ is set up on your host computer, as well as ``ssh-agent``. 
+    - Make sure your `SSH key`__ is set up on your host computer, as well as ``ssh-agent``.
     - Connect to the VM via SSH with agent forwarding enabled: ``ssh -A httpd@192.168.26.3``.
     - Clone the repository on the VM using the URL starting with ``git@github.com:``.
 
@@ -120,7 +121,7 @@ Checkout & Setup
 
 .. caution::
 
-    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master**. If you feel you've messed up your git repository contact the TFs for help. 
+    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master**. If you feel you've messed up your git repository contact the TFs for help.
 
 All assignments come with a ``pre_setup.sh`` script. **Execute this script before starting each assignment, including this one!**
 
@@ -128,7 +129,7 @@ For all assignments, all of your work must committed to a non-master branch. Spe
 
 To summarize: run the following after cloning the repository:
 
-  cd write-a-story 
+  cd write-a-story
   ./pre_setup.sh
   git checkout -b submission
 
@@ -139,7 +140,7 @@ Specification
 
     For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.
 
-As promised, the project itself is trivial. While you should feel free to unleash your inner Shakespeare, for this project you simply need to create a file named ``story.txt`` that is non-empty. You can "test" your "solution" by running ``make test``. 
+As promised, the project itself is trivial. While you should feel free to unleash your inner Shakespeare, for this project you simply need to create a file named ``story.txt`` that is non-empty. You can "test" your "solution" by running ``make test``.
 
 Submitting
 ==========
