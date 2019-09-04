@@ -69,6 +69,12 @@ The reference binaries of zookws are provided in ``bin.tar.gz``. We will use tho
 
 Now, make sure that you can run the zookws web server and start the application via ``./clean-env.sh ./zookld zook-exstack.conf``. You should then be able to open your browser and go to http://192.168.26.3:8080/. If something doesn't seem to be working, try to figure out what went wrong before proceeding further.
 
+GDB
+---
+Using ``gdb`` is a critical part of this assignment. We strongly recommend that, before you start this assignment, you read this `GDB tutorial`_!
+
+.. _GDB tutorial: gdb_tutorial_
+
 Part 1: Finding Buffer Overflows
 --------------------------------
 
@@ -407,3 +413,4 @@ This project was derived from one offered by MIT's 6.858 class.
 .. _python3_struct: https://docs.python.org/3/library/struct.html
 .. _python3_urllib: https://docs.python.org/3/library/urllib.html
 .. _wilson_url_encoding: http://www.blooberry.com/indexdot/html/topics/urlencoding.htm
+.. _gdb_tutorial: ../resources/GDB-tutorial.pdf
