@@ -1,6 +1,6 @@
 .. footer::
 
-    Copyright |copy| 2017, Harvard University CS263 |---|
+    Copyright |copy| 2019, Harvard University CS263 |---|
     all rights reserved.
 
 .. |copy| unicode:: 0xA9
@@ -15,12 +15,14 @@ This project will give you hands-on experience with buffer overflow vulnerabilit
 Project Setup
 =============
 
-- Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
+- Click on the `provided GitHub Classroom assignment link`__, login via GitHub if necessary, and click "Accept assignment".
 - Login to the VM.
-- ``cd`` to your home directory and run ``git clone <repo_url> lab/`` to clone your repo.
+- Run ``cd`` to enter your home directory, then run ``git clone <repo_url> lab/`` to clone your repo.
 - Run ``cd lab/`` to enter the project directory.
 - Run ``./pre_setup.sh``.
 - Run ``git checkout -b submission`` to checkout your new branch.
+
+__ github_classroom_
 
 Refer to Project 0's writeup for elaboration on any of these steps.
 
@@ -110,13 +112,13 @@ You are free to use this template, or write your own exploit code from scratch. 
 
 Pick two buffer overflows from the ones you put in ``bugs.txt``. The first must overwrite a return address on the stack, and the second must overwrite some other data structure that you will use to take over the control flow of the program.
 
-Then, write exploits that trigger them. For now, you do not need to inject code or do anything other than corrupt memory past the end of the buffer. Verify that your exploit actually corrupts memory, by either checking the last few lines of ``dmesg | tail``, using ``gdb``, or observing that the web server crashes.
+Then, write exploits that trigger them. For now, you do not need to inject code or do anything other than corrupt memory past the end of the buffer. Verify that your exploit actually corrupts memory, by either checking the last few lines of ``dmesg | tail`` (``dmesg`` prints the message buffer of the kernel), using ``gdb`` (tutorial linked above), or observing that the web server crashes.
 
-Name these exploits ``crash_1.py`` and ``crash_2.py``. In addition, answer the written questions in ``crash.txt`` (save your answers directly in the file).
+Create a new file for each of these exploits and name them ``crash_1.py`` and ``crash_2.py``. In addition, answer the written questions in ``crash.txt`` (save your answers directly in the file).
 
 If you believe that a vulnerability in ``bugs.txt`` is too difficult to exploit, choose a different one.
 
-**Testing**: ``make test_crash_1`` and ``make test_crash_2`` will check that your exploits crash the server via memory corruption (namely, a ``SIGSEGV``). Note that this does **not** check ``crash.txt``.
+**Testing**: ``make test_crash_1`` and ``make test_crash_2`` will check that your exploits crash the server via memory corruption (namely, a ``SIGSEGV``). Note that this does **not** check ``crash.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 crash_1.py`` and ``chmod 755 crash_2.py`` before running the test scripts.
 
 .. tip::
 
@@ -132,7 +134,7 @@ If you believe that a vulnerability in ``bugs.txt`` is too difficult to exploit,
 
     Keep in mind that a process being debugged by ``gdb`` will not get killed even if you terminate the parent zookld process using ``Ctrl-C``. If you are having trouble restarting the web server, check for leftover processes from the previous run, or be sure to exit ``gdb`` before restarting zookld.
 
-    When a process being debugged by ``gdb`` forks, by default ``gdb`` continues to debug the parent process and does not attach to the child. Since zookfs forks a child process to service each request, you may find it helpful to have ``gdb`` attach to the child on fork, using the command ``set follow-fork-mode child``. We have added that command to ``.gdbinit``, which will take effect if you start ``gdb`` in that directory.
+    When a process being debugged by ``gdb`` forks, by default ``gdb`` continues to debug the parent process and does not attach to the child. Since zookfs forks a child process to service each request, you may find it helpful to have ``gdb`` attach to the child on fork, using the command ``set follow-fork-mode child``. We have added that command to ``.gdbinit``, which will take effect if you start ``gdb`` in the ``lab/`` directory.
 
 .. tip::
 
@@ -151,9 +153,9 @@ Part 3: Code Injection via Buffer Overflow
 In this part, you will use your buffer overflows to inject code into the web server. The goal of the injected code will be to ``unlink`` (i.e., remove) a sensitive file on the server, namely ``/home/httpd/grades.txt``. Use the ``*-exstack`` binaries (via configuration files, as discussed before), since they have an executable stack that makes it easier to inject code. The zookws web server should be started via ``./clean-env.sh ./zookld zook-exstack.conf``.
 
 Shell Code
-``````````
+````````````````
 
-We have provided Aleph One's shell code for you to use in ``shellcode.S``, along with ``Makefile`` rules that produce ``shellcode.bin``, a compiled version of the shell code, when you run make. Aleph One's exploit is intended to exploit ``setuid-root`` binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink ``/home/httpd/grades.txt``. This part is ungraded, but you will most likely need ``shellcode.bin`` for your injection attack.
+We have provided Aleph One's shell code for you to use in ``shellcode.S``, along with ``Makefile`` rules that produce ``shellcode.bin``, a compiled version of the shell code, when you run ``make shellcode``. Aleph One's exploit is intended to exploit ``setuid-root`` binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink ``/home/httpd/grades.txt``. This part is ungraded, but you will most likely need ``shellcode.bin`` for your injection attack.
 
 .. tip::
 
@@ -172,9 +174,9 @@ Verify that your exploit works; you will need to re-create ``/home/httpd/grades.
 
 .. important::
 
-    It's OK to hardcode things -- however, you should be careful that your hardcoded things won't break when we're testing your code. This means, among other things, that your repository's root directory should be ``/home/httpd/lab/``.
+    It's OK to hardcode things -- however, you should be careful that your hardcoded things won't break when we're testing your code. This means, among other things, that your repository's root directory should be ``/home/httpd/lab/``. You can check what directory you are currently in with the ``pwd`` command.
 
-**Testing**: ``make test_unlink_exstack`` will check that your exploit unlinks ``/home/httpd/grades.txt`` with an executable stack. Note that this does **not** check ``unlink_exstack.txt``.
+**Testing**: ``make test_unlink_exstack`` will check that your exploit unlinks ``/home/httpd/grades.txt`` with an executable stack. Note that this does **not** check ``unlink_exstack.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 unlink_exstack.py`` before running the test script.
 
 .. _foostack:
 .. tip::
@@ -262,7 +264,7 @@ Starting from your two memory corruption exploits, construct two additional expl
 
 Verify that your exploits work; you will need to re-create ``/home/httpd/grades.txt`` after each successful exploit run.
 
-**Testing**: ``make test_unlink_libc_1`` and ``make test_unlink_libc_2`` will check that your exploits unlink ``/home/httpd/grades.txt`` with a non-executable stack. Note that this does **not** check ``unlink_libc.txt``.
+**Testing**: ``make test_unlink_libc_1`` and ``make test_unlink_libc_2`` will check that your exploits unlink ``/home/httpd/grades.txt`` with a non-executable stack. Note that this does **not** check ``unlink_libc.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 unlink_libc_1.py`` and ``chmod 755 unlink_libc_2.py`` before running the test scripts.
 
 .. important::
 
@@ -336,7 +338,16 @@ You should find at least two vulnerabilities for this exercise.
 Part 6: Fixing Buffer Overflows
 -------------------------------
 
-Finally, you will explore fixing some of the vulnerabilities that you have found in this lab assignment. For each buffer overflow vulnerability you have found in ``bugs.txt``, fix the web server's code to prevent the vulnerability in the first place. Above each modified code block, add a comment stating which bug from ``bugs.txt`` is fixed.
+Finally, you will explore fixing some of the vulnerabilities that you have found in this lab assignment. For each buffer overflow vulnerability you have found in ``bugs.txt``, fix the web server's code to prevent the vulnerability in the first place. Above each modified code block, add a comment stating which bug from ``bugs.txt`` is fixed, using the following format::
+
+    // ****
+    // ****
+    // Fixes [file.c:line #] (should correspond to a bug in bugs.txt)
+    // ****
+    // ****
+    struct stat fixed_var;
+    int fixed_int;
+    ...
 
 Commit these fixes directly to your branch. Don't worry about your fixes breaking your previous exploits, as the test scripts will always use the original (buggy) binaries.
 
@@ -365,7 +376,7 @@ Submitting
 
 After pushing, on the repo's GitHub page, click "Compare and pull request". Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
-If you need to edit your submission before the deadline, just commit and push your new changes to the your branch. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
+If you need to edit your submission before the deadline, just commit and push your new changes to your branch. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
 .. caution::
 
@@ -409,6 +420,7 @@ This project was derived from one offered by MIT's 6.858 class.
 
 .. Links follow
 
+.. _github_classroom: https://classroom.github.com/a/SjSKief0
 .. _garshol_http: http://www.garshol.priv.no/download/text/http-tut.html
 .. _python3_struct: https://docs.python.org/3/library/struct.html
 .. _python3_urllib: https://docs.python.org/3/library/urllib.html

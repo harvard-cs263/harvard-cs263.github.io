@@ -1,6 +1,6 @@
 ﻿.. footer::
 
-    Copyright |copy| 2018, Harvard University CS263 |---|
+    Copyright |copy| 2019, Harvard University CS263 |---|
     all rights reserved.
 
 .. |copy| unicode:: 0xA9
