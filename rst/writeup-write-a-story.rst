@@ -127,11 +127,11 @@ All assignments come with a ``pre_setup.sh`` script. **Execute this script befor
 
 For all assignments, all of your work must committed to a non-master branch. Specifically, commits should be committed and pushed to the ``submission`` branch. You should not (and should not be able to) push commits to master.
 
-To summarize: run the following after cloning the repository:
+To summarize: run the following after cloning the repository::
 
-  cd write-a-story
-  ./pre_setup.sh
-  git checkout -b submission
+    cd write-a-story
+    ./pre_setup.sh
+    git checkout -b submission
 
 Specification
 =============
