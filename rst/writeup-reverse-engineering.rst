@@ -15,13 +15,15 @@ In this project, you'll reverse engineer ChatMax 2000, a simple email server. Ch
 Project Setup
 =============
 
-- Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
+- Click on the provided `GitHub Classroom assignment link`__, login via GitHub if necessary, and click "Accept assignment".
 - Wait for the repository to be created.
 - Login to the VM.
-- ``cd`` to your home directory and run ``git clone <repo_url> reverse-engineering/`` to clone your repo.
+- ``cd ~`` to your home directory and run ``git clone <repo_url> reverse-engineering/`` to clone your repo.
 - Run ``cd reverse-engineering/`` to enter the project directory.
 - Run ``git checkout -b submission`` to check out a new branch. 
 - Run ``./pre_setup.sh`` to download dependencies.
+
+__ github_assignment_
 
 Refer to Project 0's writeup for elaboration on any of these steps.
 
@@ -44,7 +46,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
 .. caution::
   
-  This assignment uses Travis for remote builds. Since the class shares a single Travis build queue, there may be some contention, especially close to the deadline. As mentioned later, no testing related extensions will be granted, so you're encouraged to start and test early!
+  This assignment uses Travis for remote builds. Since the class shares a single Travis build queue, there may be some contention, especially close to the deadline. No testing related extensions will be granted, so you're encouraged to start and test early!
 
 Specification
 =============
@@ -72,20 +74,20 @@ such that you can open the client page by loading http://192.168.26.3:8080/home.
 
 The Proton binary and the shared libraries were not compiled with debugging symbols enabled. This will make reverse engineering more difficult. However, you can still learn about the structure of the code using the ``readelf``, ``objdump``, ``strings``, and ``strace`` tools. See the relevant class notes (available in the Canvas "Files" section) to get an overview of those tools.
 
-You may also find it useful to employ a browser-side debugger. Those debuggers are very powerful, and have equivalents for many gdb features like breakpoints. For example, here is an `introduction to Firefox's built-in debugger`_. One particularly nice feature of the debugger is its ability to `pretty-print minified JavaScript code`_.  Web developers `minify their JavaScript`_ to reduce its size (which makes it faster to download) and to obscure its structure (which makes it more difficult to reverse engineer).
+You may also find it useful to employ a browser-side debugger. These debuggers are very powerful, and have equivalents for many ``gdb`` features like breakpoints. For example, here is an `introduction to Firefox's built-in debugger`_. Google Chrome also has a nice one (View > Developer > Developer Tools). One particularly nice feature of these debuggers is their ability to `pretty-print minified JavaScript code`_.  Web developers `minify their JavaScript`_ to reduce its size (which makes it faster to download) and to obscure its structure (which makes it more difficult to reverse engineer).
 
 .. _introduction to Firefox's built-in debugger: mozilla_firefox_debugger_
 .. _pretty-print minified JavaScript code: mozilla_pretty_print_js_
 .. _minify their Javascript: wikipedia_minification_
 
-If your local machine's processor supports hardware-based watchpoints, those watchpoints can be `very useful for gdb debugging`__. For example, using an ``rwatch`` command, you can cause the program to break when a particular memory location is read. Similarly, a watch statement will inform you whenever a particular memory location is written. You can tell if your machine supports hardware-based watchpoints by issuing this command from gdb::
+If your local machine's processor supports hardware-based watchpoints, those watchpoints can be `very useful for gdb debugging`__. For example, using an ``rwatch`` command, you can cause the program to break when a particular memory location is read. Similarly, a watch statement will inform you whenever a particular memory location is written. You can tell if your machine supports hardware-based watchpoints by issuing this command from ``gdb``::
 
     (gdb) show can-use-hw-watchpoints
     Debugger's willingness to use watchpoint hardware is 1.
 
 __ gdb_setting_watchpoints_
 
-gdb can also use software-based watchpoints, but they are much slower!
+``gdb`` can also use software-based watchpoints, but they are much slower!
 
 Note that Proton detaches itself from the console and runs in the background as a daemon. So, as you run your experiments, you may need to check whether an old copy of Proton is running before starting a new one. You can run ``pkill proton`` to kill any old copies.
 
@@ -160,7 +162,7 @@ Write a remote password cracking function in ``network_cracker.py`` according to
 
 .. caution::
 
-    You may use your ``decrypted_passwords.txt`` file as a list of usernames, but you password cracking code should **not** assume knowledge of the hashed passwords or the hash function that the server uses.
+    You may use your ``decrypted_passwords.txt`` file as a list of usernames, but your password cracking code should **not** assume knowledge of the hashed passwords or the hash function that the server uses.
 
     This simulates a scenario in which the ChatMax admins have forced users to select new passwords, but the ChatMax server itself runs the same code.
 
@@ -274,3 +276,4 @@ Deliverables and Rubric
 .. _travis: https://travis-ci.com/
 .. _wikipedia_minification: https://en.wikipedia.org/wiki/Minification_(programming)
 .. _yolinux_libraries: http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html
+.. _github_assignment: https://classroom.github.com/a/MgeggGB_
