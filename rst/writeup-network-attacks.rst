@@ -1,11 +1,4 @@
-﻿.. footer::
-
-    Copyright |copy| 2019, Harvard University CS263 |---|
-    all rights reserved.
-
-.. |copy| unicode:: 0xA9
-.. |---| unicode:: U+02014
-
+﻿
 ===============
 Network Attacks
 ===============
@@ -21,14 +14,18 @@ More specifically, you will attack TCP streams that flow between two endpoints t
 Project Setup
 =============
 
-- Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
+- Click on the `provided GitHub Classroom assignment link`__, login via GitHub if necessary, and click "Accept assignment".
 - Login to the VM.
-- ``cd`` to your home directory and run ``git clone <repo_url> network-attacks/`` to clone your repo.
+- Run ``cd`` to enter your home directory, then run ``git clone <repo_url> network-attacks/`` to clone your repo.
 - Run ``cd network-attacks/`` to enter the project directory.
 - Run ``./pre_setup.sh`` to download dependencies. **Note:** this may take a while -- don't press Ctrl+C! You should see a prompt; the answer you want is **no**.
 - Run ``git checkout -b submission`` to switch to your submission branch. As in the previous assignment, the branch name is important!
 
-Refer to Project 0's writeup for elaboration on any of these steps.
+__ github_classroom_
+
+Refer to `Project 0's writeup`__ for elaboration on any of these steps.
+
+__ project_0_
 
 .. caution::
 
@@ -40,12 +37,14 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     The project may work in other Linux environments; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.
 
-    If you didn't follow the Project 0 setup instructions, some of the constants in the specification won't make sense for your system. In this case, you will need to replace the following:
+    If you didn't follow the `Project 0 setup instructions`__, some of the constants in the specification won't make sense for your system. In this case, you will need to replace the following:
 
     - ``192.168.26.3``: The VM's IP on the hypervisor's host-only network
     - ``192.168.26.1``: The host's IP on the hypervisor's host-only network
     - ``eth0``: The VM's interface to the hypervisor's host-only network
     - ``eth1``: The VM's interface with internet access (e.g. NAT).
+
+__ project_0_
 
 Host Setup
 ----------
@@ -123,7 +122,7 @@ The program should read and log each packet on the device according to the secti
     __ tcpdump_pcap_
 
 Logging Format
-``````````````
+````````````````````````````````
 
 You should use ``pcap_next_ex()`` (**not** ``pcap_loop()`` ) to read a raw packet. **Be sure to handle all of the possible return values for** ``pcap_next_ex()``:
 
@@ -245,7 +244,7 @@ Many of you will be SSH'ing into the VM so that you can develop and test your co
     We recommend that you place your header extraction code and your logging code in two separate utility libraries. For example, the header extraction library would define functions that take a ``u_char *`` pointer to raw packet data and return pointers to various network headers. The logging code would define functions that take in a pointer to a network header and print the relevant parts of the header. By placing the header extraction and logging code in libraries, you make it easy for your attack programs to use the header extraction and logging functionality.
 
 Handling Signals
-````````````````
+````````````````````````````````
 
 Your sniffer program should handle the ``SIGINT`` and ``SIGQUIT`` signals gracefully. To do so, use ``sigaction()`` from the Linux ``<signal.h>`` header to register a signal handler for the signals. The signal handler should simply call ``pcap_breakloop()``. ``pcap_breakloop()`` will cause ``pcap_next_ex()`` to return -2. In turn, this should cause your packet sniffing loop to exit, at which point you can gracefully close the ``pcap_t`` handle and deallocate any other resources that were created during the sniffing session.
 
@@ -254,7 +253,7 @@ Your sniffer program should handle the ``SIGINT`` and ``SIGQUIT`` signals gracef
     You should put your code for signal handling into a separate library, so that it can be used by your attacks as well.
 
 Testing Your Sniffer
-````````````````````
+````````````````````````````````
 
 First of all, ``make sniffer`` should successfully compile the program.
 
@@ -281,7 +280,7 @@ __ weaver_ndss_reset_injection_
 So, at a high level, your attack should listen for **incoming** traffic from the server which has the TCP ACK flag set. Those packets represent HTTP response packets from the server. When your attack detects such packets, it should send an **outgoing** TCP RST packet to the server.
 
 Libnet
-``````
+````````````````````````````````
 
 Now that you know how to sniff preexisting packets, you will learn how to use libnet to inject new packets into the network. Here are some tutorials on how to use libnet:
 
@@ -314,7 +313,7 @@ In libnet, a new packet is constructed by calling ``libnet_build_XXX()`` functio
     Like libpcap, libnet requires various incantations to create and destroy a libnet handle. You should create a utility library which provides a higher-level interface to those incantations. This library can be used by all of your attacks.
 
 HTTP Client/Server
-``````````````````
+````````````````````````````````
 
 To run a web server on your host, simply use Python's built-in web server like this::
 
@@ -322,18 +321,18 @@ To run a web server on your host, simply use Python's built-in web server like t
 
 Here, 9263 is the TCP port on which the server will listen for HTTP requests (feel free to change). The web server will look for requested files in the server's working directory. You should place a large file in that directory. For example, you can generate 32 MB of dummy file data like this::
 
-    python -c "print('x' * (2 ** 25))" > tmp.txt
+    python2 -c "print('x' * (2 ** 25))" > tmp.txt
 
 You will launch your RST attack against an HTTP fetch of that file. Making the file large lowers the barrier to a RST attack, since the attacker has more opportunities to generate RST packets for ACK-bearing data packets that are sent by the server.
 
-To run a web client within the VM, you can use the ``wget`` command like this::
+To retrieve content from the web client from within the VM, you can use the ``wget`` command like this::
 
     wget -t 1 -O /dev/null -- http://192.168.26.1:9263/tmp.txt
 
 Here, the ``-t 1`` means no retries, and the ``-O /dev/null`` means to throw away the received bytes.
 
 Writing Your RST Attack
-```````````````````````
+````````````````````````````````
 
 Place the ``main()`` function for your attack in ``rst_http.c``. The program should be invocable like this::
 
@@ -350,7 +349,7 @@ Here, ``server_port`` is a required argument that specifies the TCP port of the 
 Then, when ``rst_http`` detects a packet on the device, it should inspect the headers in the packet, generate a RST packet with the appropriate sequence number (and other info) using libnet, and then inject that packet into the network to destroy the client/server HTTP connection.
 
 Testing Your RST Attack
-```````````````````````
+````````````````````````````````
 
 First of all, ``make rst_http`` should successfully compile the program.
 
@@ -421,9 +420,9 @@ If you're curious about the details of the telnet protocol, you can read these d
 However, for the purposes of this project, you can ignore the details of how a telnet client and telnet server negotiate session parameters at the beginning of a TCP connection. As we explain in the next section, you only need to focus on what happens once the parameters have been negotiated, and the client issues a command to the server.
 
 Our Telnet Server
-`````````````````
+````````````````````````````````
 
-On your host machine, you can run the project's telnet server like this::
+On your host machine, you can run the project's telnet server from within the ``telnet_server/`` directory like this::
 
     ./telnet_server.py 8263
 
@@ -444,7 +443,7 @@ then the telnet server will return a copy of the argument (which in this case is
 Using your sniffer, look at the packets that the client and server exchange in response to the user typing ``echo hello`` and ``boom``. Make sure that you understand how sequence and acknowledgment numbers are being set, and what data is being placed in each TCP segment.
 
 Writing Your Hijacking Attack
-`````````````````````````````
+````````````````````````````````
 
 Place the ``main()`` function for your attack in ``hijack_telnet.c``. The program should be invocable like this::
 
@@ -457,7 +456,7 @@ Your attack should listen only for telnet traffic involving the appropriate serv
 Your attack should handle ``SIGINT`` and ``SIGQUIT`` -- upon catching one of these signals, it should inject the command ``boom`` into the preexisting telnet stream. You must use the recorded TCP information to guide the construction of the injected packets, so that the telnet server's network stack will accept the injected packets as legitimate.
 
 Testing Your Hijacking Attack
-`````````````````````````````
+````````````````````````````````
 
 First of all, ``make hijack_telnet`` should successfully compile the program.
 
@@ -467,7 +466,7 @@ From the VM, run::
 
     sudo ./hijack_telnet 192.168.26.1 8263 eth0
 
-From the VM (in a different terminal), connect to the server (as described above). Once the client has reached the ``server>`` prompt, go to the terminal window for ``hijack_telnet`` and press Control-C. If your attack works, then the telnet server on the host will print ``BOOM!`` and exit. The telnet client will probably hang or otherwise act strangely, since its TCP connection has now become desynchronized! So, you may have to kill the poor client from another terminal window using a command like ``pkill telnet``.
+From the VM (in a different terminal), connect to the server (as described above). Once the client has reached the ``proj3 server>`` prompt, go to the terminal window for ``hijack_telnet`` and press Control-C. If your attack works, then the telnet server on the host will print ``BOOM!`` and exit. The telnet client will probably hang or otherwise act strangely, since its TCP connection has now become desynchronized! So, you may have to kill the poor client from another terminal window using a command like ``pkill telnet``.
 
 Your attack should work regardless of what the user might have previously entered in the telnet client (other than ``boom``, of course).
 
@@ -511,7 +510,17 @@ Deliverables and Rubric
 | ``hijack_telnet.c``                               | 35     | Mixed          |
 +---------------------------------------------------+--------+----------------+
 
+.. footer::
+
+    Copyright |copy| 2019, Harvard University CS263 |---|
+    all rights reserved.
+
+.. |copy| unicode:: 0xA9
+.. |---| unicode:: U+02014
+
 .. Links follow
+.. _github_classroom: https://classroom.github.com/a/hSLGIp01
+.. _project_0: https://harvard-cs263.github.io/2019f/writeup-write-a-story.html
 .. _ietf_rfc_854: https://www.ietf.org/rfc/rfc854.txt
 .. _kerrisk_linux_socket: http://man7.org/linux/man-pages/man7/raw.7.html
 .. _kozierok_telnet_protocol: http://www.tcpipguide.com/free/t_TelnetProtocol.htm

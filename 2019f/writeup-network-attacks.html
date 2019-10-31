@@ -638,12 +638,7 @@ color: red }
 <body>
 <div class="document">
 
-
-<p>﻿.. footer:</p>
-<pre class="literal-block">Copyright |copy| 2019, Harvard University CS263 |---|
-all rights reserved.</pre>
-<div class="section" id="network-attacks">
-<h1>Network Attacks</h1>
+<h1 class="title">Network Attacks</h1>
 <p>In this project, you will use low-level networking primitives to sniff raw network packets, maliciously terminate preexisting TCP streams, and inject attacker-controlled data into preexisting TCP streams. This project will demonstrate the relative ease with which these attacks can be launched.</p>
 <p>More specifically, you will attack TCP streams that flow between two endpoints that reside on your local machine: one endpoint will be within a virtual machine, and the other endpoint will reside on the host machine that runs the VM. This setup is sufficient for you to launch real attacks without endangering the outside world.</p>
 <div class="admonition caution">
@@ -651,16 +646,16 @@ all rights reserved.</pre>
 <p>Obviously, <strong>YOU SHOULD NOT LAUNCH THESE ATTACKS ON REAL NETWORKS!</strong></p>
 </div>
 <div class="section" id="project-setup">
-<h2>Project Setup</h2>
+<h1>Project Setup</h1>
 <ul class="simple">
-<li><p>Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</p></li>
+<li><p>Click on the <a class="reference external" href="https://classroom.github.com/a/hSLGIp01">provided GitHub Classroom assignment link</a>, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</p></li>
 <li><p>Login to the VM.</p></li>
-<li><p><span class="docutils literal">cd</span> to your home directory and run <span class="docutils literal">git clone &lt;repo_url&gt; <span class="pre">network-attacks/</span></span> to clone your repo.</p></li>
+<li><p>Run <span class="docutils literal">cd</span> to enter your home directory, then run <span class="docutils literal">git clone &lt;repo_url&gt; <span class="pre">network-attacks/</span></span> to clone your repo.</p></li>
 <li><p>Run <span class="docutils literal">cd <span class="pre">network-attacks/</span></span> to enter the project directory.</p></li>
 <li><p>Run <span class="docutils literal">./pre_setup.sh</span> to download dependencies. <strong>Note:</strong> this may take a while -- don't press Ctrl+C! You should see a prompt; the answer you want is <strong>no</strong>.</p></li>
 <li><p>Run <span class="docutils literal">git checkout <span class="pre">-b</span> submission</span> to switch to your submission branch. As in the previous assignment, the branch name is important!</p></li>
 </ul>
-<p>Refer to Project 0's writeup for elaboration on any of these steps.</p>
+<p>Refer to <a class="reference external" href="https://harvard-cs263.github.io/2019f/writeup-write-a-story.html">Project 0's writeup</a> for elaboration on any of these steps.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution!</p>
 <p>Before starting, remember the warning from Project 0:</p>
@@ -669,7 +664,7 @@ all rights reserved.</pre>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The project may work in other Linux environments; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.</p>
-<p>If you didn't follow the Project 0 setup instructions, some of the constants in the specification won't make sense for your system. In this case, you will need to replace the following:</p>
+<p>If you didn't follow the <a class="reference external" href="https://harvard-cs263.github.io/2019f/writeup-write-a-story.html">Project 0 setup instructions</a>, some of the constants in the specification won't make sense for your system. In this case, you will need to replace the following:</p>
 <ul class="simple">
 <li><p><span class="docutils literal">192.168.26.3</span>: The VM's IP on the hypervisor's host-only network</p></li>
 <li><p><span class="docutils literal">192.168.26.1</span>: The host's IP on the hypervisor's host-only network</p></li>
@@ -678,7 +673,7 @@ all rights reserved.</pre>
 </ul>
 </div>
 <div class="section" id="host-setup">
-<h3>Host Setup</h3>
+<h2>Host Setup</h2>
 <p>Because this project involves your host machine as well, you will need to make sure its environment is suitable. Specifically:</p>
 <ul class="simple">
 <li><p>Install Python 2.7.</p></li>
@@ -689,7 +684,7 @@ all rights reserved.</pre>
 </div>
 </div>
 <div class="section" id="specification">
-<h2>Specification</h2>
+<h1>Specification</h1>
 <div class="admonition caution">
 <p class="admonition-title">Caution!</p>
 <p>For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.</p>
@@ -713,7 +708,7 @@ all rights reserved.</pre>
 <p>At various points, the document will suggest ways to efficiently structure your code so that your overall coding effort is minimized. Please follow the suggestions!</p>
 </div>
 <div class="section" id="part-1-sniffing-packets">
-<h3>Part 1: Sniffing Packets</h3>
+<h2>Part 1: Sniffing Packets</h2>
 <p>Before you can inject packets into the network, you must learn how to inspect preexisting network traffic. So, your first job is to write a network sniffer. Your sniffer will be a simplified version of tools like <a class="reference external" href="https://www.wireshark.org/">WireShark</a>.</p>
 <p>Place the <span class="docutils literal">main()</span> function for your sniffer in <span class="docutils literal">sniffer.c</span>. The program should be invocable like this:</p>
 <pre class="literal-block">sniffer [dev_name]</pre>
@@ -735,7 +730,7 @@ all rights reserved.</pre>
 <p>For more details on how to open and close PCAP handles, see the <a class="reference external" href="http://www.tcpdump.org/manpages/pcap.3pcap.html">official PCAP documentation</a>.</p>
 </div>
 <div class="section" id="logging-format">
-<h4>Logging Format</h4>
+<h3>Logging Format</h3>
 <p>You should use <span class="docutils literal">pcap_next_ex()</span> (<strong>not</strong> <span class="docutils literal">pcap_loop()</span> ) to read a raw packet. <strong>Be sure to handle all of the possible return values for</strong> <span class="docutils literal">pcap_next_ex()</span>:</p>
 <ul class="simple">
 <li><p>1 means that a packet was successfully read.</p></li>
@@ -834,7 +829,7 @@ Connection: Keep
 </div>
 </div>
 <div class="section" id="handling-signals">
-<h4>Handling Signals</h4>
+<h3>Handling Signals</h3>
 <p>Your sniffer program should handle the <span class="docutils literal">SIGINT</span> and <span class="docutils literal">SIGQUIT</span> signals gracefully. To do so, use <span class="docutils literal">sigaction()</span> from the Linux <span class="docutils literal">&lt;signal.h&gt;</span> header to register a signal handler for the signals. The signal handler should simply call <span class="docutils literal">pcap_breakloop()</span>. <span class="docutils literal">pcap_breakloop()</span> will cause <span class="docutils literal">pcap_next_ex()</span> to return -2. In turn, this should cause your packet sniffing loop to exit, at which point you can gracefully close the <span class="docutils literal">pcap_t</span> handle and deallocate any other resources that were created during the sniffing session.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -842,7 +837,7 @@ Connection: Keep
 </div>
 </div>
 <div class="section" id="testing-your-sniffer">
-<h4>Testing Your Sniffer</h4>
+<h3>Testing Your Sniffer</h3>
 <p>First of all, <span class="docutils literal">make sniffer</span> should successfully compile the program.</p>
 <p>Try the following experiments to test your packet sniffer:</p>
 <ul class="simple">
@@ -855,7 +850,7 @@ Connection: Keep
 </div>
 </div>
 <div class="section" id="part-2-forced-disconnects-via-tcp-rst">
-<h3>Part 2: Forced Disconnects via TCP RST</h3>
+<h2>Part 2: Forced Disconnects via TCP RST</h2>
 <p>Now, you will implement a TCP RST attack to maliciously destroy a preexisting TCP stream. The attack will involve three parties: a web server, a web client, and the attacker. The web server will live on the host machine, whereas the web client and the attacker will live on the VM. This setup emulates a scenario in which the web client and the attacker reside on the same subnet, such that the attacker can sniff the web traffic that is sent by the client. The attacker's goal is to force a client HTTP request to fail by injecting TCP RST packets into the network.</p>
 <p>The paper &quot;<a class="reference external" href="http://www.icir.org/vern/papers/reset-injection.ndss09.pdf">Detecting Forged TCP Reset Packets</a>&quot; provides a nice overview of TCP RST attacks; the entire paper is interesting, but for the purposes of this project, Section 4 of the paper is the most relevant:</p>
 <blockquote>
@@ -863,7 +858,7 @@ Connection: Keep
 </blockquote>
 <p>So, at a high level, your attack should listen for <strong>incoming</strong> traffic from the server which has the TCP ACK flag set. Those packets represent HTTP response packets from the server. When your attack detects such packets, it should send an <strong>outgoing</strong> TCP RST packet to the server.</p>
 <div class="section" id="libnet">
-<h4>Libnet</h4>
+<h3>Libnet</h3>
 <p>Now that you know how to sniff preexisting packets, you will learn how to use libnet to inject new packets into the network. Here are some tutorials on how to use libnet:</p>
 <ul class="simple">
 <li><p>&quot;<a class="reference external" href="http://packetfactory.openwall.net/projects/libnet/2004_RSA/eol-1.0.pdf">The Evolution of Libnet</a>&quot;</p></li>
@@ -884,18 +879,18 @@ Connection: Keep
 </div>
 </div>
 <div class="section" id="http-client-server">
-<h4>HTTP Client/Server</h4>
+<h3>HTTP Client/Server</h3>
 <p>To run a web server on your host, simply use Python's built-in web server like this:</p>
 <pre class="literal-block">python2 -m SimpleHTTPServer 9263</pre>
 <p>Here, 9263 is the TCP port on which the server will listen for HTTP requests (feel free to change). The web server will look for requested files in the server's working directory. You should place a large file in that directory. For example, you can generate 32 MB of dummy file data like this:</p>
-<pre class="literal-block">python -c &quot;print('x' * (2 ** 25))&quot; &gt; tmp.txt</pre>
+<pre class="literal-block">python2 -c &quot;print('x' * (2 ** 25))&quot; &gt; tmp.txt</pre>
 <p>You will launch your RST attack against an HTTP fetch of that file. Making the file large lowers the barrier to a RST attack, since the attacker has more opportunities to generate RST packets for ACK-bearing data packets that are sent by the server.</p>
-<p>To run a web client within the VM, you can use the <span class="docutils literal">wget</span> command like this:</p>
+<p>To retrieve content from the web client from within the VM, you can use the <span class="docutils literal">wget</span> command like this:</p>
 <pre class="literal-block">wget -t 1 -O /dev/null -- http://192.168.26.1:9263/tmp.txt</pre>
 <p>Here, the <span class="docutils literal"><span class="pre">-t</span> 1</span> means no retries, and the <span class="docutils literal"><span class="pre">-O</span> /dev/null</span> means to throw away the received bytes.</p>
 </div>
 <div class="section" id="writing-your-rst-attack">
-<h4>Writing Your RST Attack</h4>
+<h3>Writing Your RST Attack</h3>
 <p>Place the <span class="docutils literal">main()</span> function for your attack in <span class="docutils literal">rst_http.c</span>. The program should be invocable like this:</p>
 <pre class="literal-block">rst_http server_port [dev_name]</pre>
 <p>Here, <span class="docutils literal">server_port</span> is a required argument that specifies the TCP port of the victim server. <span class="docutils literal">dev_name</span> should be handled in the same manner as in <span class="docutils literal">sniffer</span>.</p>
@@ -907,7 +902,7 @@ Connection: Keep
 <p>Then, when <span class="docutils literal">rst_http</span> detects a packet on the device, it should inspect the headers in the packet, generate a RST packet with the appropriate sequence number (and other info) using libnet, and then inject that packet into the network to destroy the client/server HTTP connection.</p>
 </div>
 <div class="section" id="testing-your-rst-attack">
-<h4>Testing Your RST Attack</h4>
+<h3>Testing Your RST Attack</h3>
 <p>First of all, <span class="docutils literal">make rst_http</span> should successfully compile the program.</p>
 <p>Make sure the web server is running on the host (with a giant <span class="docutils literal">tmp.txt</span> file), as described above.</p>
 <p>From the VM, run:</p>
@@ -949,7 +944,7 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 </div>
 </div>
 <div class="section" id="part-3-telnet-hijacking-via-tcp-injection">
-<h3>Part 3: Telnet Hijacking via TCP Injection</h3>
+<h2>Part 3: Telnet Hijacking via TCP Injection</h2>
 <p>In the final part of this project, you will inject new traffic into a preexisting TCP stream. In particular, you will inject traffic into a telnet connection. <a class="reference external" href="https://en.wikipedia.org/wiki/Telnet">Telnet</a> is a well-known, simple protocol which allows a client to send commands to a server over TCP. Telnet does not encrypt traffic; thus, telnet has become much less popular with the advent of more secure approaches like ssh. Nevertheless, because telnet is just a thin protocol layer atop TCP, network admins often use telnet clients as simple testing tools, e.g., to <a class="reference external" href="http://blog.industrialnetworking.com/2011/09/using-telnet-to-test-open-ports.html">test if a particular server port is open</a>, or to <a class="reference external" href="https://www.thomas-krenn.com/en/wiki/Check_TCP_Port_80_(http)_with_telnet">see whether an HTTP server is responding to commands</a>.</p>
 <p>If you're curious about the details of the telnet protocol, you can read these documents:</p>
 <ul class="simple">
@@ -959,8 +954,8 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 </ul>
 <p>However, for the purposes of this project, you can ignore the details of how a telnet client and telnet server negotiate session parameters at the beginning of a TCP connection. As we explain in the next section, you only need to focus on what happens once the parameters have been negotiated, and the client issues a command to the server.</p>
 <div class="section" id="our-telnet-server">
-<h4>Our Telnet Server</h4>
-<p>On your host machine, you can run the project's telnet server like this:</p>
+<h3>Our Telnet Server</h3>
+<p>On your host machine, you can run the project's telnet server from within the <span class="docutils literal">telnet_server/</span> directory like this:</p>
 <pre class="literal-block">./telnet_server.py 8263</pre>
 <p>Inside your VM, you can connect to the server using this command:</p>
 <pre class="literal-block">telnet 192.168.26.1 8263</pre>
@@ -974,7 +969,7 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 <p>Using your sniffer, look at the packets that the client and server exchange in response to the user typing <span class="docutils literal">echo hello</span> and <span class="docutils literal">boom</span>. Make sure that you understand how sequence and acknowledgment numbers are being set, and what data is being placed in each TCP segment.</p>
 </div>
 <div class="section" id="writing-your-hijacking-attack">
-<h4>Writing Your Hijacking Attack</h4>
+<h3>Writing Your Hijacking Attack</h3>
 <p>Place the <span class="docutils literal">main()</span> function for your attack in <span class="docutils literal">hijack_telnet.c</span>. The program should be invocable like this:</p>
 <pre class="literal-block">hijack_telnet server_name server_port [dev_name]</pre>
 <p>Here, <span class="docutils literal">server_name</span> is a required argument that specifies the hostname or IP address of the victim server. <span class="docutils literal">server_port</span> and <span class="docutils literal">dev_name</span> should be handled in the same manner as in <span class="docutils literal">rst_http</span>.</p>
@@ -982,12 +977,12 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 <p>Your attack should handle <span class="docutils literal">SIGINT</span> and <span class="docutils literal">SIGQUIT</span> -- upon catching one of these signals, it should inject the command <span class="docutils literal">boom</span> into the preexisting telnet stream. You must use the recorded TCP information to guide the construction of the injected packets, so that the telnet server's network stack will accept the injected packets as legitimate.</p>
 </div>
 <div class="section" id="testing-your-hijacking-attack">
-<h4>Testing Your Hijacking Attack</h4>
+<h3>Testing Your Hijacking Attack</h3>
 <p>First of all, <span class="docutils literal">make hijack_telnet</span> should successfully compile the program.</p>
 <p>Make sure the telnet server is running on the host (as described above).</p>
 <p>From the VM, run:</p>
 <pre class="literal-block">sudo ./hijack_telnet 192.168.26.1 8263 eth0</pre>
-<p>From the VM (in a different terminal), connect to the server (as described above). Once the client has reached the <span class="docutils literal">server&gt;</span> prompt, go to the terminal window for <span class="docutils literal">hijack_telnet</span> and press Control-C. If your attack works, then the telnet server on the host will print <span class="docutils literal">BOOM!</span> and exit. The telnet client will probably hang or otherwise act strangely, since its TCP connection has now become desynchronized! So, you may have to kill the poor client from another terminal window using a command like <span class="docutils literal">pkill telnet</span>.</p>
+<p>From the VM (in a different terminal), connect to the server (as described above). Once the client has reached the <span class="docutils literal">proj3 server&gt;</span> prompt, go to the terminal window for <span class="docutils literal">hijack_telnet</span> and press Control-C. If your attack works, then the telnet server on the host will print <span class="docutils literal">BOOM!</span> and exit. The telnet client will probably hang or otherwise act strangely, since its TCP connection has now become desynchronized! So, you may have to kill the poor client from another terminal window using a command like <span class="docutils literal">pkill telnet</span>.</p>
 <p>Your attack should work regardless of what the user might have previously entered in the telnet client (other than <span class="docutils literal">boom</span>, of course).</p>
 <p>Finally, run <span class="docutils literal">make test_hijack_telnet</span>, which is not a comprehensive test but should verify basic functionality.</p>
 <div class="admonition tip">
@@ -998,7 +993,7 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 </div>
 </div>
 <div class="section" id="submitting">
-<h2>Submitting</h2>
+<h1>Submitting</h1>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Make sure all your work is committed and pushed to the submission branch of your repository (<span class="docutils literal">git push origin submission</span>) then create a Pull Request. Make sure the <a class="reference external" href="https://travis-ci.com/">Travis</a> build is passing for your Pull Request -- the Travis build should start automatically once you create the PR. You can verify that the Travis build has completed successfully by going to the PR and looking for a green checkmark next to your most recent commit.</p>
@@ -1015,7 +1010,7 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 </div>
 </div>
 <div class="section" id="deliverables-and-rubric">
-<h2>Deliverables and Rubric</h2>
+<h1>Deliverables and Rubric</h1>
 <p>&quot;Mixed&quot; grading means we will assign some points based on the result of the Travis test case(s). However, for this project, the tests do not fully cover the specification (for example, they only operate on <span class="docutils literal">lo</span>), so we will also assign some points based on manual inspection and testing.</p>
 <table>
 <colgroup>
@@ -1047,6 +1042,11 @@ error: [Errno 10054] An existing connection was forcibly closed by the remote ho
 <!-- Links follow -->
 </div>
 </div>
+<div class="footer">
+<hr class="footer" />
+<p>Copyright © 2019, Harvard University CS263 —
+all rights reserved.</p>
+
 </div>
 </body>
 </html>
