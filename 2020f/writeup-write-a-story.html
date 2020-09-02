@@ -788,7 +788,12 @@ git checkout -b submission
 </div>
 <div class="section" id="submitting">
 <h1>Submitting</h1>
-<p>After committing to <tt class="docutils literal">submission</tt>, push your changes with <tt class="docutils literal">git push origin submission</tt>.</p>
+<p>In order to submit your assignment you will need to add the new file, commit, and then push the changes to <tt class="docutils literal">submission</tt>. You should be able to do this with the following commands:</p>
+<pre class="literal-block">
+git add story.txt
+git commit -m&quot;commit msg&quot;
+git push origin submission
+</pre>
 <p>After pushing to your branch, click the &quot;Compare &amp; pull request&quot; button on your repository's GitHub page. Then, click on &quot;Create pull request&quot; to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).</p>
 <p>If you need to edit your submission before the deadline, just commit and push your new changes to this branch of your repository. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
 <p>Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis build by clicking on &quot;Details&quot; then &quot;The build&quot;.</p>

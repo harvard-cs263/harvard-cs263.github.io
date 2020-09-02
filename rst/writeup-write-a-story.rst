@@ -145,7 +145,11 @@ As promised, the project itself is trivial. While you should feel free to unleas
 Submitting
 ==========
 
-After committing to ``submission``, push your changes with ``git push origin submission``.
+In order to submit your assignment you will need to add the new file, commit, and then push the changes to ``submission``. You should be able to do this with the following commands::
+
+    git add story.txt
+    git commit -m"commit msg"
+    git push origin submission
 
 After pushing to your branch, click the "Compare & pull request" button on your repository's GitHub page. Then, click on "Create pull request" to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
