@@ -110,9 +110,19 @@ __ linux_syscall_list_
 
 PART 4: ``connect()`` restriction
 ---------------------------------
+For the last part of the pset, you must implement selective system call blocking. In particular, you should prevent the guest from issuing ``connect()`` system calls to any TCP server unless that server has a localhost IP address ``127.0.0.*.`` See `here`__ for an overview of the system calls which a program must invoke to talk to a TCP server.
 
-Remember that, on x86 Linux, a syscall invocation places the syscall number in ``%rax``. Your sandboxer should include ``<sys/syscall.h>`` to get constants for syscalls (e.g., ``SYSCALL_CONNECT``) which can be compared to the value in ``%rax`` to determine which syscall is being invoked.
+To complete this part of the pset, you'll need to perform selective syscall blocking as described by `the ptrace tutorial`__. In particular, during the entry into a syscall, the sandboxer should check whether the syscall is a ``connect()`` and if so, whether the second argument to ``connect()`` (i.e., the ``struct sockaddr_in *addr``) has a ``.sin_addr`` corresponding to ``127.0.0.*``. If so, the sandboxer should set the syscall number in ``%rax`` to ``-1``; later, when the ``connect()`` syscall tries to return to user-mode, the sandboxer should set the return value to ``-EPERM``. Here are some hints:
+    - Remember that, on x86-64 Linux, a syscall invocation places the syscall number in ``%rax``. Your sandboxer should include ``<sys/syscall.h>`` to get constants for syscalls (e.g., ``SYSCALL_CONNECT``) which can be compared to the value in ``%rax`` to determine which syscall is being invoked.
+    - On x86-64 Linux, syscall arguments are passed in ``%rdi``, ``%rsi``, ``%rdx``, ``%r10``, ``%r8``, and ``%r9``. For ``connect()``, the second argument is a ``struct sockaddr *addr`` (which is really a ``struct sockaddr_in``). The sandboxer must read the ``.sin_addr`` field of the ``struct`` using ``PTRACE_PEEKDATA``. Keep in mind that ``PTRACE_PEEKDATA`` reads data 8 bytes at a time. Also remember that the ``.sin_addr`` field of the ``struct sockaddr_in`` is not the first field in the ``struct``!
+    - On Ubuntu, the local DNS stub resolver runs at 127.0.0.53! The guest should be able to connect to that DNS resolver. [If you want to learn more about stub resolvers, see `here`__ and `here`__.]
 
+You've passed Part 4 when the guest says that it was "unable to fetch HTTP data from [``https://www.google.com``]: <urlopen error [Errno 1] Operation not permitted>." The guest will also try to fetch data from ``https://www.cnn.com``; the associated ``connect()`` should be denied as well. The guest will try to open a localhost TCP server on ``127.0.0.1``, and then another guest process will try to communicate with that server; the associated socket operations should be allowed. Only ``connect()`` syscalls to non-``127.0.0.*`` addresses should be blocked.
+
+__ socket_overview_
+__ ptrace_tutorial_
+__ systemd_resolved_
+__ dns_overview_
 
 Submitting
 ==========
@@ -143,9 +153,9 @@ Deliverables and Rubric
 +---------------------------------------------------+--------+----------------+
 | Criteria                                          | Points | Grading method |
 +===================================================+========+================+
-| Part 1: Guest launched with ``setuid()`` sandbox  | 40     | Automated      |
+| Part 1: ``pid`` namespacing                       | 40     | Automated      |
 +---------------------------------------------------+--------+----------------+
-| Part 2: ``pid`` namespacing                       | 25     | Automated      |
+| Part 2: Guest launched with ``setuid()`` sandbox  | 25     | Automated      |
 +---------------------------------------------------+--------+----------------+
 | Part 3: ``fork()`` restrictions                   | 15     | Automated      |
 +---------------------------------------------------+--------+----------------+
@@ -162,3 +172,6 @@ Deliverables and Rubric
 .. _ptrace_tutorial: https://nullprogram.com/blog/2018/06/23/
 .. _linux_syscall_list: https://filippo.io/linux-syscall-table/
 .. _wait_man_page: https://man7.org/linux/man-pages/man2/wait.2.html
+.. _socket_overview: https://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html
+.. _systemd_resolved: http://manpages.ubuntu.com/manpages/bionic/man8/systemd-resolved.service.8.html
+.. _dns_overview: https://www.internetsociety.org/resources/deploy360/dns-privacy/intro/
