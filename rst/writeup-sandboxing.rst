@@ -40,7 +40,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
 .. caution::
 
-    For this assignment, you should use a modern Ubuntu VM. Course staff will test your submission using `Ubuntu 20`__.
+    For this assignment, you should use a modern x86-64 Ubuntu VM. Course staff will test your submission using `Ubuntu 20`__.
 __ Ubuntu_link_
 
 Specification
@@ -61,21 +61,57 @@ If you look in the ``guest_dir/`` directory, you'll see a compiled Python progra
 
 .. caution::
     
-    **You should launch your sandbox using root privileges. You can do so from an unprivileged shell by issuing a command like ``sudo sandbox guest_dir/ 1000``, where ``1000`` is the `uid` of the unprivileged user whose identity the guest should use.**
+    You should launch your sandboxer using root privileges. You can do so from an unprivileged shell by issuing a command like ``sudo sandbox guest_dir/ 1000``, where ``1000`` is the `uid` of the unprivileged user whose identity the guest should use. You must run the sandboxer as root-privileged because only root-privileged programs can create namespaces!
 
-The first job of the sandboxer is to create a new process for the guest code to use. Your sandboxer should use the ``clone()`` system call, **not** the ``fork() system call, because ``clone()`` allows the sandboxer to place the child process in a ``pid`` namespace! Among other things, the ``pid`` namespace will restrict the set of processes that the guest can send signals to.
+The first job of the sandboxer is to create a new process for the guest code to use. Your sandboxer should use the ``clone()`` system call, **not** the ``fork() system call, because ``clone()`` allows the sandboxer to place the child process in a ``pid`` namespace! Among other things, the ``pid`` namespace will restrict the set of processes that the guest can send signals to. So, your sandboxer should ``clone()`` a new process, using the ``CLONE_NEWPID`` flag to ensure that the new process is placed in a ``pid`` namespace. The child should then ``chdir()`` to the directory specified on the command line, and use ``exec()`` to execute ``python3``, passing the argument ``guest.pyc`` to ``python3.`` Meanwhile, the parent process (i.e., the sandboxer) should use a system call like ``wait()`` to wait for the child process to finish execution.
 
-Your sandboxer should ``clone()`` a new process, using the ``CLONE_NEWPID`` flag to ensure that the new process is placed in a ``pid`` namespace. The child should then ``chdir()``'ing to the directory specified on the command line, call ``setuid()`` with the appropriate ``uid``, and then use ``exec()`` to execute ``python3``, passing the argument ``guest.pyc`` to ``python3.`` Meanwhile, the parent process (i.e., the sandboxer) should use a system call like ``wait()`` to wait for the child process to finish execution.
+.. tip::
 
-As the guest executes, it will try to do a bunch of stuff, printing output to the console. You've passed Part 1 when the guest says that it has tried and failed to access a file that only the root user should be able to access. [Note that you should not restrict the guest's activity with something like a file namespace or a ``chroot()`` jail. The guest will try to read and write files in the guest directory that was used by the pre-``exec()`` ``chdir()``; those reads and writes should succeed. The ``setuid(uid)`` call will restrict the guest's file system access to the set of files that ``uid`` can access.]
+    After the sandboxer launches the initial guest process, the sandboxer should call ``sleep(1)`` before calling ``wait()``. This ensures that the OS has actually created the child process by the time that ``wait()`` has called (meaning that ``wait()`` won't return an error which indicates that no children are available to wait upon).
 
-
-PART 2: ``pid`` namespaces
---------------------------
-Now that your sandboxer knows how to ``setuid()`` restrict the guest, you should modify the sandboxer to force the guest to run in a ``pid`` namespace. Among other things, a ``pid`` namespace restricts the set of processes that can be signalled by processes within the namespace.
+As the guest executes, it will try to do a bunch of stuff, printing output to the console. You've passed Part 1 when the guest says that it is correctly ``pid``-namespaced. If the guest is not correctly namespaced, then it will be able to send ``SIGKILL`` to its parent process (i.e., the sandboxer).
 
 
-You've passed Part 2 when the guest says that it is correctly ``pid``-namespaced. If the guest is not correctly namespaced, then it will be able to send ``SIGKILL`` to its parent process (i.e., the sandboxer).
+PART 2: ``setuid()`` restrictions
+---------------------------------
+Now that your sandboxer knows how to ``pid``-namespace a guest, you should modify the sandboxer to force the guest to run as a non-privileged ``uid``. This is important because, right now, the guest code is ``pid``-namespaced, but still runs with ``root`` privileges! So, change your sandboxer so that, after it calls ``chdir()``, but before it calls ``exec()``, it calls ``setuid()`` with the appropriate ``uid``.
+
+You've passed Part 2 when the guest says that it has tried and failed to access a file that only the root user should be able to access.
+
+.. caution::
+
+    You should not restrict the guest's file activity with something like a file namespace or a ``chroot()`` jail. The guest will try to read and write files in the guest directory that was used by the pre-``exec()`` ``chdir()``; those reads and writes should succeed. The ``setuid(uid)`` call will restrict the guest's file system access to the set of files that ``uid`` can access.
+
+
+PART 3: ``fork()`` restrictions
+-------------------------------
+The guest is now ``setuid()``-restricted and ``pid``-namespaced. However, the guest may still try to exhaust system resources, e.g., by a launching a ``fork()`` bomb. Your next task is to modify the sandboxer so that the sandboxer restricts the guest to a maximum of 3 processes. The sandboxer will need to use the `ptrace`__ API to introspect on the child's system call activity. In particular, the sandboxer needs to track the guest's process creations and process exits, tracking how many processes the guest has at any given time. The guest should have a maximum of 3 live processes at any given time; if any additional process is created, then the sandboxer should kill that process when the sandboxer observes the first system call made by that process.
+
+This part of the assignment is challenging; the ``ptrace`` API is complicated. You'll need to keep the ``man`` page for ``ptrace`` nearby as you work on Part 3. Here are some hints:
+
+    - At a high-level, your sandboxer will use the ``ptrace(PTRACE_SYSCALL, <child_pid>, ...)`` call to monitor the syscall activity of guest processes. When setting up the ``ptrace()`` options, you'll need to pass the flags ``PTRACE_O_TRACECLONE | PTRACE_O_TRACEFORK  | PTRACE_O_TRACEVFORK`` to ensure that the sandboxer will see activity from the initial guest process as well as all processes spawned by that initial guest process. Note that, using ``PTRACE_SYSCALL``, the sandboxer will be awoken twice for each guest syscall: once immediately before the syscall invokes the kernel, and once immediately before the syscall returns to user mode. You will need to distinguish these two scenarios. We recommend that your sandboxer has a table which tracks per-guest-process information; at a minimum, that table probably needs to track a guest process's ``pid`` (from the perspective of the non-``pid``-namespaced sandboxer) and whether the next expected event from the guest process is a syscall entry or a syscall return.
+    - The table will also help you to keep track of how many guest processes are currently live. Note that the table must be updated when a guest process dies! The sandbox blocks for the next ``ptrace`` event by calling the `wait(int* child_status)`__ system call. The sandboxer can then use ``WIFEXITED(child_status)`` to determine if the child has died.
+    - As the ``man`` page for ``ptrace`` describes, the tracer (i.e., the sandboxer) needs to handle the possibility that the tracee (i.e., a guest process) was stopped not because of a system call entry or exit, but because of a signal that was delivered to the tracee. As the ``man`` page states, "signal-delivery-stop is observed by the tracer as waitpid(2) returning with ``WIFSTOPPED(status)`` true, with the signal returned by ``WSTOPSIG(status)`` . . . after signal-delivery-stop is observed by the tracer, the tracer should restart the tracee with the call ``ptrace(PTRACE_restart, pid, 0, sig)`` where ``PTRACE_restart`` is one of the restarting ptrace requests [e.g., ``PTRACE_SYSCALL``]." So, once your sandboxer's ``wait()`` call returns, you need to check whether the traced guest process has died (if so, update your ``pid`` table), or invoked a syscall (if so, see whether the guest process needs to be killed); otherwise, if the tracee is stopped because of a signal, just replay the signal as described by the ``ptrace man`` page); or if none of that is true, just ``PTRACE_SYSCALL`` the guest process as usual to allow it to continue executing. 
+    - When setting up the ``ptrace`` options, the sandboxer should also specify ``PTRACE_O_EXITKILL``, which will kill all guest processes if the sandbox dies. This ensures that, even if the guest somehow kills the sandbox, the guest processes will get killed too.
+    - Before working on Part 3, it is **highly recommended** that you read `this ptrace tutorial`__! You can ignore the last section about "Foreign system emulation," but the earlier parts provide a friendly introduction to how ``ptrace`` can be used to track which system calls a traced process executes, and prevent a guest from executing certain system calls. [Also, note that on Ubuntu, your sandbox includes the definition for ``struct user_regs_struct`` by including ``<sys/user.h>``.]
+    - When the sandboxer needs to kill a guest process, the murder should be performed by sending the guest process the ``SIGKILL`` signal using `kill()`__. Do *not* try to use the ``PTRACE_KILL`` option for ``ptrace()``. As the ``ptrace`` ``man`` page states, ``PTRACE_KILL`` is deprecated and should not be used.
+    - As you're trying to ensure that your sandboxer is seeing all of the guest processes' system calls, you may find it helpful to run the guest ``.pyc`` code using ``strace -f python3 guest.pyc`` (not using the sandboxer) to get an independent verification of what kinds of system calls the guest is executing. Remember that, on x86 Linux, a syscall invocation places the syscall number in ``%rax``; see `here`__ for a list of Linux x86-64 system calls.
+    - Remember that, after your sandboxer has examined the state of a paused, non-dead guess process, the sandboxer must always restart the guest process by calling ``ptrace(PTRACE_SYSCALL, guest_pid, ...)``. If you forget to do this, the guest process will hang forever!
+    - The guest processes are not multithreaded, so you can ignore the concerns in the ``ptrace man`` page about multithreaded processes.
+
+You've passed Part 3 when the guest says that it "had the right number of children killed by the sandbox."
+
+__ ptrace_man_page_
+__ wait_man_page_
+__ ptrace_tutorial_
+__ kill_man_page_
+__ linux_syscall_list_
+
+
+PART 4: ``connect()`` restriction
+---------------------------------
+
+Remember that, on x86 Linux, a syscall invocation places the syscall number in ``%rax``. Your sandboxer should include ``<sys/syscall.h>`` to get constants for syscalls (e.g., ``SYSCALL_CONNECT``) which can be compared to the value in ``%rax`` to determine which syscall is being invoked.
 
 
 Submitting
@@ -119,12 +155,10 @@ Deliverables and Rubric
 +---------------------------------------------------+--------+----------------+
 
 .. Links follow
-.. _gdb_setting_watchpoints: https://sourceware.org/gdb/current/onlinedocs/gdb/Set-Watchpoints.html#Set-Watchpoints
-.. _rockyou_25k: https://harvard-cs263.github.io/resources/rockyou-top-25000.txt
-.. _mozilla_firefox_debugger: https://developer.mozilla.org/en-US/docs/Tools/Debugger
-.. _mozilla_pretty_print_js: https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Pretty-print_a_minified_file
-.. _travis: https://travis-ci.com/
-.. _wikipedia_minification: https://en.wikipedia.org/wiki/Minification_(programming)
-.. _yolinux_libraries: http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html
 .. _github_assignment: https://classroom.github.com/a/MgeggGB_
 .. _Ubuntu_link: https://ubuntu.com/download/desktop
+.. _ptrace_man_page: https://www.man7.org/linux/man-pages/man2/ptrace.2.html
+.. _kill_man_page: https://man7.org/linux/man-pages/man2/kill.2.html
+.. _ptrace_tutorial: https://nullprogram.com/blog/2018/06/23/
+.. _linux_syscall_list: https://filippo.io/linux-syscall-table/
+.. _wait_man_page: https://man7.org/linux/man-pages/man2/wait.2.html
