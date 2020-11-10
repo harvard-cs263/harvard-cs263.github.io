@@ -165,7 +165,7 @@ Deliverables and Rubric
 +---------------------------------------------------+--------+----------------+
 
 .. Links follow
-.. _github_assignment: https://classroom.github.com/a/MgeggGB_
+.. _github_assignment: https://classroom.github.com/a/USuA5Ozo
 .. _Ubuntu_link: https://ubuntu.com/download/desktop
 .. _ptrace_man_page: https://www.man7.org/linux/man-pages/man2/ptrace.2.html
 .. _kill_man_page: https://man7.org/linux/man-pages/man2/kill.2.html
