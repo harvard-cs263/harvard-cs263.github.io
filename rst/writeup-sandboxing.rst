@@ -36,7 +36,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     Before starting, remember the warning from Project 0:
 
-    It is important that you **do not** push to master. Push to the submission branch.
+    It is important that you **do not** push to main. Push to the submission branch.
 
 .. caution::
 
@@ -127,7 +127,7 @@ __ dns_overview_
 Submitting
 ==========
 
-Push your work using ``git push origin submission``, and open a pull request from the submission branch against master.
+Push your work using ``git push origin submission``, and open a pull request from the submission branch against main.
 
 .. important::
 
