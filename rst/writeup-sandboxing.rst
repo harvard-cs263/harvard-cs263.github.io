@@ -172,6 +172,6 @@ Deliverables and Rubric
 .. _ptrace_tutorial: https://nullprogram.com/blog/2018/06/23/
 .. _linux_syscall_list: https://filippo.io/linux-syscall-table/
 .. _wait_man_page: https://man7.org/linux/man-pages/man2/wait.2.html
-.. _socket_overview: https://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html
+.. _socket_overview: https://web.archive.org/web/20200926161338/https://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html
 .. _systemd_resolved: http://manpages.ubuntu.com/manpages/bionic/man8/systemd-resolved.service.8.html
 .. _dns_overview: https://www.internetsociety.org/resources/deploy360/dns-privacy/intro/
