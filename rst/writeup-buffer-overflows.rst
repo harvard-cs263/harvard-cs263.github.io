@@ -1,6 +1,6 @@
 .. footer::
 
-    Copyright |copy| 2019, Harvard University CS263 |---|
+    Copyright |copy| 2021, Harvard University CS263 |---|
     all rights reserved.
 
 .. |copy| unicode:: 0xA9
@@ -420,7 +420,7 @@ This project was derived from one offered by MIT's 6.858 class.
 
 .. Links follow
 
-.. _github_classroom: https://classroom.github.com/a/SjSKief0
+.. _github_classroom: https://classroom.github.com/a/RFGSAxmO 
 .. _garshol_http: http://www.garshol.priv.no/download/text/http-tut.html
 .. _python3_struct: https://docs.python.org/3/library/struct.html
 .. _python3_urllib: https://docs.python.org/3/library/urllib.html
