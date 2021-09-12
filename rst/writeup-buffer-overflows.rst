@@ -155,7 +155,7 @@ In this part, you will use your buffer overflows to inject code into the web ser
 Shell Code
 ````````````````
 
-We have provided Aleph One's shell code for you to use in ``shellcode.S``, along with ``Makefile`` rules that produce ``shellcode.bin``, a compiled version of the shell code, when you run ``make shellcode``. Aleph One's exploit is intended to exploit ``setuid-root`` binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink ``/home/httpd/grades.txt``. This part is ungraded, but you will most likely need ``shellcode.bin`` for your injection attack.
+We have provided Aleph One's shell code for you to use in ``shellcode.S``, along with ``Makefile`` rules that produce ``shellcode.bin``, a compiled version of the shell code, when you run ``make shellcode.bin``. Aleph One's exploit is intended to exploit ``setuid-root`` binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink ``/home/httpd/grades.txt``. This part is ungraded, but you will most likely need ``shellcode.bin`` for your injection attack.
 
 .. tip::
 
