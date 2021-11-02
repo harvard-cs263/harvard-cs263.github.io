@@ -14,7 +14,7 @@ In this project, you'll implement a sandboxing framework. In particular, the fra
 
 .. note::
 
-    This pset is new! Thus, there may be some kinks to work out :-D. The pset has four parts, with the last two being more difficult than the first two; point distribution is heavily skewed towards the easier parts. Part 1 is worth 40 points, Part 2 is worth 25 points, Part 3 is worth 15 points, and Part 4 is worth 10 points. Clean design and correctness are worth 10 points.
+    The pset has four parts, with the last two being more difficult than the first two; point distribution is heavily skewed towards the easier parts. Part 1 is worth 40 points, Part 2 is worth 25 points, Part 3 is worth 15 points, and Part 4 is worth 10 points. Clean design and correctness are worth 10 points.
 
 
 Project Setup
