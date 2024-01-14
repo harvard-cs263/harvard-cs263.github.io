@@ -10,14 +10,16 @@
 Write A Story!
 ==============
 
-For this project, you will write a story. More importantly, you will set up the VM, GitHub, and Travis infrastructure necessary for future course projects.
+For this project, you will write a story. More importantly, you will
+set up the Docker contianer, GitHub, and Travis infrastructure
+necessary for future course projects.
 
 .. important::
 
     Even though the project itself is trivial, it is important that you read this **entire document** carefully, as everything here applies to future projects as well.
 
-GitHub Setup
-============
+Git/GitHub Setup
+================
 
 Create a GitHub account if you don't already have one. Make sure your GitHub profile uses your real name so that we know who to give points to :).
 
@@ -34,59 +36,23 @@ Otherwise, you would benefit (both in this course and in future coursework, rese
 
 __ github_tutorial_
 
-VM Setup
-========
+Docker setup
+============
 
-Download the CS 263 VM (``vm263.ova``) from the "Files" section of the Canvas site. Then, import the VM into a virtualization platform. We strongly recommend and only officially support VirtualBox, for which instructions are provided below. If you choose to use another platform, you are responsible for making sure the configuration is functionally equivalent to the below setup instructions.
+CS 263 is using Docker this term.  Docker allows us to provide you a consistent Linux-based environment for doing CS 263 projects with much less overhead than a conventional virtual machine.
 
-VirtualBox Setup
-----------------
+Steps to do:
 
-This guide is for VirtualBox 5.1.22, although it will probably work for other VirtualBox versions.
+1. Set up the `CS 263 Docker image <https://github.com/harvard-cs263/cs263-docker-image>`_ by following the instructions in the README in the ``cs263-docker-image`` repo.
 
-- Open VirtualBox.
-- Set up a host-only network:
-    - In VirtualBox preferences, under "Network", go to "Host-only" and click the green add button.
-    - This may also be under "File->Host Network Manager..."
-    - Right-click the newly-created network (should be named something like ``vboxnet0``) and click "Edit".
-    - Enter the following settings:
-        - IPv4 Address: 192.168.26.1
-        - IPv4 Network Mask: 255.255.255.0
-        - Everything else: unchanged.
-        - Make sure the DHCP Server is disabled.
-    - Save these settings.
-- Import the VM:
-    - Click "File", then "Import Appliance".
-    - Select the ``vm263.ova`` file.
-    - Look over the default settings and click "Import".
-- Configure networking for the VM:
-    - Click on your newly-created VM and click "Settings".
-    - Under "Network > Adapter 1", choose the following options:
-        - Enable Network Adapter: checked
-        - Attached to: Host-only Adapter
-        - Name: the network you set up previously (e.g. ``vboxnet0``)
-        - Promiscuous Mode (might be under "Advanced"): Allow All
-        - Everything else: unchanged
-    - Under "Network > Adapter 2", choose the following options:
-        - Enable Network Adapter: checked
-        - Attached to: NAT
-        - Everything else: unchanged
-    - Save these settings.
+   1. Download and install `Docker <https://docker.com/>`_.
+   2. Clone the repo.
+   3. ``cd`` into ``cs263-docker-image``.
+   4. Run ``./docker/cs263-build-docker``.  Make some coffee or tea
+      while you wait for it to finish.
+   5. Run ``./cs263-run-docker``.  Tada!
 
-Starting and Logging Into the VM
---------------------------------
-
-Having set up your VM, you may now start it by clicking "Start". You may choose to access it via either the VM's console or SSH. The username is ``httpd`` and the password is ``263``.
-
-For SSH, executing ``ssh httpd@192.168.26.3`` should work.
-
-Everything below assumes you are logged into ``httpd`` on the VM.
-
-.. caution::
-
-    The ``httpd`` user is part of the ``admin`` group, which has full sudo privileges. However, you should **not** run any ``apt-get`` command yet, as the first (real) project is **very** sensitive to the installed libraries. We will let you know when it is safe to use ``apt-get``.
-
-Feel free to import your favorite dotfiles (e.g. ``.vimrc``, ``.gitconfig``, not to mention all those miscellaneous bash dotfiles).
+2. [Optional] Set up SSH agent on your computer: run ``ssh-add``.  This will allow your Docker image to utilize your SSH keys, allowing you to seamlessly authenticate to Github without typing your username & password.
 
 Project Setup
 =============
@@ -97,8 +63,9 @@ Click on the provided GitHub Classroom assignment link, login via GitHub if nece
 Clone the Repository
 --------------------
 
-Now it is time to clone the repository.
-Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL (make sure it begins with ``https://``), and run in your VM::
+Now it is time to clone the repository.  Go to
+``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``,
+copy the URL, and run in your Docker container::
 
     cd
     git clone <repo_url> write-a-story/
@@ -107,11 +74,13 @@ Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``,
 
     This command and each subsequent Git command will ask you for your username and password, which might get annoying. If you'd like to avoid this, you might want to consider `credential helpers`__.
 
-    Alternatively, you can clone and interact with repositories on the VM using existing SSH keys on your host computer:
+    Alternatively, you can clone and interact with repositories in the
+    contianer using existing SSH keys on your host computer:
 
     - Make sure your `SSH key`__ is set up on your host computer, as well as ``ssh-agent``.
-    - Connect to the VM via SSH with agent forwarding enabled: ``ssh -A httpd@192.168.26.3``.
-    - Clone the repository on the VM using the URL starting with ``git@github.com:``.
+      - If ssh-based authentication isn't working, remember to run ``ssh-add``!
+    - Clone the repository in the container using the URL starting
+      with ``git@github.com:``.
 
 __ github_credential_helpers_
 __ ssh_setup_
@@ -121,11 +90,11 @@ Checkout & Setup
 
 .. caution::
 
-    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to master**. If you feel you've messed up your git repository contact the TFs for help.
+    For all projects, you may commit and push your changes at your leisure, as long as you **do not push to main**. If you feel you've messed up your git repository, contact the TFs for help.
 
 All assignments come with a ``pre_setup.sh`` script. **Execute this script before starting each assignment, including this one!**
 
-For all assignments, all of your work must committed to a non-master branch. Specifically, commits should be committed and pushed to the ``submission`` branch. You should not (and should not be able to) push commits to master.
+For all assignments, all of your work must committed to a non-main branch. Specifically, commits should be committed and pushed to the ``submission`` branch. You should not (and should not be able to) push commits to main.
 
 To summarize: run the following after cloning the repository::
 
@@ -159,7 +128,7 @@ Ensure that Travis's automatic checks on your pull request run and pass. You can
 
 .. caution::
 
-    Do **not** click "Merge pull request" after submitting, as this will modify the master branch. We will merge your pull request when grading.
+    Do **not** click "Merge pull request" after submitting, as this will modify the main branch. We will merge your pull request when grading.
 
 .. caution::
 
