@@ -640,15 +640,13 @@ color: red }
 <div class="document" id="write-a-story">
 <h1 class="title">Write A Story!</h1>
 
-<p>For this project, you will write a story. More importantly, you will
-set up the Docker contianer, GitHub, and Travis infrastructure
-necessary for future course projects.</p>
+<p>For this project, you will write a story. More importantly, you will set up the VM, GitHub, and Travis infrastructure necessary for future course projects.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">Even though the project itself is trivial, it is important that you read this <strong>entire document</strong> carefully, as everything here applies to future projects as well.</p>
 </div>
-<div class="section" id="git-github-setup">
-<h1>Git/GitHub Setup</h1>
+<div class="section" id="github-setup">
+<h1>GitHub Setup</h1>
 <p>Create a GitHub account if you don't already have one. Make sure your GitHub profile uses your real name so that we know who to give points to :).</p>
 <p>Go to the <a class="reference external" href="https://education.github.com/discount_requests/new">GitHub Education discount page</a> and request a free individual student account. This request should be granted almost instantaneously (check your email). Let the course staff know if there are any problems.</p>
 <div class="section" id="learn-git">
@@ -657,31 +655,129 @@ necessary for future course projects.</p>
 <p>Otherwise, you would benefit (both in this course and in future coursework, research, and/or jobs) by learning some git. Github offers an <a class="reference external" href="https://try.github.io">interactive tutorial</a>, and you can also just search for &quot;git tutorial&quot;.</p>
 </div>
 </div>
-<div class="section" id="docker-setup">
-<h1>Docker setup</h1>
-<p>CS 263 is using Docker this term.  Docker allows us to provide you a consistent Linux-based environment for doing CS 263 projects with much less overhead than a conventional virtual machine.</p>
-<p>Steps to do:</p>
-<ol class="arabic simple">
-<li>Set up the <a class="reference external" href="https://github.com/harvard-cs263/cs263-docker-image">CS 263 Docker image</a> by following the instructions in the README in the <tt class="docutils literal"><span class="pre">cs263-docker-image</span></tt> repo.<ol class="arabic">
-<li>Download and install <a class="reference external" href="https://docker.com/">Docker</a>.</li>
-<li>Clone the repo.</li>
-<li><tt class="docutils literal">cd</tt> into <tt class="docutils literal"><span class="pre">cs263-docker-image</span></tt>.</li>
-<li>Run <tt class="docutils literal"><span class="pre">./docker/cs263-build-docker</span></tt>.  Make some coffee or tea
-while you wait for it to finish.</li>
-<li>Run <tt class="docutils literal"><span class="pre">./cs263-run-docker</span></tt>.  Tada!</li>
-</ol>
+<div class="section" id="vm-setup">
+<h1>VM Setup</h1>
+<p>Download the CS 263 VM (<tt class="docutils literal">vm263.ova</tt>) from the &quot;Files&quot; section of the Canvas site. Then, import the VM into a virtualization platform.</p>
+<div class="section" id="virtualbox-setup">
+<h2>VirtualBox Setup</h2>
+<p>This guide is for VirtualBox 5.1.22, although it will probably work for other VirtualBox versions.</p>
+<ul class="simple">
+<li><cite>Download VirtualBox &lt;https://www.virtualbox.org/wiki/Downloads&gt;</cite>.
+- macOS M-chip users must instead download the <cite>developer preview &lt;https://www.virtualbox.org/wiki/Testbuilds&gt;</cite> instead, as VirtualBox does not maintain a mainline release.</li>
+<li>Open VirtualBox.</li>
+<li><dl class="first docutils">
+<dt>Set up a host-only network:</dt>
+<dd><ul class="first last">
+<li>In VirtualBox preferences, under &quot;Network&quot;, go to &quot;Host-only&quot; and click the green add button.</li>
+<li>This may also be under &quot;File-&gt;Host Network Manager...&quot;</li>
+<li>Right-click the newly-created network (should be named something like <tt class="docutils literal">vboxnet0</tt>) and click &quot;Edit&quot;.</li>
+<li><dl class="first docutils">
+<dt>Enter the following settings:</dt>
+<dd><ul class="first last">
+<li>IPv4 Address: 192.168.26.1</li>
+<li>IPv4 Network Mask: 255.255.255.0</li>
+<li>Everything else: unchanged.</li>
+<li>Make sure the DHCP Server is disabled.</li>
+</ul>
+</dd>
+</dl>
 </li>
-<li>[Optional] Set up SSH agent on your computer: run <tt class="docutils literal"><span class="pre">ssh-add</span></tt>.  This will allow your Docker image to utilize your SSH keys, allowing you to seamlessly authenticate to Github without typing your username &amp; password.</li>
-</ol>
+<li>Save these settings.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Import the VM:</dt>
+<dd><ul class="first last">
+<li>Click &quot;File&quot;, then &quot;Import Appliance&quot;.</li>
+<li>Select the OVA file.</li>
+<li>Look over the default settings and click &quot;Import&quot;.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Configure networking for the VM:</dt>
+<dd><ul class="first last">
+<li>Click on your newly-created VM and click &quot;Settings&quot;.</li>
+<li><dl class="first docutils">
+<dt>Under &quot;Network &gt; Adapter 1&quot;, choose the following options:</dt>
+<dd><ul class="first last">
+<li>Enable Network Adapter: checked</li>
+<li>Attached to: Host-only Adapter</li>
+<li>Name: the network you set up previously (e.g. <tt class="docutils literal">vboxnet0</tt>)</li>
+<li>Promiscuous Mode (might be under &quot;Advanced&quot;): Allow All</li>
+<li>Everything else: unchanged</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Under &quot;Network &gt; Adapter 2&quot;, choose the following options:</dt>
+<dd><ul class="first last">
+<li>Enable Network Adapter: checked</li>
+<li>Attached to: NAT</li>
+<li>Everything else: unchanged</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Save these settings.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Optional: set up a shared folder:</dt>
+<dd><ul class="first last">
+<li>Under your VM, click Settings, then Shared Folders.</li>
+<li>Click the &quot;plus folder&quot; icon.</li>
+<li>Pick a folder path locally.  Perhaps a directory called <tt class="docutils literal">vmshare</tt> in your home folder.</li>
+<li><dl class="first docutils">
+<dt>Mount it in the VM:</dt>
+<dd><ul class="first last">
+<li>Pick <tt class="docutils literal">/home/student/vmshare/</tt> as the mount point.</li>
+<li>Check auto-mount.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Ensure you reboot your VM.</li>
+<li>If you're getting permissions errors accessing the shared folder, run <tt class="docutils literal">sudo adduser student vboxsf</tt>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="starting-and-logging-into-the-vm">
+<h2>Starting and Logging Into the VM</h2>
+<p>Having set up your VM, you may now start it by clicking &quot;Start&quot;. You may choose to access it via either the VM's console or SSH. The username is <tt class="docutils literal">student</tt> and the password is <tt class="docutils literal">student</tt>.</p>
+<p>For SSH, executing <tt class="docutils literal">ssh student&#64;192.168.26.3</tt> should work.</p>
+<p>Everything below assumes you are logged into <tt class="docutils literal">student</tt> on the VM.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">The <tt class="docutils literal">student</tt> user is part of the <tt class="docutils literal">admin</tt> group, which has full sudo privileges. However, you should <strong>not</strong> run any <tt class="docutils literal"><span class="pre">apt-get</span></tt> command yet, as the first (real) project is <strong>very</strong> sensitive to the installed libraries. We will let you know when it is safe to use <tt class="docutils literal"><span class="pre">apt-get</span></tt>.</p>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">If you're on an ARM (M-chip) macOS host, it's important to be very careful with your VM.  Your host is emulating an x86 CPU, and so all software runs with very significant overhead.  In particular, the filesystem in the Linux kernel runs much slower; if you're not careful, you can corrupt the filesystem with careless VM shutdowns.  <strong>Always</strong> take care to properly power-manage your VM: <tt class="docutils literal">sudo systemctl poweroff</tt> to turn it off, <tt class="docutils literal">sudo reboot</tt> to reboot, and use &quot;ACPI Shutdown&quot; from within Virtualbox.</p>
+</div>
+<p>Feel free to import your favorite dotfiles (e.g. <tt class="docutils literal">.vimrc</tt>, <tt class="docutils literal">.gitconfig</tt>, not to mention all those miscellaneous bash dotfiles).</p>
+</div>
 </div>
 <div class="section" id="project-setup">
 <h1>Project Setup</h1>
 <p>Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Even though the project itself is trivial, it is important that you read this <strong>entire document</strong> carefully, as everything here applies to future projects as well.</p>
+</div>
 <div class="section" id="clone-the-repository">
 <h2>Clone the Repository</h2>
-<p>Now it is time to clone the repository.  Go to
-<tt class="docutils literal"><span class="pre">https://github.com/harvard-cs263/write-a-story-&lt;YOUR-GITHUB-USERNAME&gt;</span></tt>,
-copy the URL, and run in your Docker container:</p>
+<p>Now it is time to clone the repository.
+Go to <tt class="docutils literal"><span class="pre">https://github.com/harvard-cs263/write-a-story-&lt;YOUR-GITHUB-USERNAME&gt;</span></tt>, copy the URL (make sure it begins with <tt class="docutils literal"><span class="pre">https://</span></tt>), and run in your VM:</p>
 <pre class="literal-block">
 cd
 git clone &lt;repo_url&gt; write-a-story/
@@ -689,13 +785,11 @@ git clone &lt;repo_url&gt; write-a-story/
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>This command and each subsequent Git command will ask you for your username and password, which might get annoying. If you'd like to avoid this, you might want to consider <a class="reference external" href="https://help.github.com/articles/caching-your-github-password-in-git/#platform-linux">credential helpers</a>.</p>
-<p>Alternatively, you can clone and interact with repositories in the
-contianer using existing SSH keys on your host computer:</p>
+<p>Alternatively, you can clone and interact with repositories on the VM using existing SSH keys on your host computer:</p>
 <ul class="last simple">
-<li>Make sure your <a class="reference external" href="https://help.github.com/articles/connecting-to-github-with-ssh/">SSH key</a> is set up on your host computer, as well as <tt class="docutils literal"><span class="pre">ssh-agent</span></tt>.
-- If ssh-based authentication isn't working, remember to run <tt class="docutils literal"><span class="pre">ssh-add</span></tt>!</li>
-<li>Clone the repository in the container using the URL starting
-with <tt class="docutils literal">git&#64;github.com:</tt>.</li>
+<li>Make sure your <a class="reference external" href="https://help.github.com/articles/connecting-to-github-with-ssh/">SSH key</a> is set up on your host computer, as well as <tt class="docutils literal"><span class="pre">ssh-agent</span></tt>.</li>
+<li>Connect to the VM via SSH with agent forwarding enabled: <tt class="docutils literal">ssh <span class="pre">-A</span> student&#64;192.168.26.3</tt>.</li>
+<li>Clone the repository on the VM using the URL starting with <tt class="docutils literal">git&#64;github.com:</tt>.</li>
 </ul>
 </div>
 </div>
@@ -703,10 +797,10 @@ with <tt class="docutils literal">git&#64;github.com:</tt>.</li>
 <h2>Checkout &amp; Setup</h2>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p class="last">For all projects, you may commit and push your changes at your leisure, as long as you <strong>do not push to main</strong>. If you feel you've messed up your git repository, contact the TFs for help.</p>
+<p class="last">For all projects, you may commit and push your changes at your leisure, as long as you <strong>do not push to master</strong>. If you feel you've messed up your git repository contact the TFs for help.</p>
 </div>
 <p>All assignments come with a <tt class="docutils literal">pre_setup.sh</tt> script. <strong>Execute this script before starting each assignment, including this one!</strong></p>
-<p>For all assignments, all of your work must committed to a non-main branch. Specifically, commits should be committed and pushed to the <tt class="docutils literal">submission</tt> branch. You should not (and should not be able to) push commits to main.</p>
+<p>For all assignments, all of your work must committed to a non-master branch. Specifically, commits should be committed and pushed to the <tt class="docutils literal">submission</tt> branch. You should not (and should not be able to) push commits to master.</p>
 <p>To summarize: run the following after cloning the repository:</p>
 <pre class="literal-block">
 cd write-a-story
@@ -736,7 +830,7 @@ git push origin submission
 <p>Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis build by clicking on &quot;Details&quot; then &quot;The build&quot;.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify the main branch. We will merge your pull request when grading.</p>
+<p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify the master branch. We will merge your pull request when grading.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
