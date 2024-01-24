@@ -95,10 +95,10 @@ Part 2: Memory Corruption
 
 Now, you will start developing exploits to take advantage of the buffer overflows that you have found. We have provided template Python code for an exploit in ``exploit_template.py``. That script issues an HTTP request, and takes two arguments, the server name and port number. So, you might run it as follows to issue a request to zookws running on localhost::
 
-    httpd@vm263:~/lab$ ./clean-env.sh ./zookld zook-exstack.conf
+    student@vm263:~/lab$ ./clean-env.sh ./zookld zook-exstack.conf
 
     (in another terminal session)
-    httpd@vm263:~/lab$ ./exploit_template.py localhost 8080
+    student@vm263:~/lab$ ./exploit_template.py localhost 8080
     HTTP request:
     GET / HTTP/1.0
 
@@ -124,7 +124,7 @@ If you believe that a vulnerability in ``bugs.txt`` is too difficult to exploit,
 
     You will find ``gdb`` useful in building your exploits. As zookws forks off many processes, it can be difficult to debug the correct one. The easiest way to do this is to run the web server ahead of time with ``clean-env.sh`` and then attaching ``gdb`` to an already-running process with the ``-p`` flag. To help find the right process for debugging, zookld prints out the process IDs of the child processes that it spawns. You can also find the PID of a process by using pgrep; for example, to attach to ``zookd-exstack``, start the server and, in another shell, run::
 
-        httpd@vm-CS263:~/lab$ gdb -p $(pgrep zookd-exstack)
+        student@vm-CS263:~/lab$ gdb -p $(pgrep zookd-exstack)
         ...
         0x4001d422 in __kernel_vsyscall ()
         (gdb) break your-breakpoint
@@ -150,33 +150,33 @@ If you believe that a vulnerability in ``bugs.txt`` is too difficult to exploit,
 Part 3: Code Injection via Buffer Overflow
 ------------------------------------------
 
-In this part, you will use your buffer overflows to inject code into the web server. The goal of the injected code will be to ``unlink`` (i.e., remove) a sensitive file on the server, namely ``/home/httpd/grades.txt``. Use the ``*-exstack`` binaries (via configuration files, as discussed before), since they have an executable stack that makes it easier to inject code. The zookws web server should be started via ``./clean-env.sh ./zookld zook-exstack.conf``.
+In this part, you will use your buffer overflows to inject code into the web server. The goal of the injected code will be to ``unlink`` (i.e., remove) a sensitive file on the server, namely ``/home/student/grades.txt``. Use the ``*-exstack`` binaries (via configuration files, as discussed before), since they have an executable stack that makes it easier to inject code. The zookws web server should be started via ``./clean-env.sh ./zookld zook-exstack.conf``.
 
 Shell Code
 ````````````````
 
-We have provided Aleph One's shell code for you to use in ``shellcode.S``, along with ``Makefile`` rules that produce ``shellcode.bin``, a compiled version of the shell code, when you run ``make shellcode.bin``. Aleph One's exploit is intended to exploit ``setuid-root`` binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink ``/home/httpd/grades.txt``. This part is ungraded, but you will most likely need ``shellcode.bin`` for your injection attack.
+We have provided Aleph One's shell code for you to use in ``shellcode.S``, along with ``Makefile`` rules that produce ``shellcode.bin``, a compiled version of the shell code, when you run ``make shellcode.bin``. Aleph One's exploit is intended to exploit ``setuid-root`` binaries, and thus it runs a shell. You will need to modify this shell code to instead unlink ``/home/student/grades.txt``. This part is ungraded, but you will most likely need ``shellcode.bin`` for your injection attack.
 
 .. tip::
 
     To help you develop your shell code for this task, we have provided a program called ``run-shellcode`` that will run your binary shell code, as if you correctly jumped to its starting point. For example, running it on Aleph One's shell code will cause the program to ``execve("/bin/sh")``, thereby giving you another shell prompt::
 
-        httpd@vm263:~/lab$ ./run-shellcode shellcode.bin
+        student@vm263:~/lab$ ./run-shellcode shellcode.bin
         $
 
 
 Injection Attack
 ````````````````
 
-Starting from one of your memory corruption exploits, construct an exploit that hijacks control flow of the web server to unlink ``/home/httpd/grades.txt``. Save this exploit in a file called ``unlink_exstack.py``. In addition, answer the written questions in ``unlink_exstack.txt`` (save your answers directly in the file).
+Starting from one of your memory corruption exploits, construct an exploit that hijacks control flow of the web server to unlink ``/home/student/grades.txt``. Save this exploit in a file called ``unlink_exstack.py``. In addition, answer the written questions in ``unlink_exstack.txt`` (save your answers directly in the file).
 
-Verify that your exploit works; you will need to re-create ``/home/httpd/grades.txt`` after each successful exploit run.
+Verify that your exploit works; you will need to re-create ``/home/student/grades.txt`` after each successful exploit run.
 
 .. important::
 
-    It's OK to hardcode things -- however, you should be careful that your hardcoded things won't break when we're testing your code. This means, among other things, that your repository's root directory should be ``/home/httpd/lab/``. You can check what directory you are currently in with the ``pwd`` command.
+    It's OK to hardcode things -- however, you should be careful that your hardcoded things won't break when we're testing your code. This means, among other things, that your repository's root directory should be ``/home/student/lab/``. You can check what directory you are currently in with the ``pwd`` command.
 
-**Testing**: ``make test_unlink_exstack`` will check that your exploit unlinks ``/home/httpd/grades.txt`` with an executable stack. Note that this does **not** check ``unlink_exstack.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 unlink_exstack.py`` before running the test script.
+**Testing**: ``make test_unlink_exstack`` will check that your exploit unlinks ``/home/student/grades.txt`` with an executable stack. Note that this does **not** check ``unlink_exstack.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 unlink_exstack.py`` before running the test script.
 
 .. _foostack:
 .. tip::
@@ -207,7 +207,7 @@ Verify that your exploit works; you will need to re-create ``/home/httpd/grades.
 
     When developing an exploit, you will often need to know the addresses of specific stack locations, or specific functions, in a particular program. The easiest way to do this is to use ``gdb``. For example, suppose you want to know the stack address of the ``pn[]`` array in the ``http_serve()`` function in ``zookfs-exstack``, and the address of its saved ``%ebp`` register on the stack. You can obtain them using ``gdb`` as follows::
 
-        httpd@vm-CS263:~/lab$ gdb -p $(pgrep zookfs-exstack)
+        student@vm-CS263:~/lab$ gdb -p $(pgrep zookfs-exstack)
         ...
         0x40022416 in __kernel_vsyscall ()
         (gdb) break http_serve
@@ -260,11 +260,11 @@ Part 4: Return-to-libc Attacks
 
 Many modern operating systems mark the stack as non-executable in an attempt to make it more difficult to exploit buffer overflows. In this part, you will explore how this protection mechanism can be circumvented. You'll need to run the web server configured with binaries that have a non-executable stack via ``./clean-env.sh ./zookld zook-nxstack.conf``.
 
-Starting from your two memory corruption exploits, construct two additional exploits that unlink ``/home/httpd/grades.txt`` when run on the binaries that have a non-executable stack. Name these new exploits ``unlink_libc_1.py`` and ``unlink_libc_2.py``. In addition, answer the written questions in ``unlink_libc.txt`` (save your answers directly in the file).
+Starting from your two memory corruption exploits, construct two additional exploits that unlink ``/home/student/grades.txt`` when run on the binaries that have a non-executable stack. Name these new exploits ``unlink_libc_1.py`` and ``unlink_libc_2.py``. In addition, answer the written questions in ``unlink_libc.txt`` (save your answers directly in the file).
 
-Verify that your exploits work; you will need to re-create ``/home/httpd/grades.txt`` after each successful exploit run.
+Verify that your exploits work; you will need to re-create ``/home/student/grades.txt`` after each successful exploit run.
 
-**Testing**: ``make test_unlink_libc_1`` and ``make test_unlink_libc_2`` will check that your exploits unlink ``/home/httpd/grades.txt`` with a non-executable stack. Note that this does **not** check ``unlink_libc.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 unlink_libc_1.py`` and ``chmod 755 unlink_libc_2.py`` before running the test scripts.
+**Testing**: ``make test_unlink_libc_1`` and ``make test_unlink_libc_2`` will check that your exploits unlink ``/home/student/grades.txt`` with a non-executable stack. Note that this does **not** check ``unlink_libc.txt``. If you get an error about the file not being an executable, you may also need to run ``chmod 755 unlink_libc_1.py`` and ``chmod 755 unlink_libc_2.py`` before running the test scripts.
 
 .. important::
 
