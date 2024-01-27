@@ -46,7 +46,7 @@ VirtualBox Setup
 Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below `here`__
 
 - `Download VirtualBox`__.
-  - macOS M-chip users must instead download the `developer preview`__, as VirtualBox does not maintain a mainline release.
+    - macOS M-chip users must instead download the `developer preview`__, as VirtualBox does not maintain a mainline release.
 - Open VirtualBox.
 - Set up a host-only network:
     - In VirtualBox preferences, under "Network", go to "Host-only" and click the green add button.
@@ -101,7 +101,6 @@ Starting and Logging Into the VM
 
 Having set up your VM, you may now start it by clicking "Start". You may choose to access it via either the VM's console or SSH. The username is ``student`` and the password is ``student``.
 
-For SSH, executing ``ssh student@192.168.26.3`` should work.
 To access your VM using SSH, execute ``ssh student@192.168.26.X``. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named ``eth0``) in your network interface configuration (``ifconfig | less``).
 
 .. tip::

@@ -662,8 +662,14 @@ color: red }
 <h2>VirtualBox Setup</h2>
 <p>Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below <a class="reference external" href="https://www.virtualbox.org/manual/ch06.html">here</a></p>
 <ul class="simple">
-<li><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">Download VirtualBox</a>.
-- macOS M-chip users must instead download the <a class="reference external" href="https://www.virtualbox.org/wiki/Testbuilds">developer preview</a>, as VirtualBox does not maintain a mainline release.</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">Download VirtualBox</a>.</dt>
+<dd><ul class="first last">
+<li>macOS M-chip users must instead download the <a class="reference external" href="https://www.virtualbox.org/wiki/Testbuilds">developer preview</a>, as VirtualBox does not maintain a mainline release.</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li>Open VirtualBox.</li>
 <li><dl class="first docutils">
 <dt>Set up a host-only network:</dt>
@@ -761,8 +767,7 @@ color: red }
 <div class="section" id="starting-and-logging-into-the-vm">
 <h2>Starting and Logging Into the VM</h2>
 <p>Having set up your VM, you may now start it by clicking &quot;Start&quot;. You may choose to access it via either the VM's console or SSH. The username is <tt class="docutils literal">student</tt> and the password is <tt class="docutils literal">student</tt>.</p>
-<p>For SSH, executing <tt class="docutils literal">ssh student&#64;192.168.26.3</tt> should work.
-To access your VM using SSH, execute <tt class="docutils literal">ssh student&#64;192.168.26.X</tt>. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named <tt class="docutils literal">eth0</tt>) in your network interface configuration (<tt class="docutils literal">ifconfig | less</tt>).</p>
+<p>To access your VM using SSH, execute <tt class="docutils literal">ssh student&#64;192.168.26.X</tt>. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named <tt class="docutils literal">eth0</tt>) in your network interface configuration (<tt class="docutils literal">ifconfig | less</tt>).</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>Password authentication for SSH may not be enabled by default. If this is the case (i.e. if you attempt to SSH fails with <tt class="docutils literal">Permission denied (publickey)</tt> and you were not asked for a password), you can either:</p>
