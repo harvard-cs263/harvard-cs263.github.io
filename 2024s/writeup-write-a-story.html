@@ -657,12 +657,13 @@ color: red }
 </div>
 <div class="section" id="vm-setup">
 <h1>VM Setup</h1>
-<p>Download the CS 263 VM (<tt class="docutils literal">vm263.ova</tt>) from <a href="https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing">here</a>. Then, import the VM into a virtualization platform.</p>
+<p>Download the CS 263 VM (<tt class="docutils literal">vm263.ova</tt>) from <a class="reference external" href="https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing">here</a>. Then, import the VM into a virtualization platform.</p>
 <div class="section" id="virtualbox-setup">
 <h2>VirtualBox Setup</h2>
-<p>Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below <a href=https://www.virtualbox.org/manual/ch06.html>here</a>.</p>
-<ol class="simple">
-<li>Download VirtualBox <a href=https://www.virtualbox.org/wiki/Downloads&gt;>here</a>, or if you are a macOS M-chip user, download the <cite>developer preview</cite> <a href=https://www.virtualbox.org/wiki/Testbuilds>here</a>, as VirtualBox does not maintain a mainline release.</li>
+<p>Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below <a class="reference external" href="https://www.virtualbox.org/manual/ch06.html">here</a></p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">Download VirtualBox</a>.
+- macOS M-chip users must instead download the <a class="reference external" href="https://www.virtualbox.org/wiki/Testbuilds">developer preview</a>, as VirtualBox does not maintain a mainline release.</li>
 <li>Open VirtualBox.</li>
 <li><dl class="first docutils">
 <dt>Set up a host-only network:</dt>
@@ -675,7 +676,7 @@ color: red }
 <dd><ul class="first last">
 <li>IPv4 Address: 192.168.26.1</li>
 <li>IPv4 Network Mask: 255.255.255.0</li>
-<li>Everything else: unchanged</li>
+<li>Everything else: unchanged.</li>
 </ul>
 </dd>
 </dl>
@@ -727,7 +728,7 @@ color: red }
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Optional: Set up a shared folder</dt>
+<dt>Optional: Set up a shared folder:</dt>
 <dd><ul class="first last">
 <li>Under your VM, click Settings, then Shared Folders.</li>
 <li>Click the &quot;plus folder&quot; icon.</li>
@@ -748,32 +749,36 @@ color: red }
 </dl>
 </li>
 </ul>
-</div>
 <div class="admonition tip">
-    <p class="first admonition-title">Tip</p>
-    <p>Try <tt class="docutils literal">ping google.com</tt> to see if you can access the external network. If not:</p>
-    <ul class="last simple">
-    <li>List your network interfaces using <tt class="docutils literal">ip link</tt>. You should see another ethernet interface, likely named <tt class="docutils literal">eth1</tt>, whose state is down.</li>
-    <li>Configure your netplan YAML to explicitly set <tt class="docutils literal">dhcp4: true</tt> for your second interface. You may need to use sudo to write to this file, and run <tt class="docutils literal">netplan apply</tt>. </li> 
-    </ul>
-    </div>
+<p class="first admonition-title">Tip</p>
+<p>Try <tt class="docutils literal">ping google.com</tt> to see if you can access the external network. If not:</p>
+<ul class="last simple">
+<li>List your network interfaces using <tt class="docutils literal">ip link</tt>. You should see another ethernet interface, likely named <tt class="docutils literal">eth1</tt>, whose state is down.</li>
+<li>Configure your netplan YAML (located in <tt class="docutils literal">etc/netplan/</tt>) to explicitly set <tt class="docutils literal">dhcp4: true</tt> for your second interface. You may need to use <tt class="docutils literal">sudo</tt> to write to this file and run <tt class="docutils literal">netplan apply</tt>.</li>
+</ul>
+</div>
+</div>
 <div class="section" id="starting-and-logging-into-the-vm">
 <h2>Starting and Logging Into the VM</h2>
 <p>Having set up your VM, you may now start it by clicking &quot;Start&quot;. You may choose to access it via either the VM's console or SSH. The username is <tt class="docutils literal">student</tt> and the password is <tt class="docutils literal">student</tt>.</p>
-<p>To access your VM using SSH, execute <tt class="docutils literal">ssh student&#64;192.168.26.X</tt>. The last digit of your IP address may vary<code>&#8212;</code>you can check the exact address inside your VM by looking at the first interface (typically named <tt class="docutils literal">eth0</tt>) in your network interface configuration (<tt class="docutils literal">ifconfig | less</tt>).</p>
+<p>For SSH, executing <tt class="docutils literal">ssh student&#64;192.168.26.3</tt> should work.
+To access your VM using SSH, execute <tt class="docutils literal">ssh student&#64;192.168.26.X</tt>. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named <tt class="docutils literal">eth0</tt>) in your network interface configuration (<tt class="docutils literal">ifconfig | less</tt>).</p>
 <div class="admonition tip">
-    <p class="first admonition-title">Tip</p>
-    <p>Password authentication for SSH may not be enabled by default. If this is the case (i.e. if you attempt to SSH fails with <tt class="docutils literal">Permission denied (publickey)</tt> and you were not asked for a password), you can either:</p>
-    <ul class="last simple">
-    <li>Enable password authentication by editing the <tt class="docutils literal">PasswordAuthentication</tt> flag in <tt class="docutils literal"><span class="pre">/etc/ssh/sshd_config</span></tt> in your VM, and then restarting the <tt class="docutils literal">sshd</tt> service (<tt class="docutils literal">sudo systemctl restart sshd</tt>), or</li>
-    <li>Share a public key with the VM. 
-        <ul class="last simple">
-            <li>If you already have SSH set up on your host, you can copy your existing SSH public key file (usually located in <tt class="docutils literal">~/.ssh/id_rsa.pub</tt>) into your shared folder, and then do <tt class="docutils literal">cp ~/shared_folder/your_key.pub ~/.ssh/authorized_keys</tt>.</li>
-            <li>Or, you can <a class="reference external" href=https://www.booleanworld.com/set-ssh-keys-linux-unix-server/>generate a new key pair</a>. </li>
-        </ul>
-        </li>
-    </ul>
-    </div>
+<p class="first admonition-title">Tip</p>
+<p>Password authentication for SSH may not be enabled by default. If this is the case (i.e. if you attempt to SSH fails with <tt class="docutils literal">Permission denied (publickey)</tt> and you were not asked for a password), you can either:</p>
+<ul class="last simple">
+<li>Enable password authentication by editing the <tt class="docutils literal">PasswordAuthentication</tt> flag in <tt class="docutils literal">/etc/ssh/sshd_config</tt> in your VM, and then restarting the <tt class="docutils literal">sshd</tt> service (<tt class="docutils literal">sudo systemctl restart sshd</tt>), or</li>
+<li><dl class="first docutils">
+<dt>Share a public key with the VM.</dt>
+<dd><ul class="first last">
+<li>If you already have SSH set up on your host, you can copy your existing SSH public key file (usually located in <tt class="docutils literal"><span class="pre">~/.ssh/id_rsa.pub</span></tt>) into your shared folder, and then do <tt class="docutils literal">cp ~/shared_folder/your_key.pub <span class="pre">~/.ssh/authorized_keys</span></tt></li>
+<li>Or, you can <a class="reference external" href="https://www.booleanworld.com/set-ssh-keys-linux-unix-server/">generate a new key pair</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
 <p>Everything below assumes you are logged into <tt class="docutils literal">student</tt> on the VM.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
@@ -815,7 +820,7 @@ git clone &lt;repo_url&gt; write-a-story/
 <h2>Checkout &amp; Setup</h2>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p class="last">For all projects, you may commit and push your changes at your leisure, as long as you <strong>do not push to main</strong>. If you feel you've messed up your git repository contact the TFs for help.</p>
+<p class="last">For all projects, you may commit and push your changes at your leisure, as long as you <strong>do not push to master</strong>. If you feel you've messed up your git repository contact the TFs for help.</p>
 </div>
 <p>All assignments come with a <tt class="docutils literal">pre_setup.sh</tt> script. <strong>Execute this script before starting each assignment, including this one!</strong></p>
 <p>For all assignments, all of your work must committed to a non-main branch. Specifically, commits should be committed and pushed to the <tt class="docutils literal">submission</tt> branch. You should not (and should not be able to) push commits to main.</p>

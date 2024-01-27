@@ -10,7 +10,7 @@
 Write A Story!
 ==============
 
-For this project, you will write a story. More importantly, you will set up the VM, GitHub, and Travis infrastructure necessary for future course projects.
+For this project, you will write a story. More importantly, you will set up the VM and GitHub infrastructure necessary for future course projects.
 
 .. important::
 
@@ -37,24 +37,25 @@ __ github_tutorial_
 VM Setup
 ========
 
-Download the CS 263 VM (``vm263.ova``) from the "Files" section of the Canvas site. Then, import the VM into a virtualization platform. 
+Download the CS 263 VM (``vm263.ova``) from `here`__. Then, import the VM into a virtualization platform. 
+
+__ vm_ova_ 
 
 VirtualBox Setup
 ----------------
-This guide is for VirtualBox 5.1.22, although it will probably work for other VirtualBox versions.
+Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below `here`__
 
-- `Download VirtualBox <https://www.virtualbox.org/wiki/Downloads>`.
-  - macOS M-chip users must instead download the `developer preview <https://www.virtualbox.org/wiki/Testbuilds>` instead, as VirtualBox does not maintain a mainline release.
+- `Download VirtualBox`__.
+  - macOS M-chip users must instead download the `developer preview`__, as VirtualBox does not maintain a mainline release.
 - Open VirtualBox.
 - Set up a host-only network:
     - In VirtualBox preferences, under "Network", go to "Host-only" and click the green add button.
     - This may also be under "File->Host Network Manager..."
-    - Right-click the newly-created network (should be named something like ``vboxnet0``) and click "Edit".
+    - Right-click the newly-created network (will have a default name like ``vboxnet0`` or ``HostNetwork``) and click "Edit".
     - Enter the following settings:
         - IPv4 Address: 192.168.26.1
         - IPv4 Network Mask: 255.255.255.0
         - Everything else: unchanged.
-        - Make sure the DHCP Server is disabled.
     - Save these settings.
 - Import the VM:
     - Click "File", then "Import Appliance".
@@ -64,8 +65,8 @@ This guide is for VirtualBox 5.1.22, although it will probably work for other Vi
     - Click on your newly-created VM and click "Settings".
     - Under "Network > Adapter 1", choose the following options:
         - Enable Network Adapter: checked
-        - Attached to: Host-only Adapter
-        - Name: the network you set up previously (e.g. ``vboxnet0``)
+        - Attached to: Host-only Adapter (or Host-only Network, if Host-only Adapter is deprecated)
+        - Name: the network you set up previously (e.g. ``vboxnet0`` or ``HostNetwork``)
         - Promiscuous Mode (might be under "Advanced"): Allow All
         - Everything else: unchanged
     - Under "Network > Adapter 2", choose the following options:
@@ -73,7 +74,7 @@ This guide is for VirtualBox 5.1.22, although it will probably work for other Vi
         - Attached to: NAT
         - Everything else: unchanged
     - Save these settings.
-- Optional: set up a shared folder:
+- Optional: Set up a shared folder:
     - Under your VM, click Settings, then Shared Folders.
     - Click the "plus folder" icon.
     - Pick a folder path locally.  Perhaps a directory called ``vmshare`` in your home folder.
@@ -83,12 +84,34 @@ This guide is for VirtualBox 5.1.22, although it will probably work for other Vi
     - Ensure you reboot your VM.
     - If you're getting permissions errors accessing the shared folder, run ``sudo adduser student vboxsf``.
 
+.. tip::
+
+    Try ``ping google.com`` to see if you can access the external network. If not:
+
+    - List your network interfaces using ``ip link``. You should see another ethernet interface, likely named ``eth1``, whose state is down.
+    - Configure your netplan YAML (located in ``etc/netplan/``) to explicitly set ``dhcp4: true`` for your second interface. You may need to use ``sudo`` to write to this file and run ``netplan apply``.
+
+
+__ virtualbox_manual_
+__ virtualbox_download_
+__ virtualbox_mac_download_
+
 Starting and Logging Into the VM
 --------------------------------
 
 Having set up your VM, you may now start it by clicking "Start". You may choose to access it via either the VM's console or SSH. The username is ``student`` and the password is ``student``.
 
 For SSH, executing ``ssh student@192.168.26.3`` should work.
+To access your VM using SSH, execute ``ssh student@192.168.26.X``. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named ``eth0``) in your network interface configuration (``ifconfig | less``).
+
+.. tip::
+
+    Password authentication for SSH may not be enabled by default. If this is the case (i.e. if you attempt to SSH fails with ``Permission denied (publickey)`` and you were not asked for a password), you can either:
+
+    - Enable password authentication by editing the ``PasswordAuthentication`` flag in ``/etc/ssh/sshd_config`` in your VM, and then restarting the ``sshd`` service (``sudo systemctl restart sshd``), or
+    - Share a public key with the VM.
+        - If you already have SSH set up on your host, you can copy your existing SSH public key file (usually located in ``~/.ssh/id_rsa.pub``) into your shared folder, and then do ``cp ~/shared_folder/your_key.pub ~/.ssh/authorized_keys``
+        - Or, you can `generate a new key pair`__
 
 Everything below assumes you are logged into ``student`` on the VM.
 
@@ -100,6 +123,8 @@ Everything below assumes you are logged into ``student`` on the VM.
    If you're on an ARM (M-chip) macOS host, it's important to be very careful with your VM.  Your host is emulating an x86 CPU, and so all software runs with very significant overhead.  In particular, the filesystem in the Linux kernel runs much slower; if you're not careful, you can corrupt the filesystem with careless VM shutdowns.  **Always** take care to properly power-manage your VM: ``sudo systemctl poweroff`` to turn it off, ``sudo reboot`` to reboot, and use "ACPI Shutdown" from within Virtualbox.
 
 Feel free to import your favorite dotfiles (e.g. ``.vimrc``, ``.gitconfig``, not to mention all those miscellaneous bash dotfiles).
+
+__ ssh_key_setup_
 
 Project Setup
 =============
@@ -121,16 +146,13 @@ Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``,
 
 .. tip::
 
-    This command and each subsequent Git command will ask you for your username and password, which might get annoying. If you'd like to avoid this, you might want to consider `credential helpers`__.
-
-    Alternatively, you can clone and interact with repositories on the VM using existing SSH keys on your host computer:
+    You can clone and interact with repositories on the VM using existing SSH keys on your host computer:
 
     - Make sure your `SSH key`__ is set up on your host computer, as well as ``ssh-agent``.
-    - Connect to the VM via SSH with agent forwarding enabled: ``ssh -A student@192.168.26.3``.
+    - Connect to the VM via SSH with agent forwarding enabled: ``ssh -A student@192.168.26.X``.
     - Clone the repository on the VM using the URL starting with ``git@github.com:``.
 
-__ github_credential_helpers_
-__ ssh_setup_
+__ github_ssh_setup_
 
 Checkout & Setup
 ----------------
@@ -141,7 +163,7 @@ Checkout & Setup
 
 All assignments come with a ``pre_setup.sh`` script. **Execute this script before starting each assignment, including this one!**
 
-For all assignments, all of your work must committed to a non-master branch. Specifically, commits should be committed and pushed to the ``submission`` branch. You should not (and should not be able to) push commits to master.
+For all assignments, all of your work must committed to a non-main branch. Specifically, commits should be committed and pushed to the ``submission`` branch. You should not (and should not be able to) push commits to main.
 
 To summarize: run the following after cloning the repository::
 
@@ -171,11 +193,9 @@ After pushing to your branch, click the "Compare & pull request" button on your 
 
 If you need to edit your submission before the deadline, just commit and push your new changes to this branch of your repository. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
 
-Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis build by clicking on "Details" then "The build".
-
 .. caution::
 
-    Do **not** click "Merge pull request" after submitting, as this will modify the master branch. We will merge your pull request when grading.
+    Do **not** click "Merge pull request" after submitting, as this will modify the main branch. We will merge your pull request when grading.
 
 .. caution::
 
@@ -196,8 +216,12 @@ Deliverables and Rubric
 
 .. Links follow
 
-.. _github_credential_helpers: https://help.github.com/articles/caching-your-github-password-in-git/#platform-linux
 .. _github_edu_discount: https://education.github.com/discount_requests/new
 .. _github_tutorial: https://try.github.io
 .. _travis: https://travis-ci.com/
-.. _ssh_setup: https://help.github.com/articles/connecting-to-github-with-ssh/
+.. _github_ssh_setup: https://help.github.com/articles/connecting-to-github-with-ssh/
+.. _vm_ova: https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing
+.. _virtualbox_manual: https://www.virtualbox.org/manual/ch06.html
+.. _virtualbox_download: https://www.virtualbox.org/wiki/Downloads
+.. _virtualbox_mac_download: https://www.virtualbox.org/wiki/Testbuilds
+.. _ssh_key_setup: https://www.booleanworld.com/set-ssh-keys-linux-unix-server/
