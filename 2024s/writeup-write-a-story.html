@@ -640,7 +640,7 @@ color: red }
 <div class="document" id="write-a-story">
 <h1 class="title">Write A Story!</h1>
 
-<p>For this project, you will write a story. More importantly, you will set up the VM, GitHub, and Travis infrastructure necessary for future course projects.</p>
+<p>For this project, you will write a story. More importantly, you will set up the VM and GitHub infrastructure necessary for future course projects.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">Even though the project itself is trivial, it is important that you read this <strong>entire document</strong> carefully, as everything here applies to future projects as well.</p>
@@ -657,27 +657,32 @@ color: red }
 </div>
 <div class="section" id="vm-setup">
 <h1>VM Setup</h1>
-<p>Download the CS 263 VM (<tt class="docutils literal">vm263.ova</tt>) from <a href="https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing">here</a>. Then, import the VM into a virtualization platform.</p>
+<p>Download the CS 263 VM (<tt class="docutils literal">vm263.ova</tt>) from <a class="reference external" href="https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing">here</a>. Then, import the VM into a virtualization platform.</p>
 <div class="section" id="virtualbox-setup">
 <h2>VirtualBox Setup</h2>
-<p>This guide is for VirtualBox 5.1.22, although it will probably work for other VirtualBox versions.</p>
+<p>Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below <a class="reference external" href="https://www.virtualbox.org/manual/ch06.html">here</a>.</p>
 <ul class="simple">
-<li><cite>Download VirtualBox &lt;https://www.virtualbox.org/wiki/Downloads&gt;</cite>.
-- macOS M-chip users must instead download the <cite>developer preview &lt;https://www.virtualbox.org/wiki/Testbuilds&gt;</cite> instead, as VirtualBox does not maintain a mainline release.</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">Download VirtualBox</a>.</dt>
+<dd><ul class="first last">
+<li>macOS M-chip users must instead download the <a class="reference external" href="https://www.virtualbox.org/wiki/Testbuilds">developer preview</a>, as VirtualBox does not maintain a mainline release.</li>
+</ul>
+</dd>
+</dl>
+</li>
 <li>Open VirtualBox.</li>
 <li><dl class="first docutils">
 <dt>Set up a host-only network:</dt>
 <dd><ul class="first last">
 <li>In VirtualBox preferences, under &quot;Network&quot;, go to &quot;Host-only&quot; and click the green add button.</li>
 <li>This may also be under &quot;File-&gt;Host Network Manager...&quot;</li>
-<li>Right-click the newly-created network (should be named something like <tt class="docutils literal">vboxnet0</tt>) and click &quot;Edit&quot;.</li>
+<li>Right-click the newly-created network (will have a default name like <tt class="docutils literal">vboxnet0</tt> or <tt class="docutils literal">HostNetwork</tt>) and click &quot;Edit&quot;.</li>
 <li><dl class="first docutils">
 <dt>Enter the following settings:</dt>
 <dd><ul class="first last">
 <li>IPv4 Address: 192.168.26.1</li>
 <li>IPv4 Network Mask: 255.255.255.0</li>
 <li>Everything else: unchanged.</li>
-<li>Make sure the DHCP Server is disabled.</li>
 </ul>
 </dd>
 </dl>
@@ -705,8 +710,8 @@ color: red }
 <dt>Under &quot;Network &gt; Adapter 1&quot;, choose the following options:</dt>
 <dd><ul class="first last">
 <li>Enable Network Adapter: checked</li>
-<li>Attached to: Host-only Adapter</li>
-<li>Name: the network you set up previously (e.g. <tt class="docutils literal">vboxnet0</tt>)</li>
+<li>Attached to: Host-only Adapter (or Host-only Network, if Host-only Adapter is deprecated)</li>
+<li>Name: the network you set up previously (e.g. <tt class="docutils literal">vboxnet0</tt> or <tt class="docutils literal">HostNetwork</tt>)</li>
 <li>Promiscuous Mode (might be under &quot;Advanced&quot;): Allow All</li>
 <li>Everything else: unchanged</li>
 </ul>
@@ -729,7 +734,7 @@ color: red }
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>Optional: set up a shared folder:</dt>
+<dt>Optional: Set up a shared folder:</dt>
 <dd><ul class="first last">
 <li>Under your VM, click Settings, then Shared Folders.</li>
 <li>Click the &quot;plus folder&quot; icon.</li>
@@ -750,11 +755,35 @@ color: red }
 </dl>
 </li>
 </ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Try <tt class="docutils literal">ping google.com</tt> to see if you can access the external network. If not:</p>
+<ul class="last simple">
+<li>List your network interfaces using <tt class="docutils literal">ip link</tt>. You should see another ethernet interface, likely named <tt class="docutils literal">eth1</tt>, whose state is down.</li>
+<li>Configure your netplan YAML (located in <tt class="docutils literal">etc/netplan/</tt>) to explicitly set <tt class="docutils literal">dhcp4: true</tt> for your second interface. You may need to use <tt class="docutils literal">sudo</tt> to write to this file and run <tt class="docutils literal">netplan apply</tt>.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="starting-and-logging-into-the-vm">
 <h2>Starting and Logging Into the VM</h2>
 <p>Having set up your VM, you may now start it by clicking &quot;Start&quot;. You may choose to access it via either the VM's console or SSH. The username is <tt class="docutils literal">student</tt> and the password is <tt class="docutils literal">student</tt>.</p>
-<p>For SSH, executing <tt class="docutils literal">ssh student&#64;192.168.26.3</tt> should work.</p>
+<p>To access your VM using SSH, execute <tt class="docutils literal">ssh student&#64;192.168.26.X</tt>. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named <tt class="docutils literal">eth0</tt>) in your network interface configuration (<tt class="docutils literal">ifconfig | less</tt>).</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Password authentication for SSH may not be enabled by default. If this is the case (i.e. if you attempt to SSH fails with <tt class="docutils literal">Permission denied (publickey)</tt> and you were not asked for a password), you can either:</p>
+<ul class="last simple">
+<li>Enable password authentication by editing the <tt class="docutils literal">PasswordAuthentication</tt> flag in <tt class="docutils literal">/etc/ssh/sshd_config</tt> in your VM, and then restarting the <tt class="docutils literal">sshd</tt> service (<tt class="docutils literal">sudo systemctl restart sshd</tt>), or</li>
+<li><dl class="first docutils">
+<dt>Share a public key with the VM.</dt>
+<dd><ul class="first last">
+<li>If you already have SSH set up on your host, you can copy your existing SSH public key file (usually located in <tt class="docutils literal"><span class="pre">~/.ssh/id_rsa.pub</span></tt>) into your shared folder, and then do <tt class="docutils literal">cp ~/shared_folder/your_key.pub <span class="pre">~/.ssh/authorized_keys</span></tt></li>
+<li>Or, you can <a class="reference external" href="https://www.booleanworld.com/set-ssh-keys-linux-unix-server/">generate a new key pair</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
 <p>Everything below assumes you are logged into <tt class="docutils literal">student</tt> on the VM.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
@@ -784,11 +813,10 @@ git clone &lt;repo_url&gt; write-a-story/
 </pre>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>This command and each subsequent Git command will ask you for your username and password, which might get annoying. If you'd like to avoid this, you might want to consider <a class="reference external" href="https://help.github.com/articles/caching-your-github-password-in-git/#platform-linux">credential helpers</a>.</p>
-<p>Alternatively, you can clone and interact with repositories on the VM using existing SSH keys on your host computer:</p>
+<p>You can clone and interact with repositories on the VM using existing SSH keys on your host computer:</p>
 <ul class="last simple">
 <li>Make sure your <a class="reference external" href="https://help.github.com/articles/connecting-to-github-with-ssh/">SSH key</a> is set up on your host computer, as well as <tt class="docutils literal"><span class="pre">ssh-agent</span></tt>.</li>
-<li>Connect to the VM via SSH with agent forwarding enabled: <tt class="docutils literal">ssh <span class="pre">-A</span> student&#64;192.168.26.3</tt>.</li>
+<li>Connect to the VM via SSH with agent forwarding enabled: <tt class="docutils literal">ssh <span class="pre">-A</span> student&#64;192.168.26.X</tt>.</li>
 <li>Clone the repository on the VM using the URL starting with <tt class="docutils literal">git&#64;github.com:</tt>.</li>
 </ul>
 </div>
@@ -800,7 +828,7 @@ git clone &lt;repo_url&gt; write-a-story/
 <p class="last">For all projects, you may commit and push your changes at your leisure, as long as you <strong>do not push to master</strong>. If you feel you've messed up your git repository contact the TFs for help.</p>
 </div>
 <p>All assignments come with a <tt class="docutils literal">pre_setup.sh</tt> script. <strong>Execute this script before starting each assignment, including this one!</strong></p>
-<p>For all assignments, all of your work must committed to a non-master branch. Specifically, commits should be committed and pushed to the <tt class="docutils literal">submission</tt> branch. You should not (and should not be able to) push commits to master.</p>
+<p>For all assignments, all of your work must committed to a non-main branch. Specifically, commits should be committed and pushed to the <tt class="docutils literal">submission</tt> branch. You should not (and should not be able to) push commits to main.</p>
 <p>To summarize: run the following after cloning the repository:</p>
 <pre class="literal-block">
 cd write-a-story
@@ -827,10 +855,9 @@ git push origin submission
 </pre>
 <p>After pushing to your branch, click the &quot;Compare &amp; pull request&quot; button on your repository's GitHub page. Then, click on &quot;Create pull request&quot; to submit your work! The title can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).</p>
 <p>If you need to edit your submission before the deadline, just commit and push your new changes to this branch of your repository. The original pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
-<p>Ensure that Travis's automatic checks on your pull request run and pass. You can find the details of a Travis build by clicking on &quot;Details&quot; then &quot;The build&quot;.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify the master branch. We will merge your pull request when grading.</p>
+<p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify the main branch. We will merge your pull request when grading.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
