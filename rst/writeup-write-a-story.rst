@@ -200,12 +200,10 @@ If you need to edit your submission before the deadline, just commit and push yo
 
     The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute; the last commit before the deadline will be considered the submission. The course late policy is a 10% deduction per 8 hours of lateness.
 
-    Note that the Travis tests can take a while, and no testing-related extensions will be granted.
-
 Deliverables and Rubric
 =======================
 
-"Automated" grading means we will assign points based on the result of the Travis test case(s).
+"Automated" grading means we will assign points based on the result of the automated test case(s).
 
 +---------------------------------------------------+--------+----------------+
 | Criteria                                          | Points | Grading method |
@@ -217,7 +215,6 @@ Deliverables and Rubric
 
 .. _github_edu_discount: https://education.github.com/discount_requests/new
 .. _github_tutorial: https://try.github.io
-.. _travis: https://travis-ci.com/
 .. _github_ssh_setup: https://help.github.com/articles/connecting-to-github-with-ssh/
 .. _vm_ova: https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing
 .. _virtualbox_manual: https://www.virtualbox.org/manual/ch06.html
