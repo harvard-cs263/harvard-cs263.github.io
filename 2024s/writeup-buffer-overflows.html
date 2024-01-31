@@ -681,7 +681,7 @@ color: red }
 <li>Click &quot;Launch Instance&quot;.</li>
 <li>Use the community AMI <tt class="docutils literal"><span class="pre">ami-032c2461106e6aee3</span></tt>.</li>
 <li>Ensure the instance type is <tt class="docutils literal">t2.micro</tt>.</li>
-<li>Under &quot;Key pair&quot;, create a new key pair and save the PEM file.  (Don't lose it!  You'll need it later.)</li>
+<li>Under &quot;Key pair&quot;, create a new key pair (choose <tt class="docutils literal">RSA</tt> and <tt class="docutils literal">.pem</tt>) and save the PEM file.  (Don't lose it!  You'll need it later.)</li>
 <li>Under &quot;Network&quot;, leave &quot;Create security group&quot; checked, and ensure &quot;Allow SSH traffic&quot; is set to anywhere 0.0.0.0/0.</li>
 <li>Under &quot;Storage&quot;, use 16 GB of gp2 storage.</li>
 <li>Launch!  Wait a few minutes for it to start up.</li>
@@ -689,12 +689,19 @@ color: red }
 </li>
 <li><p class="first">Connect to instance</p>
 <ul>
-<li><p class="first"><tt class="docutils literal">ssh <span class="pre">-i</span> your_pem_file.PEM <span class="pre">-L</span> 8080:localhost:8080 <span class="pre">student&#64;&lt;your</span> EC2 instance public IPv4 DNS&gt;</tt></p>
+<li><p class="first"><tt class="docutils literal">ssh <span class="pre">-A</span> <span class="pre">-i</span> your_pem_file.PEM <span class="pre">-L</span> 8080:localhost:8080 <span class="pre">student&#64;&lt;your</span> EC2 instance public IPv4 DNS&gt;</tt></p>
 </li>
 <li><p class="first">For instance, <tt class="docutils literal">ssh <span class="pre">-i</span> ~/Downloads/id_aws_va.PEM <span class="pre">-L</span> 8080:localhost:8080 <span class="pre">student&#64;ec2-ww-xxx-yyy-zzz.compute-1.amazonaws.com</span></tt></p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">The <tt class="docutils literal">L</tt> flag above forwards ports.  Later, once you launch the zoobar web server, you should be able to visit <tt class="docutils literal">localhost:8080</tt> <cite>on your laptop</cite> and browse the websever running on your EC2 instance.</p>
+<p class="last">You can find your EC2 instance public IPv4 DNS by clicking &quot;Connect to Instance&quot; and then selecting the &quot;SSH Client&quot; tab. You will also need to follow the instructions there to make your <tt class="docutils literal">.pem</tt> file private.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>The <tt class="docutils literal">A</tt> flag enables agent forwarding, which will allow you to use your local credentials to authenticate to GitHub and clone the repository.</li>
+<li>The <tt class="docutils literal">L</tt> flag above forwards ports.  Later, once you launch the zoobar web server, you should be able to visit <tt class="docutils literal">localhost:8080</tt> <cite>on your laptop</cite> and browse the webserver running on your EC2 instance.</li>
+</ul>
 </div>
 </li>
 </ul>
