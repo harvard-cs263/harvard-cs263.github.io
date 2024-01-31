@@ -36,6 +36,59 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     As mentioned in Project 0's writeup, **do not** use ``apt-get`` and related commands yet. Installing, removing, or upgrading packages (esp. ``lib*``) has the potential to change various things in your address space, so your code will probably fail tests on our grading machines.
 
+AWS project setup
+-----------------
+
+If you're running into problems running the VM on your laptop, follow these directions to set up the software environment in an AWS instance.
+
+.. tip::
+
+   We'll be taking advantage of the AWS free tier, so this should not cost you any money!
+
+1. Account creation
+
+   - `Create an AWS account`__.  We're using the free tier, but you will need to add a payment card.
+
+2. Launch EC2 instance
+
+   - Make sure you're in ``us-east-1`` (Northern Virginia).  The region selector is at the upper right of the top toolbar, next to your account name.
+   - From the console dashboard, search "EC2" in the top searchbox.
+   - Click "Launch Instance".
+   - Use the community AMI ``ami-032c2461106e6aee3``.
+   - Ensure the instance type is ``t2.micro``.
+   - Under "Key pair", create a new key pair (choose ``RSA`` and ``.pem``) and save the PEM file.  (Don't lose it!  You'll need it later.)
+   - Under "Network", leave "Create security group" checked, and ensure "Allow SSH traffic" is set to anywhere 0.0.0.0/0.
+   - Under "Storage", use 16 GB of gp2 storage.
+   - Launch!  Wait a few minutes for it to start up.
+
+3. Connect to instance
+
+   - ``ssh -A -i your_pem_file.PEM -L 8080:localhost:8080 student@<your EC2 instance public IPv4 DNS>``
+   - For instance, ``ssh -i ~/Downloads/id_aws_va.PEM -L 8080:localhost:8080 student@ec2-ww-xxx-yyy-zzz.compute-1.amazonaws.com``
+     
+     .. tip::
+        You can find your EC2 instance public IPv4 DNS by clicking "Connect to Instance" and then selecting the "SSH Client" tab. You will also need to follow the instructions there to make your ``.pem`` file private.
+
+     .. tip::
+        - The ``A`` flag enables agent forwarding, which will allow you to use your local credentials to authenticate to GitHub and clone the repository. 
+        - The ``L`` flag above forwards ports.  Later, once you launch the zoobar web server, you should be able to visit ``localhost:8080`` `on your laptop` and browse the webserver running on your EC2 instance. 
+
+4. Install missing software packages: The course VM comes with necessary software preinstalled.  Follow  these steps to replicate the environment in the course VM in your instance.
+
+   - Run ``sudo dpkg --add-architecture i386``
+   - Run ``sudo apt update``
+   - Run ``sudo apt install --assume-yes execstack libc6-dev-i386 libssl-dev:i386 python2 python3 python-pip``
+   - Run ``pip2 install sqlalchemy flask``
+
+5. Disable ASLR: ``echo 0 | sudo tee /proc/sys/kernel/randomize_va_space``
+
+   .. caution::
+      You must re-run this if you reboot your instance!
+
+6. Clone lab, and proceed normally.
+
+__ aws_signup_
+
 Specification
 =============
 
@@ -437,3 +490,4 @@ This project was derived from one offered by MIT's 6.858 class.
 .. _wilson_url_encoding: http://www.blooberry.com/indexdot/html/topics/urlencoding.htm
 .. _gdb_tutorial: ../resources/GDB-tutorial.pdf
 .. _tmux_sheet: https://gist.github.com/MohamedAlaa/2961058
+.. _aws_signup: https://portal.aws.amazon.com/billing/signup#/
