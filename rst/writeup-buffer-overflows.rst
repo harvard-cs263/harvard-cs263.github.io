@@ -56,7 +56,7 @@ If you're running into problems running the VM on your laptop, follow these dire
    - Click "Launch Instance".
    - Use the community AMI ``ami-032c2461106e6aee3``.
    - Ensure the instance type is ``t2.micro``.
-   - Under "Key pair", create a new key pair and same the PEM file.  (Don't lose it!  You'll need it later.)
+   - Under "Key pair", create a new key pair and save the PEM file.  (Don't lose it!  You'll need it later.)
    - Under "Network", leave "Create security group" checked, and ensure "Allow SSH traffic" is set to anywhere 0.0.0.0/0.
    - Under "Storage", use 16 GB of gp2 storage.
    - Launch!  Wait a few minutes for it to start up.
