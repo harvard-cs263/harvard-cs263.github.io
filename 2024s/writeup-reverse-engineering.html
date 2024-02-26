@@ -1,0 +1,885 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.20.1: https://docutils.sourceforge.io/" />
+<title>Reverse Engineering</title>
+<style type="text/css">
+
+/******************************************************************************
+The MIT License (MIT)
+
+Copyright (c) 2014 Matthias Eisen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+******************************************************************************/
+
+/* Modified by Jerry Ma */
+
+body {
+    font-family: Palatino, "Palatino LT STD", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-size: 16px;
+    color: #24292e;
+}
+
+div.document {
+    margin: 0 auto;
+    width: 95%;
+    max-width: 960px;
+}
+
+p {
+    line-height: 120%;
+}
+
+
+/* ========== Headings ========== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    margin-top: 1.5em;
+}
+
+h1.section-subtitle, 
+h2.section-subtitle, 
+h3.section-subtitle,
+h4.section-subtitle, 
+h5.section-subtitle, 
+h6.section-subtitle {
+    margin-top: 0.4em;
+}
+
+h1.title {
+    text-align: center;
+}
+
+h2.subtitle {
+    text-align: center;
+}
+
+span.section-subtitle {
+    font-size: 80%,
+}
+
+/* //-------- Headings ---------- */
+
+
+/* ========== Images ========== */
+
+img, 
+.figure, 
+object {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+div.figure {
+    margin-left:    2em;
+    margin-right:   2em;
+}
+
+img.align-left, .figure.align-left, object.align-left {
+    clear:          left;
+    float:          left;
+    margin-right:   1em;
+}
+
+img.align-right, .figure.align-right, object.align-right {
+    clear:          right;
+    float:          right;
+    margin-left:    1em;
+}
+
+img.align-center, .figure.align-center, object.align-center {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+/* reset inner alignment in figures */
+div.align-right {
+    text-align: inherit;
+}
+
+object[type="image/svg+xml"], 
+object[type="application/x-shockwave-flash"] {
+    overflow: hidden;
+}
+
+/* //-------- Images ---------- */
+
+
+
+/* ========== Literal Blocks ========== */
+
+pre, tt.literal, span.literal {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    font-size: 14px;
+}
+
+tt.literal {
+    background-color: #f3f3f4;
+}
+
+span.literal {
+    background-color: #f3f3f4;
+    border-radius: 0.3em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    white-space: pre;
+}
+
+pre.address {
+    margin-bottom: 0;
+    margin-top: 0;
+    font: inherit;
+}
+
+pre.literal-block {
+    border-left: solid 5px #ccc;
+    background-color: #f6f8fa;
+    padding: 1em;
+}
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+}
+
+span.interpreted {
+}
+
+span.pre {
+    white-space: pre;
+}
+
+pre.code .ln { 
+    color: grey; 
+}
+pre.code, code {
+    border-style: none;
+    padding: 1em 0;
+}
+pre.code .comment, code .comment { 
+    color: #888;
+}
+pre.code .keyword, code .keyword {
+    font-weight: bold; 
+    color: #080;
+}
+pre.code .literal.string, code .literal.string { 
+    color: #d20;
+    background-color: #fff0f0;
+}
+pre.code .literal.number, code .literal.number { 
+    color: #00d;
+}
+pre.code .name.builtin, code .name.builtin {
+    color: #038;
+    color: #820;
+}
+pre.code .name.namespace, code .name.namespace {
+    color: #b06;
+}
+pre.code .deleted, code .deleted {
+    background-color: #fdd;
+}
+pre.code .inserted, code .inserted {
+    background-color: #dfd;
+}
+
+
+/* //-------- Literal Blocks --------- */
+
+
+/* ========== Tables ========== */
+
+table {
+    border-spacing:         0;
+    border-collapse:        collapse;
+    border-style:           none;
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+}
+
+td, 
+th {
+    border: none;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    vertical-align:         top;
+}
+
+th {
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+    background-color:       #ddd;
+}
+
+td p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+table.field-list,
+table.footnote,
+table.citation,
+table.option-list {
+    border:                 none;
+}
+table.docinfo {
+    margin:                 2em 4em;
+}
+
+table.docutils {
+    margin:                 1em 0;
+}
+
+table.docutils th.field-name, 
+table.docinfo th.docinfo-name {
+    border:                 none;
+    background:             none;
+    font-weight:            bold ;
+    text-align:             left ;
+    white-space:            nowrap ;
+    padding-left:           0;
+    vertical-align:         middle; 
+}
+
+table.docutils.booktabs {
+    border:                 none;
+    border-top:             2px solid;
+    border-bottom:          2px solid;
+    border-collapse:        collapse;
+}
+
+table.docutils.booktabs * {
+    border:                 0px;
+}
+table.docutils.booktabs th {
+    border-bottom:          thin solid;
+    text-align:             left;
+}
+
+span.option {
+    white-space: nowrap;
+}
+
+table caption {
+    margin-bottom: 2px;
+}
+
+/* //-------- Tables ---------- */
+
+
+/* ========== Lists ========== */
+
+ol.simple, ul.simple {
+    margin-bottom: 1em;
+}
+
+ol.arabic {
+    list-style: decimal;
+}
+
+ol.loweralpha {
+    list-style: lower-alpha;
+}
+
+ol.upperalpha {
+    list-style: upper-alpha;
+}
+
+ol.lowerroman {
+    list-style: lower-roman;
+}
+
+ol.upperroman {
+    list-style: upper-roman;
+}
+
+dl.docutils dd {
+    margin-bottom: 0.5em;
+}
+
+
+dl.docutils dt {
+    font-weight: bold;
+}
+
+li p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+dl {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* //-------- Lists ---------- */
+
+
+/* ========== Sidebar ========== */
+
+div.sidebar {
+    margin: 0 0 0.5em 1em ;
+    border-left: solid 2px #111;
+    padding: 1em ;
+    width: 40% ;
+    float: right ;
+    clear: right;
+}
+
+div.sidebar {
+    font-size: 14px;
+}
+
+p.sidebar-title {
+    font-size: 16px;
+    font-weight: bold ;
+}
+
+p.sidebar-subtitle {
+    font-weight: bold;
+}
+
+/* //-------- Sidebar ---------- */
+
+
+/* ========== Topic ========== */
+
+div.topic {
+    margin: 2em;
+    padding: 1em 0;
+    border-width: 1px;
+    border-color: #111;
+    border-style: solid none;
+}
+
+div.topic p {
+    padding: 0;
+}
+
+p.topic-title {
+    font-weight: bold;
+}
+
+/* //-------- Topic ---------- */
+
+
+/* ========== Header ========== */
+
+div.header {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             2em auto 4em auto;
+    max-width:          960px;
+    clear:              both;
+}
+
+hr.header {
+    border:             0;
+    height:             1px;
+    margin-top:         1em;
+    background-color:   #111;
+}
+
+/* //-------- Header ---------- */
+
+
+/* ========== Footer ========== */
+
+div.footer {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             6em auto 2em auto;
+    max-width:          960px;
+    clear:              both;
+    text-align:         center;
+}
+
+hr.footer {
+    border:             0;
+    height:             1px;
+    margin-bottom:      2em;
+    background-color:   #111;
+}
+
+/* //-------- Footer ---------- */
+
+
+/* ========== Admonitions ========== */
+
+div.admonition, 
+div.attention, 
+div.caution, 
+div.danger, 
+div.error,
+div.hint, 
+div.important, 
+div.note, 
+div.tip, 
+div.warning {
+    margin: 2em;
+    border: solid 1px #111;
+    padding: 0 1em;
+    background-color: #eee;
+}
+
+div.error,
+div.danger {
+    border-color: #a94442;
+    background-color: #f2dede;
+}
+
+div.hint,
+div.tip {
+    border-color: #31708f;
+    background-color: #d9edf7;
+}
+
+div.attention,
+div.caution,
+div.warning {
+    border-color: #8a6d3b;
+    background-color: #fcf8e3; 
+}
+
+div.hint p.admonition-title,
+div.tip p.admonition-title {
+    color: #31708f;
+    font-weight: bold ;
+}
+
+div.note p.admonition-title,
+div.admonition p.admonition-title, 
+div.important p.admonition-title {
+    font-weight: bold ;
+}
+
+div.attention p.admonition-title,
+div.caution p.admonition-title,
+div.warning p.admonition-title {
+    color: #8a6d3b;
+    font-weight: bold ;
+}
+
+div.danger p.admonition-title, 
+div.error p.admonition-title,
+.code .error {
+    color: #a94442;
+    font-weight: bold ;
+}
+
+/* //-------- Admonitions ---------- */
+
+
+/* ========== Table of Contents ========== */
+
+div.contents {
+    margin: 2em 0;
+    border: none;
+}
+
+ul.auto-toc {
+    list-style-type: none;
+}
+
+a.toc-backref {
+    text-decoration: none ;
+    color: #111;
+}
+
+/* //-------- Table of Contents ---------- */
+
+
+
+/* ========== Line Blocks========== */
+
+div.line-block {
+    display: block ;
+    margin-top: 1em ;
+    margin-bottom: 1em;
+}
+
+div.line-block div.line-block {
+    margin-top: 0 ;
+    margin-bottom: 0 ;
+    margin-left: 1.5em;
+}
+
+/* //-------- Line Blocks---------- */
+
+
+/* ========== System Messages ========== */
+
+div.system-messages {
+    margin: 5em;
+}
+
+div.system-messages h1 {
+    color: red;
+}
+
+div.system-message {
+    border: medium outset ;
+    padding: 1em;
+}
+
+div.system-message p.system-message-title {
+    color: red ;
+    font-weight: bold;
+}
+
+/* //-------- System Messages---------- */
+
+
+/* ========== Helpers ========== */
+
+.hidden {
+    display: none;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    clear: both ;
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/* //-------- Helpers---------- */
+
+
+p.caption {
+    font-style: italic;
+    text-align: center;
+}
+
+p.credits {
+font-style: italic ;
+font-size: smaller }
+
+p.label {
+white-space: nowrap }
+
+p.rubric {
+font-weight: bold ;
+font-size: larger ;
+color: maroon ;
+text-align: center }
+
+p.attribution {
+text-align: right ;
+margin-left: 50% }
+
+blockquote.epigraph {
+    margin: 2em 5em;
+}
+
+div.abstract {
+margin: 2em 5em }
+
+div.abstract {
+font-weight: bold ;
+text-align: center }
+
+div.dedication {
+margin: 2em 5em ;
+text-align: center ;
+font-style: italic }
+
+div.dedication {
+font-weight: bold ;
+font-style: normal }
+
+
+span.classifier {
+font-style: oblique }
+
+span.classifier-delimiter {
+font-weight: bold }
+
+span.problematic {
+color: red }
+
+
+
+
+</style>
+</head>
+<body>
+<div class="document" id="reverse-engineering">
+<h1 class="title">Reverse Engineering</h1>
+
+<p>In this project, you'll reverse engineer ChatMax 2000, a simple email server. ChatMax allows users to send each other short messages. To read and send messages, a user loads the ChatMax client page in a browser. The client page interacts with the ChatMax back-end server, which is called Proton. Proton encrypts per-user mailboxes and the authentication data that is employed to validate user requests.</p>
+<div class="section" id="project-setup">
+<h1>Project Setup</h1>
+<ul class="simple">
+<li>Click on the provided <a class="reference external" href="https://classroom.github.com/a/MgeggGB_">GitHub Classroom assignment link</a>, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</li>
+<li>Wait for the repository to be created.</li>
+<li>Login to the VM.</li>
+<li><tt class="docutils literal">cd ~</tt> to your home directory and run <tt class="docutils literal">git clone &lt;repo_url&gt; <span class="pre">reverse-engineering/</span></tt> to clone your repo.</li>
+<li>Run <tt class="docutils literal">cd <span class="pre">reverse-engineering/</span></tt> to enter the project directory.</li>
+<li>Run <tt class="docutils literal">git checkout <span class="pre">-b</span> submission</tt> to check out a new branch.</li>
+<li>Run <tt class="docutils literal">./pre_setup.sh</tt> to download dependencies.</li>
+</ul>
+<p>Refer to Project 0's writeup for elaboration on any of these steps.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p>Before starting, remember the warning from Project 0:</p>
+<p class="last">It is important that you <strong>do not</strong> push to master. Push to the submission branch.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The ChatMax binaries <strong>should</strong> work on most Linux machines; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Rejoice! Starting now, you may now use <tt class="docutils literal"><span class="pre">apt-get</span></tt> and related commands as you wish. For example, to install <tt class="docutils literal">tmux</tt>:</p>
+<pre class="last literal-block">
+sudo apt-get update
+sudo apt-get install -qq tmux
+</pre>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">This assignment uses Travis for remote builds. Since the class shares a single Travis build queue, there may be some contention, especially close to the deadline. No testing related extensions will be granted, so you're encouraged to start and test early!</p>
+</div>
+</div>
+<div class="section" id="specification">
+<h1>Specification</h1>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using <tt class="docutils literal">git push origin submission</tt>. Once pushed, open a Pull Request for your branch. Travis builds should trigger on new commits pushed to open PRs. You can view remote builds on the <a class="reference external" href="https://travis-ci.com/">Travis</a> website.</p>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>The leaked ChatMax code and data is in the <tt class="docutils literal">leaked_app/</tt> directory. The leak contains the Proton binary, as well as an encrypted password file, some shared libraries used by Proton, and the web content used by the client-side ChatMax page. You will have to configure your reverse engineering environment so that Proton can find the shared libraries; in particular, you'll need to create some symbolic links that point to the leaked libraries, and you'll have to perform an <tt class="docutils literal">export <span class="pre">LD_LIBRARY_PATH=&quot;$HOME&quot;/reverse-engineering/leaked_app/</span></tt> command (add this to <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt> to make your life easier) to ensure that the dynamic linker will search your current working directory for the libraries. For more information on how shared libraries work, and for examples of the necessary incantations, see <a class="reference external" href="http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html">this overview</a>.</p>
+<p>Once you've set up the dynamic libraries, you can run the Proton binary using a command line like this:</p>
+<pre class="literal-block">
+you&#64;yourMachine:~/reverse-engineering/leaked_app$ ./proton 8080 .
+</pre>
+<p>such that you can open the client page by loading <a class="reference external" href="http://192.168.26.X:8080/home.html">http://192.168.26.X:8080/home.html</a> in a browser (or localhost:8080 if you are using AWS with port forwarding).</p>
+<p>The Proton binary and the shared libraries were not compiled with debugging symbols enabled. This will make reverse engineering more difficult. However, you can still learn about the structure of the code using the <tt class="docutils literal">readelf</tt>, <tt class="docutils literal">objdump</tt>, <tt class="docutils literal">strings</tt>, and <tt class="docutils literal">strace</tt> tools.</p>
+<p>You may also find it useful to employ a browser-side debugger. These debuggers are very powerful, and have equivalents for many <tt class="docutils literal">gdb</tt> features like breakpoints. For example, here is an <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Tools/Debugger">introduction to Firefox's built-in debugger</a>. Google Chrome also has a nice one (View &gt; Developer &gt; Developer Tools). One particularly nice feature of these debuggers is their ability to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Pretty-print_a_minified_file">pretty-print minified JavaScript code</a>.  Web developers <a class="reference external" href="https://en.wikipedia.org/wiki/Minification_(programming)">minify their JavaScript</a> to reduce its size (which makes it faster to download) and to obscure its structure (which makes it more difficult to reverse engineer).</p>
+<p>If your local machine's processor supports hardware-based watchpoints, those watchpoints can be <a class="reference external" href="https://sourceware.org/gdb/current/onlinedocs/gdb/Set-Watchpoints.html#Set-Watchpoints">very useful for gdb debugging</a>. For example, using an <tt class="docutils literal">rwatch</tt> command, you can cause the program to break when a particular memory location is read. Similarly, a watch statement will inform you whenever a particular memory location is written. You can tell if your machine supports hardware-based watchpoints by issuing this command from <tt class="docutils literal">gdb</tt>:</p>
+<pre class="literal-block">
+(gdb) show can-use-hw-watchpoints
+Debugger's willingness to use watchpoint hardware is 1.
+</pre>
+<p><tt class="docutils literal">gdb</tt> can also use software-based watchpoints, but they are much slower!</p>
+<p>Note that Proton detaches itself from the console and runs in the background as a daemon. So, as you run your experiments, you may need to check whether an old copy of Proton is running before starting a new one. You can run <tt class="docutils literal">pkill proton</tt> to kill any old copies.</p>
+</div>
+<div class="section" id="part-1-decrypting-the-password-database">
+<h2>Part 1: Decrypting the Password Database</h2>
+<p>One of the files in the leaked app looks like a password database. Unfortunately, it also looks quite encrypted. Find any necessary decryption key(s), then decrypt the password database and extract the mapping from usernames to hashed passwords. Save your decrypted password database as a file called <tt class="docutils literal">decrypted_passwords.txt</tt> (in the repository's root, not in <tt class="docutils literal">leaked_app/</tt>). This file can be in whichever format you prefer, but you will find it most helpful to represent the password hashes as hex strings.</p>
+<p>In addition, answer the written questions in <tt class="docutils literal">keys.txt</tt> (save your answers directly in the file).</p>
+<p><strong>Testing</strong>: <tt class="docutils literal">make test_keys</tt> will check that the correct key(s) are in <tt class="docutils literal">keys.txt</tt>.</p>
+</div>
+<div class="section" id="part-2-reverse-engineering-the-hash-function">
+<h2>Part 2: Reverse Engineering the Hash Function</h2>
+<p>In order to crack some passwords, we also need the hash function that Proton uses to convert a plaintext password into a hash value that is compared against a hash in the password table. Reverse engineer this hash function and implement it in <tt class="docutils literal">hashpw.c</tt>. In the comment at the top of the file, <strong>thoroughly</strong> describe how you reverse-engineered the hash function.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">Your reverse-engineered hash function should not be assembly code that is copied from Proton and called by a real C function; instead, your reverse-engineered hash function should be real, high-level C code with equivalent functionality to the assembly code in Proton.</p>
+</div>
+<p><strong>Compiling</strong>: Run <tt class="docutils literal">make hasher</tt> to compile your hash function.</p>
+<p><strong>Running</strong>: Run <tt class="docutils literal">./hasher 'my_string'</tt> to run your hash function on the string and print the result in hex.</p>
+<p><strong>Testing</strong>: Run <tt class="docutils literal">make test_hasher</tt> to test your hash function.</p>
+</div>
+<div class="section" id="part-3-writing-a-password-cracker">
+<h2>Part 3: Writing a Password Cracker</h2>
+<p>Using your reverse-engineered hash function, implement a password cracking function in <tt class="docutils literal">crackpw.c</tt> according to the specification in the file. Do not use off-the-shelf password crackers (e.g. John the Ripper)  -- instead, write your own. In the comment at the top of the file, briefly describe how your cracker works.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>You may find it useful to use external text or data files. Put these files in the <tt class="docutils literal">data/</tt> directory. The total size of the <tt class="docutils literal">data/</tt> directory should be at most <strong>1 MB</strong>.</p>
+<p>If you do choose to use a list, we highly recommend that you use <a class="reference external" href="https://harvard-cs263.github.io/resources/rockyou-top-25000.txt">this list</a> (RockYou top 25000). You should not need any other list to successfully complete this project.</p>
+<p class="last">Finally, any file paths you use in your cracker should be <strong>relative</strong> paths (relative to the repository root), not absolute paths. For example, to open a data file <tt class="docutils literal">test123.txt</tt>, you should do <tt class="docutils literal"><span class="pre">fopen(&quot;data/test123.txt&quot;,</span> <span class="pre">...)</span></tt>, not <tt class="docutils literal"><span class="pre">fopen(&quot;/home/username/reverse-engineering/data/test123.txt&quot;,</span> <span class="pre">...)</span></tt>. If you use the latter, Travis tests will undoubtedly fail.</p>
+</div>
+<p><strong>Compiling</strong>: Run <tt class="docutils literal">make cracker</tt> to compile your crack function.</p>
+<p><strong>Running</strong>: Run <tt class="docutils literal">./cracker deadbeef</tt> to run your crack function (replace <tt class="docutils literal">deadbeef</tt> with the hex of your hash to crack).</p>
+<div class="section" id="cracking-the-database">
+<h3>Cracking the Database</h3>
+<p>Using your cracker, find the cleartext passwords for at least 8 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in <strong>60 seconds</strong> or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Travis and let you go up to 120 seconds). This might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you don't feel like being a human timer (who does), the <tt class="docutils literal">timeout</tt> tool is for you. Running:</p>
+<pre class="literal-block">
+timeout 60s ./cracker deadbeef
+</pre>
+<p class="last">will try to crack <tt class="docutils literal">deadbeef</tt> for 60 seconds, then terminate with a non-zero exit code if it hasn't finished by then. You can use this to write a bash script to attempt a bunch of hashes without babysitting the VM.</p>
+</div>
+<p>Save these username/password pairs in <tt class="docutils literal"><span class="pre">plaintext-passwords-cracker.csv</span></tt> (CSV format, and do <strong>not</strong> delete the pre-existing header row).</p>
+<p><strong>Testing</strong>: <tt class="docutils literal">make test_cracker</tt> will verify that the cracked passwords in <tt class="docutils literal"><span class="pre">plaintext-passwords-cracker.csv</span></tt> are correct. It will then verify that the cracker can actually crack all of the users' hashes in &lt;= 60 seconds each.</p>
+</div>
+</div>
+<div class="section" id="part-4-remote-password-cracking">
+<h2>Part 4: Remote Password Cracking</h2>
+<p>So far, the analysis we have done has been offline, with the assumption that we have a full leak of the app and database. In this part and the following part of this project, you will develop remote attacks against ChatMax without such an assumption.</p>
+<p>Keep in mind that, like any web application, ChatMax has some quirks. For example, the client ChatMax page occasionally writes debug statements and warnings to the console log. The ChatMax page also does not automatically poll the server for new messages in a user's inbox; so, to receive new messages, you'll need to refresh the page. The Proton server is also quirky; for example, it may not handle certain kinds of messages that you think are reasonable. You'll have to work around these quirks as you reverse-engineer the system.</p>
+<p>Write a remote password cracking function in <tt class="docutils literal">network_cracker.py</tt> according to the specification of <tt class="docutils literal">crack()</tt>. This function should only use network messages to the ChatMax server. In the comment at the top of the file, briefly describe how your cracker works.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p>You may use your <tt class="docutils literal">decrypted_passwords.txt</tt> file as a list of usernames, but your password cracking code should <strong>not</strong> assume knowledge of the hashed passwords or the hash function that the server uses.</p>
+<p class="last">This simulates a scenario in which the ChatMax admins have forced users to select new passwords, but the ChatMax server itself runs the same code.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">As in the non-remote cracking exercise, you may use external text or data files under the same directory and size conditions. Again, we highly recommend that you use <a class="reference external" href="https://harvard-cs263.github.io/resources/rockyou-top-25000.txt">this list</a> (RockYou top 25000). Be careful to use relative instead of absolute paths!</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Although not supported by the course staff, you may use a language other than Python. See <tt class="docutils literal">network_cracker.sh</tt> for instructions.</p>
+</div>
+<p><strong>Running</strong>: After starting a proton server (say, on port 8080), run <tt class="docutils literal">./network_cracker.sh some_username localhost 8080</tt>, replacing <tt class="docutils literal">some_username</tt> with the one whose password you want to crack.</p>
+<div class="section" id="cracking-passwords">
+<h3>Cracking Passwords</h3>
+<p>Using your network cracker, find the cleartext passwords for at least 4 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in <strong>60 seconds</strong> or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Travis and let you go up to 120 seconds). Again, this might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious. As before, the <tt class="docutils literal">timeout</tt> command and bash scripting might be useful.</p>
+<p>Save these username/password pairs in <tt class="docutils literal"><span class="pre">plaintext-passwords-network-cracker.csv</span></tt> (CSV format, and do <strong>not</strong> delete the pre-existing header row).</p>
+<p><strong>Testing</strong>: <tt class="docutils literal">make test_network_cracker</tt> will verify that the cracked passwords in <tt class="docutils literal"><span class="pre">plaintext-passwords-network-cracker.csv</span></tt> are correct. It will then verify that the network cracker can actually crack all of the users' hashes in &lt;= 60 seconds each.</p>
+</div>
+</div>
+<div class="section" id="part-5-remote-exfiltration">
+<h2>Part 5: Remote Exfiltration</h2>
+<p>Imagine that you do have the username and password for a non-root user, but you do <strong>not</strong> have the password for root; for the purposes of this exercise, use one of the non-root username/password pairs that you generated in a previous part of the project. As before, you still do not have access to either the ChatMax binaries or database.</p>
+<p>Your goal is to exfiltrate the cleartext data from root's mailbox. The exfiltration attack should be launched remotely, i.e., only by sending network messages to the Proton server. &quot;Exfiltration&quot; means that the attack must be able to send the contents of root's mailbox, either to a remote server (e.g., <tt class="docutils literal">upload.attacker.com</tt>), or some other endpoint the attacker can access (e.g. the user's own mailbox). You may assume that <tt class="docutils literal">root</tt> logs in and checks their inbox regularly.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Your exfiltration attack can send more information that strictly necessary if that makes the attack easier for you. For example, you could leak more than one user's server-side mailbox, or you could leak all of the HTML in <tt class="docutils literal">root</tt>'s client-side ChatMax page that has been loaded within <tt class="docutils literal">root</tt>'s browser.</p>
+</div>
+<p>Describe your attack in <tt class="docutils literal">exfiltration.txt</tt>. Your description should be thorough enough that a typical &quot;script-kiddle&quot; (knows how to use a terminal, browser, and not much else) could execute your attack perfectly. You may create additional source code files for this attack, as long as the usage is thoroughly specified in <tt class="docutils literal">exfiltration.txt</tt>.</p>
+<p><strong>Running</strong>/<strong>Testing</strong>: on your own.</p>
+</div>
+<div class="section" id="part-6-the-ethics-of-reverse-engineering">
+<h2>Part 6: The Ethics of Reverse Engineering</h2>
+<p>Up to this point in the assignment, your motivation for reverse engineering has been a desire to fulfill your destiny as a l33t hAx0r who gets an A in CS 263. However, imagine that you had performed the activities in Parts 1--5 of this assignment because you work for a software company named WidgetCo. WidgetCo's intellectual property had been stolen by cyberattackers; WidgetCo asked you to hack back and discover what the attackers did with the stolen data. The email server that you've been reverse engineering belongs to the attackers.</p>
+<p>Now that you have the ability to exfiltrate email from the attacker's email server, you can determine what the attackers did with WidgetCo's stolen data. However, suppose that WidgetCo now asks you to proactively attack the server, to prevent the attackers from launching subsequent malicious activity. WidgetCo wants you to continue to reverse engineer the server, to discover a vulnerability that will allow you to delete all data on the attacker's server. WidgetCo says that performing this hack-back is justified because the attackers appear to be close to launching a new attack on WidgetCo and another company.</p>
+<p>How would you respond to the request from WidgetCo to actively destroy the attackers' server? Which arguments from &quot;Ethics of Hacking Back&quot; by Patrick Lin would influence your decision? Place your answer in <tt class="docutils literal"><span class="pre">hack-back.txt</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="submitting">
+<h1>Submitting</h1>
+<p>Push your work using <tt class="docutils literal">git push origin submission</tt>, and open a Pull Request from the submission branch against master.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Before submitting, make sure all your work is committed and pushed to the submission branch of your repository, and make sure the <a class="reference external" href="https://travis-ci.com/">Travis</a> build is passing for your pull request. You can verify by going to your Pull Request and verifying that the latest Travis build shows a green checkmark.</p>
+</div>
+<p>The title of your PR can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).</p>
+<p>If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify your repository. We will merge your pull request when grading.</p>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p>The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.</p>
+<p class="last">Note that the Travis tests can take a while, and no testing-related extensions will be granted.</p>
+</div>
+</div>
+<div class="section" id="deliverables-and-rubric">
+<h1>Deliverables and Rubric</h1>
+<p>&quot;Automated&quot; grading means we will assign points based on the result of the Travis test case(s).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="68%" />
+<col width="11%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Criteria</th>
+<th class="head">Points</th>
+<th class="head">Grading method</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">keys.txt</tt> (Question 1)</td>
+<td>5</td>
+<td>Automated</td>
+</tr>
+<tr><td><tt class="docutils literal">keys.txt</tt> (all other questions)</td>
+<td>5</td>
+<td>Manual</td>
+</tr>
+<tr><td><tt class="docutils literal">decrypted_passwords.txt</tt></td>
+<td>5</td>
+<td>Manual</td>
+</tr>
+<tr><td><tt class="docutils literal">hashpw.c</tt> (correctness)</td>
+<td>7</td>
+<td>Automated</td>
+</tr>
+<tr><td><tt class="docutils literal">hashpw.c</tt> (reverse engineering description)</td>
+<td>7</td>
+<td>Manual</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">plaintext-passwords-cracker.csv</span></tt> and
+<tt class="docutils literal">crackpw()</tt> (correctness/efficiency)</td>
+<td>14</td>
+<td>Automated</td>
+</tr>
+<tr><td><tt class="docutils literal">crackpw()</tt> (brief description)</td>
+<td>4</td>
+<td>Manual</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">plaintext-passwords-network-cracker.csv</span></tt> and
+<tt class="docutils literal">network_cracker.py</tt> (correctness/efficiency)</td>
+<td>18</td>
+<td>Automated</td>
+</tr>
+<tr><td><tt class="docutils literal">network_cracker.py</tt> (brief description)</td>
+<td>5</td>
+<td>Manual</td>
+</tr>
+<tr><td><tt class="docutils literal">exfiltration.txt</tt></td>
+<td>24</td>
+<td>Manual</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">hack-back.txt</span></tt></td>
+<td>6</td>
+<td>Manual</td>
+</tr>
+</tbody>
+</table>
+<!-- Links follow -->
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+Copyright © 2021, Harvard University CS263 —
+all rights reserved.
+</div>
+</body>
+</html>
