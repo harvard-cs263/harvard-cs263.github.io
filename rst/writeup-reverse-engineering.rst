@@ -70,9 +70,9 @@ Once you've set up the dynamic libraries, you can run the Proton binary using a 
 
     you@yourMachine:~/reverse-engineering/leaked_app$ ./proton 8080 .
 
-such that you can open the client page by loading http://192.168.26.3:8080/home.html in a browser.
+such that you can open the client page by loading http://192.168.26.X:8080/home.html in a browser (or localhost:8080 if you are using AWS with port forwarding).
 
-The Proton binary and the shared libraries were not compiled with debugging symbols enabled. This will make reverse engineering more difficult. However, you can still learn about the structure of the code using the ``readelf``, ``objdump``, ``strings``, and ``strace`` tools. See the relevant class notes (available in the Canvas "Files" section) to get an overview of those tools.
+The Proton binary and the shared libraries were not compiled with debugging symbols enabled. This will make reverse engineering more difficult. However, you can still learn about the structure of the code using the ``readelf``, ``objdump``, ``strings``, and ``strace`` tools. 
 
 You may also find it useful to employ a browser-side debugger. These debuggers are very powerful, and have equivalents for many ``gdb`` features like breakpoints. For example, here is an `introduction to Firefox's built-in debugger`_. Google Chrome also has a nice one (View > Developer > Developer Tools). One particularly nice feature of these debuggers is their ability to `pretty-print minified JavaScript code`_.  Web developers `minify their JavaScript`_ to reduce its size (which makes it faster to download) and to obscure its structure (which makes it more difficult to reverse engineer).
 
