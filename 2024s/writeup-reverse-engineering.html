@@ -644,9 +644,9 @@ color: red }
 <div class="section" id="project-setup">
 <h1>Project Setup</h1>
 <ul class="simple">
-<li>Click on the provided <a class="reference external" href="https://classroom.github.com/a/MgeggGB_">GitHub Classroom assignment link</a>, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</li>
+<li>Click on the provided <a class="reference external" href="https://classroom.github.com/a/MgeggGB_">Github Classroom assignment link</a>, login via Github if necessary, and click &quot;Accept assignment&quot;.</li>
 <li>Wait for the repository to be created.</li>
-<li>Login to the VM.</li>
+<li>Login to your AWS free instance or the course VM.</li>
 <li><tt class="docutils literal">cd ~</tt> to your home directory and run <tt class="docutils literal">git clone &lt;repo_url&gt; <span class="pre">reverse-engineering/</span></tt> to clone your repo.</li>
 <li>Run <tt class="docutils literal">cd <span class="pre">reverse-engineering/</span></tt> to enter the project directory.</li>
 <li>Run <tt class="docutils literal">git checkout <span class="pre">-b</span> submission</tt> to check out a new branch.</li>
@@ -660,7 +660,7 @@ color: red }
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The ChatMax binaries <strong>should</strong> work on most Linux machines; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.</p>
+<p class="last">The ChatMax binaries <strong>should</strong> work on most Linux machines; however, the course staff will only support the AWS instance or the course VM, and you are solely responsible for making sure your code passes automated tests.</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -672,7 +672,7 @@ sudo apt-get install -qq tmux
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p class="last">This assignment uses Travis for remote builds. Since the class shares a single Travis build queue, there may be some contention, especially close to the deadline. No testing related extensions will be granted, so you're encouraged to start and test early!</p>
+<p class="last">This assignment uses Github Actions for remote builds and autograding. No testing related extensions will be granted, so you're encouraged to start and test early!</p>
 </div>
 </div>
 <div class="section" id="specification">
@@ -683,7 +683,7 @@ sudo apt-get install -qq tmux
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using <tt class="docutils literal">git push origin submission</tt>. Once pushed, open a Pull Request for your branch. Travis builds should trigger on new commits pushed to open PRs. You can view remote builds on the <a class="reference external" href="https://travis-ci.com/">Travis</a> website.</p>
+<p class="last">For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using <tt class="docutils literal">git push origin submission</tt>. Once pushed, open a Pull Request for your branch. Github Actions builds should trigger on new commits pushed to open PRs.</p>
 </div>
 <div class="section" id="introduction">
 <h2>Introduction</h2>
@@ -727,13 +727,13 @@ Debugger's willingness to use watchpoint hardware is 1.
 <p class="first admonition-title">Important</p>
 <p>You may find it useful to use external text or data files. Put these files in the <tt class="docutils literal">data/</tt> directory. The total size of the <tt class="docutils literal">data/</tt> directory should be at most <strong>1 MB</strong>.</p>
 <p>If you do choose to use a list, we highly recommend that you use <a class="reference external" href="https://harvard-cs263.github.io/resources/rockyou-top-25000.txt">this list</a> (RockYou top 25000). You should not need any other list to successfully complete this project.</p>
-<p class="last">Finally, any file paths you use in your cracker should be <strong>relative</strong> paths (relative to the repository root), not absolute paths. For example, to open a data file <tt class="docutils literal">test123.txt</tt>, you should do <tt class="docutils literal"><span class="pre">fopen(&quot;data/test123.txt&quot;,</span> <span class="pre">...)</span></tt>, not <tt class="docutils literal"><span class="pre">fopen(&quot;/home/username/reverse-engineering/data/test123.txt&quot;,</span> <span class="pre">...)</span></tt>. If you use the latter, Travis tests will undoubtedly fail.</p>
+<p class="last">Finally, any file paths you use in your cracker should be <strong>relative</strong> paths (relative to the repository root), not absolute paths. For example, to open a data file <tt class="docutils literal">test123.txt</tt>, you should do <tt class="docutils literal"><span class="pre">fopen(&quot;data/test123.txt&quot;,</span> <span class="pre">...)</span></tt>, not <tt class="docutils literal"><span class="pre">fopen(&quot;/home/username/reverse-engineering/data/test123.txt&quot;,</span> <span class="pre">...)</span></tt>. If you use the latter, automated Github tests will undoubtedly fail.</p>
 </div>
 <p><strong>Compiling</strong>: Run <tt class="docutils literal">make cracker</tt> to compile your crack function.</p>
 <p><strong>Running</strong>: Run <tt class="docutils literal">./cracker deadbeef</tt> to run your crack function (replace <tt class="docutils literal">deadbeef</tt> with the hex of your hash to crack).</p>
 <div class="section" id="cracking-the-database">
 <h3>Cracking the Database</h3>
-<p>Using your cracker, find the cleartext passwords for at least 8 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in <strong>60 seconds</strong> or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Travis and let you go up to 120 seconds). This might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious.</p>
+<p>Using your cracker, find the cleartext passwords for at least 8 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in <strong>60 seconds</strong> or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Github Actions and let you go up to 120 seconds). This might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>If you don't feel like being a human timer (who does), the <tt class="docutils literal">timeout</tt> tool is for you. Running:</p>
@@ -767,7 +767,7 @@ timeout 60s ./cracker deadbeef
 <p><strong>Running</strong>: After starting a proton server (say, on port 8080), run <tt class="docutils literal">./network_cracker.sh some_username localhost 8080</tt>, replacing <tt class="docutils literal">some_username</tt> with the one whose password you want to crack.</p>
 <div class="section" id="cracking-passwords">
 <h3>Cracking Passwords</h3>
-<p>Using your network cracker, find the cleartext passwords for at least 4 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in <strong>60 seconds</strong> or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Travis and let you go up to 120 seconds). Again, this might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious. As before, the <tt class="docutils literal">timeout</tt> command and bash scripting might be useful.</p>
+<p>Using your network cracker, find the cleartext passwords for at least 4 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in <strong>60 seconds</strong> or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Github Actions and let you go up to 120 seconds). Again, this might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious. As before, the <tt class="docutils literal">timeout</tt> command and bash scripting might be useful.</p>
 <p>Save these username/password pairs in <tt class="docutils literal"><span class="pre">plaintext-passwords-network-cracker.csv</span></tt> (CSV format, and do <strong>not</strong> delete the pre-existing header row).</p>
 <p><strong>Testing</strong>: <tt class="docutils literal">make test_network_cracker</tt> will verify that the cracked passwords in <tt class="docutils literal"><span class="pre">plaintext-passwords-network-cracker.csv</span></tt> are correct. It will then verify that the network cracker can actually crack all of the users' hashes in &lt;= 60 seconds each.</p>
 </div>
@@ -795,10 +795,10 @@ timeout 60s ./cracker deadbeef
 <p>Push your work using <tt class="docutils literal">git push origin submission</tt>, and open a Pull Request from the submission branch against master.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">Before submitting, make sure all your work is committed and pushed to the submission branch of your repository, and make sure the <a class="reference external" href="https://travis-ci.com/">Travis</a> build is passing for your pull request. You can verify by going to your Pull Request and verifying that the latest Travis build shows a green checkmark.</p>
+<p class="last">Before submitting, make sure all your work is committed and pushed to the submission branch of your repository, and make sure the Github Actions build is passing for your pull request. You can verify by going to your Pull Request and verifying that the latest Github Actions build shows a green checkmark.</p>
 </div>
 <p>The title of your PR can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).</p>
-<p>If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
+<p>If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the Github pull request page to verify).</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
 <p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify your repository. We will merge your pull request when grading.</p>
@@ -806,12 +806,12 @@ timeout 60s ./cracker deadbeef
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
 <p>The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.</p>
-<p class="last">Note that the Travis tests can take a while, and no testing-related extensions will be granted.</p>
+<p class="last">Note that the Github Actions tests can take a while, and no testing-related extensions will be granted.</p>
 </div>
 </div>
 <div class="section" id="deliverables-and-rubric">
 <h1>Deliverables and Rubric</h1>
-<p>&quot;Automated&quot; grading means we will assign points based on the result of the Travis test case(s).</p>
+<p>&quot;Automated&quot; grading means we will assign points based on the result of the Github Actions test case(s).</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="68%" />

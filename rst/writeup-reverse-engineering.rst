@@ -15,9 +15,9 @@ In this project, you'll reverse engineer ChatMax 2000, a simple email server. Ch
 Project Setup
 =============
 
-- Click on the provided `GitHub Classroom assignment link`__, login via GitHub if necessary, and click "Accept assignment".
+- Click on the provided `Github Classroom assignment link`__, login via Github if necessary, and click "Accept assignment".
 - Wait for the repository to be created.
-- Login to the VM.
+- Login to your AWS free instance or the course VM.
 - ``cd ~`` to your home directory and run ``git clone <repo_url> reverse-engineering/`` to clone your repo.
 - Run ``cd reverse-engineering/`` to enter the project directory.
 - Run ``git checkout -b submission`` to check out a new branch. 
@@ -35,7 +35,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
 .. note::
 
-    The ChatMax binaries **should** work on most Linux machines; however, the course staff will only support the course VM, and you are solely responsible for making sure your code passes Travis tests.
+    The ChatMax binaries **should** work on most Linux machines; however, the course staff will only support the AWS instance or the course VM, and you are solely responsible for making sure your code passes automated tests.
 
 .. tip::
 
@@ -46,7 +46,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
 .. caution::
   
-  This assignment uses Travis for remote builds. Since the class shares a single Travis build queue, there may be some contention, especially close to the deadline. No testing related extensions will be granted, so you're encouraged to start and test early!
+  This assignment uses Github Actions for remote builds and autograding. No testing related extensions will be granted, so you're encouraged to start and test early!
 
 Specification
 =============
@@ -57,7 +57,7 @@ Specification
 
 .. tip::
 
-    For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using ``git push origin submission``. Once pushed, open a Pull Request for your branch. Travis builds should trigger on new commits pushed to open PRs. You can view remote builds on the Travis_ website.
+    For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using ``git push origin submission``. Once pushed, open a Pull Request for your branch. Github Actions builds should trigger on new commits pushed to open PRs. 
 
 Introduction
 ------------
@@ -126,7 +126,7 @@ Using your reverse-engineered hash function, implement a password cracking funct
 
     If you do choose to use a list, we highly recommend that you use `this list`__ (RockYou top 25000). You should not need any other list to successfully complete this project.
 
-    Finally, any file paths you use in your cracker should be **relative** paths (relative to the repository root), not absolute paths. For example, to open a data file ``test123.txt``, you should do ``fopen("data/test123.txt", ...)``, not ``fopen("/home/username/reverse-engineering/data/test123.txt", ...)``. If you use the latter, Travis tests will undoubtedly fail.
+    Finally, any file paths you use in your cracker should be **relative** paths (relative to the repository root), not absolute paths. For example, to open a data file ``test123.txt``, you should do ``fopen("data/test123.txt", ...)``, not ``fopen("/home/username/reverse-engineering/data/test123.txt", ...)``. If you use the latter, automated Github tests will undoubtedly fail.
 
 __ rockyou_25k_
 
@@ -137,7 +137,7 @@ __ rockyou_25k_
 Cracking the Database
 `````````````````````
 
-Using your cracker, find the cleartext passwords for at least 8 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in **60 seconds** or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Travis and let you go up to 120 seconds). This might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious.
+Using your cracker, find the cleartext passwords for at least 8 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in **60 seconds** or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Github Actions and let you go up to 120 seconds). This might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious.
 
 .. tip::
 
@@ -181,7 +181,7 @@ __ rockyou_25k_
 Cracking Passwords
 ``````````````````
 
-Using your network cracker, find the cleartext passwords for at least 4 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in **60 seconds** or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Travis and let you go up to 120 seconds). Again, this might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious. As before, the ``timeout`` command and bash scripting might be useful.
+Using your network cracker, find the cleartext passwords for at least 4 usernames, including the password for the root account. For each listed user, the cracker must have cracked their password in **60 seconds** or less (assuming single-core on a 2.6GHz Intel Xeon -- we will give you some leeway on Github Actions and let you go up to 120 seconds). Again, this might seem like a tight constraint, but the passwords that some of these users have chosen are truly atrocious. As before, the ``timeout`` command and bash scripting might be useful.
 
 Save these username/password pairs in ``plaintext-passwords-network-cracker.csv`` (CSV format, and do **not** delete the pre-existing header row).
 
@@ -219,11 +219,11 @@ Push your work using ``git push origin submission``, and open a Pull Request fro
 
 .. important::
 
-    Before submitting, make sure all your work is committed and pushed to the submission branch of your repository, and make sure the Travis_ build is passing for your pull request. You can verify by going to your Pull Request and verifying that the latest Travis build shows a green checkmark.
+    Before submitting, make sure all your work is committed and pushed to the submission branch of your repository, and make sure the Github Actions build is passing for your pull request. You can verify by going to your Pull Request and verifying that the latest Github Actions build shows a green checkmark.
 
 The title of your PR can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).
 
-If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).
+If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the Github pull request page to verify).
 
 .. caution::
 
@@ -233,12 +233,12 @@ If you need to edit your submission before the deadline, just commit and push yo
 
     The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.
 
-    Note that the Travis tests can take a while, and no testing-related extensions will be granted. 
+    Note that the Github Actions tests can take a while, and no testing-related extensions will be granted. 
 
 Deliverables and Rubric
 =======================
 
-"Automated" grading means we will assign points based on the result of the Travis test case(s).
+"Automated" grading means we will assign points based on the result of the Github Actions test case(s).
 
 +---------------------------------------------------+--------+----------------+
 | Criteria                                          | Points | Grading method |
@@ -273,7 +273,6 @@ Deliverables and Rubric
 .. _rockyou_25k: https://harvard-cs263.github.io/resources/rockyou-top-25000.txt
 .. _mozilla_firefox_debugger: https://developer.mozilla.org/en-US/docs/Tools/Debugger
 .. _mozilla_pretty_print_js: https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Pretty-print_a_minified_file
-.. _travis: https://travis-ci.com/
 .. _wikipedia_minification: https://en.wikipedia.org/wiki/Minification_(programming)
 .. _yolinux_libraries: http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html
 .. _github_assignment: https://classroom.github.com/a/MgeggGB_
