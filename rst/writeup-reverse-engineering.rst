@@ -70,7 +70,7 @@ Once you've set up the dynamic libraries, you can run the Proton binary using a 
 
     you@yourMachine:~/reverse-engineering/leaked_app$ ./proton 8080 .
 
-such that you can open the client page by loading http://192.168.26.3:8080/home.html in a browser.
+such that you can open the client page by loading http://localhost:8080/home.html in a browser (or http://192.168.26.X:8080 if you are using a Virtualbox VM).
 
 The Proton binary and the shared libraries were not compiled with debugging symbols enabled. This will make reverse engineering more difficult. However, you can still learn about the structure of the code using the ``readelf``, ``objdump``, ``strings``, and ``strace`` tools. See the relevant class notes (available in the Canvas "Files" section) to get an overview of those tools.
 
