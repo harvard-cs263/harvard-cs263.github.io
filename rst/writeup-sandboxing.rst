@@ -40,7 +40,7 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
 .. caution::
 
-    For this assignment, you should use a modern x86-64 Ubuntu VM. Course staff will test your submission using `Ubuntu 22`__.
+    For this assignment, you should use a modern x86-64 Ubuntu VM. Course staff will test your submission using the AWS setup (i.e. `Ubuntu 22.04`__ with Python 3.10.12).
 __ Ubuntu_link_
 
 Specification
