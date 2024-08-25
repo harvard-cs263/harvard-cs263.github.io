@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<title>Sandboxing</title>
+<style type="text/css">
+
+/******************************************************************************
+The MIT License (MIT)
+
+Copyright (c) 2014 Matthias Eisen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+******************************************************************************/
+
+/* Modified by Jerry Ma */
+
+body {
+    font-family: Palatino, "Palatino LT STD", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-size: 16px;
+    color: #24292e;
+}
+
+div.document {
+    margin: 0 auto;
+    width: 95%;
+    max-width: 960px;
+}
+
+p {
+    line-height: 120%;
+}
+
+
+/* ========== Headings ========== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    margin-top: 1.5em;
+}
+
+h1.section-subtitle, 
+h2.section-subtitle, 
+h3.section-subtitle,
+h4.section-subtitle, 
+h5.section-subtitle, 
+h6.section-subtitle {
+    margin-top: 0.4em;
+}
+
+h1.title {
+    text-align: center;
+}
+
+h2.subtitle {
+    text-align: center;
+}
+
+span.section-subtitle {
+    font-size: 80%,
+}
+
+/* //-------- Headings ---------- */
+
+
+/* ========== Images ========== */
+
+img, 
+.figure, 
+object {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+div.figure {
+    margin-left:    2em;
+    margin-right:   2em;
+}
+
+img.align-left, .figure.align-left, object.align-left {
+    clear:          left;
+    float:          left;
+    margin-right:   1em;
+}
+
+img.align-right, .figure.align-right, object.align-right {
+    clear:          right;
+    float:          right;
+    margin-left:    1em;
+}
+
+img.align-center, .figure.align-center, object.align-center {
+    display:        block;
+    margin-left:    auto;
+    margin-right:   auto;
+}
+
+/* reset inner alignment in figures */
+div.align-right {
+    text-align: inherit;
+}
+
+object[type="image/svg+xml"], 
+object[type="application/x-shockwave-flash"] {
+    overflow: hidden;
+}
+
+/* //-------- Images ---------- */
+
+
+
+/* ========== Literal Blocks ========== */
+
+pre, tt.literal, span.literal {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    font-size: 14px;
+}
+
+tt.literal {
+    background-color: #f3f3f4;
+}
+
+span.literal {
+    background-color: #f3f3f4;
+    border-radius: 0.3em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    white-space: pre;
+}
+
+pre.address {
+    margin-bottom: 0;
+    margin-top: 0;
+    font: inherit;
+}
+
+pre.literal-block {
+    border-left: solid 5px #ccc;
+    background-color: #f6f8fa;
+    padding: 1em;
+}
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+}
+
+span.interpreted {
+}
+
+span.pre {
+    white-space: pre;
+}
+
+pre.code .ln { 
+    color: grey; 
+}
+pre.code, code {
+    border-style: none;
+    padding: 1em 0;
+}
+pre.code .comment, code .comment { 
+    color: #888;
+}
+pre.code .keyword, code .keyword {
+    font-weight: bold; 
+    color: #080;
+}
+pre.code .literal.string, code .literal.string { 
+    color: #d20;
+    background-color: #fff0f0;
+}
+pre.code .literal.number, code .literal.number { 
+    color: #00d;
+}
+pre.code .name.builtin, code .name.builtin {
+    color: #038;
+    color: #820;
+}
+pre.code .name.namespace, code .name.namespace {
+    color: #b06;
+}
+pre.code .deleted, code .deleted {
+    background-color: #fdd;
+}
+pre.code .inserted, code .inserted {
+    background-color: #dfd;
+}
+
+
+/* //-------- Literal Blocks --------- */
+
+
+/* ========== Tables ========== */
+
+table {
+    border-spacing:         0;
+    border-collapse:        collapse;
+    border-style:           none;
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+}
+
+td, 
+th {
+    border: none;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    vertical-align:         top;
+}
+
+th {
+    border-top:             solid 1px #111;
+    border-bottom:          solid 1px #111;
+    background-color:       #ddd;
+}
+
+td p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+table.field-list,
+table.footnote,
+table.citation,
+table.option-list {
+    border:                 none;
+}
+table.docinfo {
+    margin:                 2em 4em;
+}
+
+table.docutils {
+    margin:                 1em 0;
+}
+
+table.docutils th.field-name, 
+table.docinfo th.docinfo-name {
+    border:                 none;
+    background:             none;
+    font-weight:            bold ;
+    text-align:             left ;
+    white-space:            nowrap ;
+    padding-left:           0;
+    vertical-align:         middle; 
+}
+
+table.docutils.booktabs {
+    border:                 none;
+    border-top:             2px solid;
+    border-bottom:          2px solid;
+    border-collapse:        collapse;
+}
+
+table.docutils.booktabs * {
+    border:                 0px;
+}
+table.docutils.booktabs th {
+    border-bottom:          thin solid;
+    text-align:             left;
+}
+
+span.option {
+    white-space: nowrap;
+}
+
+table caption {
+    margin-bottom: 2px;
+}
+
+/* //-------- Tables ---------- */
+
+
+/* ========== Lists ========== */
+
+ol.simple, ul.simple {
+    margin-bottom: 1em;
+}
+
+ol.arabic {
+    list-style: decimal;
+}
+
+ol.loweralpha {
+    list-style: lower-alpha;
+}
+
+ol.upperalpha {
+    list-style: upper-alpha;
+}
+
+ol.lowerroman {
+    list-style: lower-roman;
+}
+
+ol.upperroman {
+    list-style: upper-roman;
+}
+
+dl.docutils dd {
+    margin-bottom: 0.5em;
+}
+
+
+dl.docutils dt {
+    font-weight: bold;
+}
+
+li p {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+dl {
+    margin: 0;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* //-------- Lists ---------- */
+
+
+/* ========== Sidebar ========== */
+
+div.sidebar {
+    margin: 0 0 0.5em 1em ;
+    border-left: solid 2px #111;
+    padding: 1em ;
+    width: 40% ;
+    float: right ;
+    clear: right;
+}
+
+div.sidebar {
+    font-size: 14px;
+}
+
+p.sidebar-title {
+    font-size: 16px;
+    font-weight: bold ;
+}
+
+p.sidebar-subtitle {
+    font-weight: bold;
+}
+
+/* //-------- Sidebar ---------- */
+
+
+/* ========== Topic ========== */
+
+div.topic {
+    margin: 2em;
+    padding: 1em 0;
+    border-width: 1px;
+    border-color: #111;
+    border-style: solid none;
+}
+
+div.topic p {
+    padding: 0;
+}
+
+p.topic-title {
+    font-weight: bold;
+}
+
+/* //-------- Topic ---------- */
+
+
+/* ========== Header ========== */
+
+div.header {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             2em auto 4em auto;
+    max-width:          960px;
+    clear:              both;
+}
+
+hr.header {
+    border:             0;
+    height:             1px;
+    margin-top:         1em;
+    background-color:   #111;
+}
+
+/* //-------- Header ---------- */
+
+
+/* ========== Footer ========== */
+
+div.footer {
+    font-family:        "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size:          14px;
+    margin:             6em auto 2em auto;
+    max-width:          960px;
+    clear:              both;
+    text-align:         center;
+}
+
+hr.footer {
+    border:             0;
+    height:             1px;
+    margin-bottom:      2em;
+    background-color:   #111;
+}
+
+/* //-------- Footer ---------- */
+
+
+/* ========== Admonitions ========== */
+
+div.admonition, 
+div.attention, 
+div.caution, 
+div.danger, 
+div.error,
+div.hint, 
+div.important, 
+div.note, 
+div.tip, 
+div.warning {
+    margin: 2em;
+    border: solid 1px #111;
+    padding: 0 1em;
+    background-color: #eee;
+}
+
+div.error,
+div.danger {
+    border-color: #a94442;
+    background-color: #f2dede;
+}
+
+div.hint,
+div.tip {
+    border-color: #31708f;
+    background-color: #d9edf7;
+}
+
+div.attention,
+div.caution,
+div.warning {
+    border-color: #8a6d3b;
+    background-color: #fcf8e3; 
+}
+
+div.hint p.admonition-title,
+div.tip p.admonition-title {
+    color: #31708f;
+    font-weight: bold ;
+}
+
+div.note p.admonition-title,
+div.admonition p.admonition-title, 
+div.important p.admonition-title {
+    font-weight: bold ;
+}
+
+div.attention p.admonition-title,
+div.caution p.admonition-title,
+div.warning p.admonition-title {
+    color: #8a6d3b;
+    font-weight: bold ;
+}
+
+div.danger p.admonition-title, 
+div.error p.admonition-title,
+.code .error {
+    color: #a94442;
+    font-weight: bold ;
+}
+
+/* //-------- Admonitions ---------- */
+
+
+/* ========== Table of Contents ========== */
+
+div.contents {
+    margin: 2em 0;
+    border: none;
+}
+
+ul.auto-toc {
+    list-style-type: none;
+}
+
+a.toc-backref {
+    text-decoration: none ;
+    color: #111;
+}
+
+/* //-------- Table of Contents ---------- */
+
+
+
+/* ========== Line Blocks========== */
+
+div.line-block {
+    display: block ;
+    margin-top: 1em ;
+    margin-bottom: 1em;
+}
+
+div.line-block div.line-block {
+    margin-top: 0 ;
+    margin-bottom: 0 ;
+    margin-left: 1.5em;
+}
+
+/* //-------- Line Blocks---------- */
+
+
+/* ========== System Messages ========== */
+
+div.system-messages {
+    margin: 5em;
+}
+
+div.system-messages h1 {
+    color: red;
+}
+
+div.system-message {
+    border: medium outset ;
+    padding: 1em;
+}
+
+div.system-message p.system-message-title {
+    color: red ;
+    font-weight: bold;
+}
+
+/* //-------- System Messages---------- */
+
+
+/* ========== Helpers ========== */
+
+.hidden {
+    display: none;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    clear: both ;
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/* //-------- Helpers---------- */
+
+
+p.caption {
+    font-style: italic;
+    text-align: center;
+}
+
+p.credits {
+font-style: italic ;
+font-size: smaller }
+
+p.label {
+white-space: nowrap }
+
+p.rubric {
+font-weight: bold ;
+font-size: larger ;
+color: maroon ;
+text-align: center }
+
+p.attribution {
+text-align: right ;
+margin-left: 50% }
+
+blockquote.epigraph {
+    margin: 2em 5em;
+}
+
+div.abstract {
+margin: 2em 5em }
+
+div.abstract {
+font-weight: bold ;
+text-align: center }
+
+div.dedication {
+margin: 2em 5em ;
+text-align: center ;
+font-style: italic }
+
+div.dedication {
+font-weight: bold ;
+font-style: normal }
+
+
+span.classifier {
+font-style: oblique }
+
+span.classifier-delimiter {
+font-weight: bold }
+
+span.problematic {
+color: red }
+
+
+
+
+</style>
+</head>
+<body>
+<div class="document" id="sandboxing">
+<h1 class="title">Sandboxing</h1>
+
+<p>In this project, you'll implement a sandboxing framework. In particular, the framework will restrict the execution of a Python script that we give you. As described below, the sandboxing framework must prevent the script from executing certain system calls in certain situations. The sandboxer must also set the script's <tt class="docutils literal">uid</tt> to an unprivileged one, and place the script in a <tt class="docutils literal">pid</tt> namespace.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The pset has four parts, with the last two being more difficult than the first two; point distribution is heavily skewed towards the easier parts. Part 1 is worth 40 points, Part 2 is worth 25 points, Part 3 is worth 15 points, and Part 4 is worth 10 points. Clean design and correctness are worth 10 points.</p>
+</div>
+<div class="section" id="project-setup">
+<h1>Project Setup</h1>
+<ul class="simple">
+<li>Click on the provided <a class="reference external" href="https://classroom.github.com/a/USuA5Ozo">GitHub Classroom assignment link</a>, login via GitHub if necessary, and click &quot;Accept assignment&quot;.</li>
+<li>Wait for the repository to be created.</li>
+<li>Login to the VM.</li>
+<li><tt class="docutils literal">cd ~</tt> to your home directory and run <tt class="docutils literal">git clone &lt;repo_url&gt; sandboxing/</tt> to clone your repo.</li>
+<li>Run <tt class="docutils literal">cd sandboxing/</tt> to enter the project directory.</li>
+<li>Run <tt class="docutils literal">git checkout <span class="pre">-b</span> submission</tt> to check out a new branch.</li>
+<li>Run <tt class="docutils literal">./pre_setup.sh</tt> to download dependencies.</li>
+</ul>
+<p>Refer to Project 0's writeup for elaboration on any of these steps.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p>Before starting, remember the warning from Project 0:</p>
+<p class="last">It is important that you <strong>do not</strong> push to main. Push to the submission branch.</p>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">For this assignment, you should use a modern x86-64 Ubuntu VM. Course staff will test your submission using the AWS setup (i.e. <a class="reference external" href="https://ubuntu.com/download/desktop">Ubuntu 22.04</a> with Python 3.10.12).</p>
+</div>
+</div>
+<div class="section" id="specification">
+<h1>Specification</h1>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using <tt class="docutils literal">git push origin submission</tt>. Once pushed, open a Pull Request for your branch. Note that there are no Travis build tests for this pset.</p>
+</div>
+<div class="section" id="part-1-pid-namespacing">
+<h2>PART 1: <tt class="docutils literal">pid</tt> namespacing</h2>
+<p>If you look in the <tt class="docutils literal">guest_dir/</tt> directory, you'll see a compiled Python program called <tt class="docutils literal">guest.pyc</tt>. This is the program that you need to sandbox! You should place your sandboxer in a single file called <tt class="docutils literal">sandbox.c</tt>. The program should accept two command line arguments: the path of the directory which contains <tt class="docutils literal">guest.pyc</tt> (which should be <tt class="docutils literal">guest_dir/</tt>), and the user id whose privilege should be used to execute <tt class="docutils literal">guest.pyc</tt>. You should pass whatever (unprivileged) user id is associated with your normal login account on your VM. To see what that user id is, you can execute <tt class="docutils literal">id <span class="pre">-u</span> &lt;username&gt;</tt> from your shell's command prompt.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">You should launch your sandboxer using root privileges. You can do so from an unprivileged shell by issuing a command like <tt class="docutils literal">sudo sandbox guest_dir/ 1000</tt>, where <tt class="docutils literal">1000</tt> is the <tt class="docutils literal">uid</tt> of the unprivileged user whose identity the guest should use. You must run the sandboxer as root-privileged because only root-privileged programs can create namespaces!</p>
+</div>
+<p>The first job of the sandboxer is to create a new process for the guest code to use. Your sandboxer should use the <tt class="docutils literal">clone()</tt> system call, <strong>not</strong> the <tt class="docutils literal">fork()</tt> system call, because <tt class="docutils literal">clone()</tt> allows the sandboxer to place the child process in a <tt class="docutils literal">pid</tt> namespace! Among other things, the <tt class="docutils literal">pid</tt> namespace will restrict the set of processes that the guest can send signals to. So, your sandboxer should <tt class="docutils literal">clone()</tt> a new process, using the <tt class="docutils literal">CLONE_NEWPID</tt> flag to ensure that the new process is placed in a <tt class="docutils literal">pid</tt> namespace. The child should then <tt class="docutils literal">chdir()</tt> to the directory specified on the command line, and use <tt class="docutils literal">exec()</tt> to execute <tt class="docutils literal">python3</tt>, passing the argument <tt class="docutils literal">guest.pyc</tt> to <tt class="docutils literal">python3.</tt> Meanwhile, the parent process (i.e., the sandboxer) should use a system call like <tt class="docutils literal">wait()</tt> to wait for the child process to finish execution.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">After the sandboxer launches the initial guest process, the sandboxer should call <tt class="docutils literal">sleep(1)</tt> before calling <tt class="docutils literal">wait()</tt>. This ensures that the OS has actually created the child process by the time that <tt class="docutils literal">wait()</tt> is called (so that <tt class="docutils literal">wait()</tt> won't return an error which indicates that no children are available to be waited upon).</p>
+</div>
+<p>As the guest executes, it will try to do a bunch of stuff, printing output to the console. You've passed Part 1 when the guest says that it is correctly <tt class="docutils literal">pid</tt>-namespaced. If the guest is not correctly namespaced, then it will be able to send <tt class="docutils literal">SIGKILL</tt> to its parent process (i.e., the sandboxer).</p>
+</div>
+<div class="section" id="part-2-setuid-restrictions">
+<h2>PART 2: <tt class="docutils literal">setuid()</tt> restrictions</h2>
+<p>Now that your sandboxer knows how to <tt class="docutils literal">pid</tt>-namespace a guest, you should modify the sandboxer to force the guest to run as a non-privileged <tt class="docutils literal">uid</tt>. This is important because, right now, the guest code is <tt class="docutils literal">pid</tt>-namespaced, but still runs with <tt class="docutils literal">root</tt> privileges! Change your sandboxer so that, after it calls <tt class="docutils literal">chdir()</tt>, but before it calls <tt class="docutils literal">exec()</tt>, it calls <tt class="docutils literal">setuid()</tt> with the appropriate <tt class="docutils literal">uid</tt>.</p>
+<p>You've passed Part 2 when the guest says that it has tried and failed to access a file that only the root user should be able to access.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">You should not restrict the guest's file activity with something like a file namespace or a <tt class="docutils literal">chroot()</tt> jail. The guest will try to read and write files in the guest directory that was used by the pre-<tt class="docutils literal">exec()</tt> <tt class="docutils literal">chdir()</tt>; those reads and writes should succeed. The <tt class="docutils literal">setuid(uid)</tt> call will restrict the guest's file system access to the set of files that <tt class="docutils literal">uid</tt> can access.</p>
+</div>
+</div>
+<div class="section" id="part-3-fork-restrictions">
+<h2>PART 3: <tt class="docutils literal">fork()</tt> restrictions</h2>
+<p>The guest is now <tt class="docutils literal">setuid()</tt>-restricted and <tt class="docutils literal">pid</tt>-namespaced. However, the guest may still try to exhaust system resources, e.g., by a launching a <tt class="docutils literal">fork()</tt> bomb. Your next task is to modify the sandboxer so that the sandboxer restricts the guest to a maximum of 3 processes. The sandboxer will need to use the <a class="reference external" href="https://www.man7.org/linux/man-pages/man2/ptrace.2.html">ptrace</a> API to introspect on the child's system call activity. In particular, the sandboxer needs to track the guest's process creations and process exits, tracking how many processes the guest has at any given time. The guest should have a maximum of 3 live processes at any given time; if an additional process is created, the sandboxer should kill that process <strong>when the sandboxer observes the first system call made by that process</strong>.</p>
+<p>This part of the assignment is challenging; the <tt class="docutils literal">ptrace</tt> API is complicated. You'll need to keep the <tt class="docutils literal">man</tt> page for <tt class="docutils literal">ptrace</tt> nearby as you work on Part 3. Here are some hints:</p>
+<blockquote>
+<ul class="simple">
+<li>At a high-level, your sandboxer will use the <tt class="docutils literal">ptrace(PTRACE_SYSCALL, &lt;child_pid&gt;, <span class="pre">...)</span></tt> call to monitor the syscall activity of guest processes. When setting up the <tt class="docutils literal">ptrace()</tt> options, you'll need to pass the flags <tt class="docutils literal">PTRACE_O_TRACECLONE | PTRACE_O_TRACEFORK&nbsp; | PTRACE_O_TRACEVFORK</tt> to ensure that the sandboxer will see activity from the initial guest process as well as all processes spawned by that initial guest process. Note that, using <tt class="docutils literal">PTRACE_SYSCALL</tt>, the sandboxer will be awoken twice for each guest syscall: once immediately before the syscall invokes the kernel, and once immediately before the syscall returns to user mode. You will need to distinguish these two scenarios. We recommend that your sandboxer keep a table which tracks per-guest-process information; at a minimum, that table probably needs to track a guest process's <tt class="docutils literal">pid</tt> (from the perspective of the non-<tt class="docutils literal">pid</tt>-namespaced sandboxer) and whether the next expected event from the guest process is a syscall entry or a syscall return.</li>
+<li>The table will also help you track how many guest processes are currently live. Note that the table must be updated when a guest process dies! The sandbox blocks for the next <tt class="docutils literal">ptrace</tt> event by calling the <a class="reference external" href="https://man7.org/linux/man-pages/man2/wait.2.html">wait(int* child_status)</a> system call. The sandboxer can then use <tt class="docutils literal">WIFEXITED(child_status)</tt> to determine if the child has died.</li>
+<li>As the <tt class="docutils literal">man</tt> page for <tt class="docutils literal">ptrace</tt> describes, the tracer (i.e., the sandboxer) needs to handle the possibility that the tracee (i.e., a guest process) was stopped not because of a system call entry or exit, but because of a signal that was delivered to the tracee. As the <tt class="docutils literal">man</tt> page states, &quot;signal-delivery-stop is observed by the tracer as <tt class="docutils literal">waitpid(2)</tt> returning with <tt class="docutils literal">WIFSTOPPED(status)</tt> true, with the signal returned by <tt class="docutils literal">WSTOPSIG(status)</tt> . . . [A]fter signal-delivery-stop is observed by the tracer, the tracer should restart the tracee with the call <tt class="docutils literal">ptrace(PTRACE_restart, pid, 0, sig)</tt> where <tt class="docutils literal">PTRACE_restart</tt> is one of the restarting ptrace requests [e.g., <tt class="docutils literal">PTRACE_SYSCALL</tt>].&quot; So, once your sandboxer's <tt class="docutils literal">wait()</tt> call returns, you need to check whether the traced guest process has died (if so, update your <tt class="docutils literal">pid</tt> table), or invoked a syscall (if so, see whether the guest process needs to be killed); otherwise, if the tracee is stopped because of a signal, just replay the signal as described by the <tt class="docutils literal">ptrace man</tt> page); or if none of that is true, just <tt class="docutils literal">PTRACE_SYSCALL</tt> the guest process as usual to allow it to continue executing.</li>
+<li>When setting up the <tt class="docutils literal">ptrace</tt> options, the sandboxer should also specify <tt class="docutils literal">PTRACE_O_EXITKILL</tt>, which will kill all guest processes if the sandbox dies. This ensures that, even if the guest somehow kills the sandbox, the guest processes will get killed too.</li>
+<li>Before working on Part 3, it is <strong>highly recommended</strong> that you read <a class="reference external" href="https://nullprogram.com/blog/2018/06/23/">this ptrace tutorial</a>! You can ignore the last section about &quot;Foreign system emulation,&quot; but the earlier parts provide a friendly introduction to how <tt class="docutils literal">ptrace</tt> can be used to track which system calls a traced process executes. [Note that, on Ubuntu, your sandbox includes the definition for <tt class="docutils literal">struct user_regs_struct</tt> by including <tt class="docutils literal">&lt;sys/user.h&gt;</tt>.]</li>
+<li>When the sandboxer needs to kill a guest process, the murder should be performed by sending the guest process the <tt class="docutils literal">SIGKILL</tt> signal using <a class="reference external" href="https://man7.org/linux/man-pages/man2/kill.2.html">kill()</a>. Do <em>not</em> try to use the <tt class="docutils literal">PTRACE_KILL</tt> option for <tt class="docutils literal">ptrace()</tt>. As the <tt class="docutils literal">ptrace</tt> <tt class="docutils literal">man</tt> page states, <tt class="docutils literal">PTRACE_KILL</tt> is deprecated and should not be used.</li>
+<li>As you're trying to ensure that your sandboxer is seeing all of the guest processes' system calls, you may find it helpful to run the guest <tt class="docutils literal">.pyc</tt> code using <tt class="docutils literal">strace <span class="pre">-f</span> python3 guest.pyc</tt> (not using the sandboxer) to get an independent verification of what kinds of system calls the guest is executing. Remember that, on x86 Linux, a syscall invocation places the syscall number in <tt class="docutils literal">%rax</tt>; see <a class="reference external" href="https://filippo.io/linux-syscall-table/">here</a> for a list of Linux x86-64 system calls.</li>
+<li>Remember that, after your sandboxer has examined the state of a paused, non-dead guest process, the sandboxer must always restart the guest process by calling <tt class="docutils literal">ptrace(PTRACE_SYSCALL, guest_pid, <span class="pre">...)</span></tt>. If you forget to do this, the guest process will hang forever!</li>
+<li>The guest processes are not multithreaded, so you can ignore the concerns in the <tt class="docutils literal">ptrace man</tt> page about multithreaded processes.</li>
+</ul>
+</blockquote>
+<p>You've passed Part 3 when the guest says that it &quot;had the right number of children killed by the sandbox.&quot;</p>
+</div>
+<div class="section" id="part-4-connect-restriction">
+<h2>PART 4: <tt class="docutils literal">connect()</tt> restriction</h2>
+<p>For the last part of the pset, you must implement selective system call blocking. In particular, you should prevent the guest from issuing <tt class="docutils literal">connect()</tt> system calls to any TCP server unless that server has a localhost IP address <tt class="docutils literal"><span class="pre">127.0.0.*.</span></tt> See <a class="reference external" href="https://web.archive.org/web/20200926161338/https://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html">here</a> for an overview of the system calls which a program must invoke to talk to a TCP server.</p>
+<dl class="docutils">
+<dt>To complete this part of the pset, you'll need to perform selective syscall blocking as described by <a class="reference external" href="https://nullprogram.com/blog/2018/06/23/">the ptrace tutorial</a>. In particular, during the entry into a syscall, the sandboxer should check whether the syscall is a <tt class="docutils literal">connect()</tt> and if so, whether the second argument to <tt class="docutils literal">connect()</tt> (i.e., the <tt class="docutils literal">struct sockaddr_in *addr</tt>) has a <tt class="docutils literal">.sin_addr</tt> corresponding to <tt class="docutils literal">127.0.0.*</tt>. If the <tt class="docutils literal">connect()</tt> call is to a non-<tt class="docutils literal">127.0.0.*</tt> IP address, the sandboxer should set the syscall number in <tt class="docutils literal">%rax</tt> to <tt class="docutils literal"><span class="pre">-1</span></tt>; later, when the <tt class="docutils literal">connect()</tt> syscall tries to return to user-mode, the sandboxer should set the return value to <tt class="docutils literal"><span class="pre">-EPERM</span></tt>. Here are some hints:</dt>
+<dd><ul class="first last simple">
+<li>Remember that, on x86-64 Linux, a syscall invocation places the syscall number in <tt class="docutils literal">%rax</tt>. Your sandboxer should include <tt class="docutils literal">&lt;sys/syscall.h&gt;</tt> to get constants for syscalls (e.g., <tt class="docutils literal">SYSCALL_CONNECT</tt>) which can be compared to the value in <tt class="docutils literal">%rax</tt> to determine which syscall is being invoked.</li>
+<li>On x86-64 Linux, syscall arguments are passed in <tt class="docutils literal">%rdi</tt>, <tt class="docutils literal">%rsi</tt>, <tt class="docutils literal">%rdx</tt>, <tt class="docutils literal">%r10</tt>, <tt class="docutils literal">%r8</tt>, and <tt class="docutils literal">%r9</tt>. For <tt class="docutils literal">connect()</tt>, the second argument is a <tt class="docutils literal">struct sockaddr *addr</tt> (which is really a <tt class="docutils literal">struct sockaddr_in</tt>). The sandboxer must read the <tt class="docutils literal">.sin_addr</tt> field of the <tt class="docutils literal">struct</tt> using <tt class="docutils literal">PTRACE_PEEKDATA</tt>. Keep in mind that <tt class="docutils literal">PTRACE_PEEKDATA</tt> reads data 8 bytes at a time. Also remember that the <tt class="docutils literal">.sin_addr</tt> field of the <tt class="docutils literal">struct sockaddr_in</tt> is not the first field in the <tt class="docutils literal">struct</tt>!</li>
+<li>On Ubuntu, the local DNS stub resolver runs at 127.0.0.53! The guest should be able to connect to that DNS resolver. [If you want to learn more about stub resolvers, see <a class="reference external" href="http://manpages.ubuntu.com/manpages/bionic/man8/systemd-resolved.service.8.html">here</a> and <a class="reference external" href="https://www.internetsociety.org/resources/deploy360/dns-privacy/intro/">here</a>.]</li>
+</ul>
+</dd>
+</dl>
+<p>You've passed Part 4 when the guest says that it was &quot;unable to fetch HTTP data from [<tt class="docutils literal"><span class="pre">https://www.google.com</span></tt>]: &lt;urlopen error [Errno 1] Operation not permitted&gt;.&quot; The guest will also try to fetch data from <tt class="docutils literal"><span class="pre">https://www.cnn.com</span></tt>; the associated <tt class="docutils literal">connect()</tt> should be denied as well. The guest will try to open a localhost TCP server on <tt class="docutils literal">127.0.0.1</tt>, and then another guest process will try to communicate with that server; the associated socket operations should be allowed. Only <tt class="docutils literal">connect()</tt> syscalls to non-<tt class="docutils literal">127.0.0.*</tt> addresses should be blocked.</p>
+</div>
+</div>
+<div class="section" id="submitting">
+<h1>Submitting</h1>
+<p>Push your work using <tt class="docutils literal">git push origin submission</tt>, and open a pull request from the submission branch against main.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Before submitting, make sure all your work is committed and pushed to the submission branch of your repository. Also make sure that you've submitted a pull request!</p>
+</div>
+<p>The title of your PR can be whatever, and the comment can be left blank (or non-blank if you have a note for the grader).</p>
+<p>If you need to edit your submission before the deadline, just commit and push your new changes to the submission branch. The pull request will be automatically updated with those commits (of course, be sure to check the GitHub pull request page to verify).</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">Do <strong>not</strong> click &quot;Merge pull request&quot; after submitting, as this will modify your repository. We will merge your pull request when grading.</p>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.</p>
+</div>
+</div>
+<div class="section" id="deliverables-and-rubric">
+<h1>Deliverables and Rubric</h1>
+<p>&quot;Automated&quot; grading means we will assign points based on whether the guest script outputs that a particular test failed or succeeded. &quot;Manual&quot; grading uses TF inspection of your code.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="68%" />
+<col width="11%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Criteria</th>
+<th class="head">Points</th>
+<th class="head">Grading method</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Part 1: <tt class="docutils literal">pid</tt> namespacing</td>
+<td>40</td>
+<td>Automated</td>
+</tr>
+<tr><td>Part 2: Guest launched with <tt class="docutils literal">setuid()</tt> sandbox</td>
+<td>25</td>
+<td>Automated</td>
+</tr>
+<tr><td>Part 3: <tt class="docutils literal">fork()</tt> restrictions</td>
+<td>15</td>
+<td>Automated</td>
+</tr>
+<tr><td>Part 4: <tt class="docutils literal">connect()</tt> sandboxing</td>
+<td>10</td>
+<td>Automated</td>
+</tr>
+<tr><td>Clean design and correctness</td>
+<td>10</td>
+<td>Manual</td>
+</tr>
+</tbody>
+</table>
+<!-- Links follow -->
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+Copyright © 2021, Harvard University CS263 —
+all rights reserved.
+</div>
+</body>
+</html>
