@@ -176,6 +176,7 @@ If you're running into problems running the VM on your laptop, follow these dire
 
    - Run ``sudo dpkg --add-architecture i386``
    - Run ``sudo apt update``
+   - Run ``sudo apt install libc6=2.35-0ubuntu3.8 libc6:i386=2.35-0ubuntu3.8``
    - Run ``sudo apt install --assume-yes execstack libc6-dev-i386 libssl-dev:i386 python2 python3 python-pip``
    - Run ``pip2 install sqlalchemy flask``
 
