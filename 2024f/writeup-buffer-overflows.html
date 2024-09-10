@@ -661,68 +661,16 @@ color: red }
 <p class="first admonition-title">Caution!</p>
 <p class="last">As mentioned in Project 0's writeup, <strong>do not</strong> use <tt class="docutils literal"><span class="pre">apt-get</span></tt> and related commands yet. Installing, removing, or upgrading packages (esp. <tt class="docutils literal">lib*</tt>) has the potential to change various things in your address space, so your code will probably fail tests on our grading machines.</p>
 </div>
-<div class="section" id="aws-project-setup">
-<h2>AWS project setup</h2>
-<p>If you're running into problems running the VM on your laptop, follow these directions to set up the software environment in an AWS instance.</p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">We'll be taking advantage of the AWS free tier, so this should not cost you any money!</p>
-</div>
-<ol class="arabic">
-<li><p class="first">Account creation</p>
-<ul class="simple">
-<li><a class="reference external" href="https://portal.aws.amazon.com/billing/signup#/">Create an AWS account</a>.  We're using the free tier, but you will need to add a payment card.</li>
-</ul>
-</li>
-<li><p class="first">Launch EC2 instance</p>
-<ul class="simple">
-<li>Make sure you're in <tt class="docutils literal"><span class="pre">us-east-1</span></tt> (Northern Virginia).  The region selector is at the upper right of the top toolbar, next to your account name.</li>
-<li>From the console dashboard, search &quot;EC2&quot; in the top searchbox.</li>
-<li>Click &quot;Launch Instance&quot;.</li>
-<li>Use the community AMI <tt class="docutils literal"><span class="pre">ami-032c2461106e6aee3</span></tt>.</li>
-<li>Ensure the instance type is <tt class="docutils literal">t2.micro</tt>.</li>
-<li>Under &quot;Key pair&quot;, create a new key pair (choose <tt class="docutils literal">RSA</tt> and <tt class="docutils literal">.pem</tt>) and save the PEM file.  (Don't lose it!  You'll need it later.)</li>
-<li>Under &quot;Network&quot;, leave &quot;Create security group&quot; checked, and ensure &quot;Allow SSH traffic&quot; is set to anywhere 0.0.0.0/0.</li>
-<li>Under &quot;Storage&quot;, use 16 GB of gp2 storage.</li>
-<li>Launch!  Wait a few minutes for it to start up.</li>
-</ul>
-</li>
-<li><p class="first">Connect to instance</p>
-<ul>
-<li><p class="first"><tt class="docutils literal">ssh <span class="pre">-A</span> <span class="pre">-i</span> your_pem_file.PEM <span class="pre">-L</span> 8080:localhost:8080 <span class="pre">student&#64;&lt;your</span> EC2 instance public IPv4 DNS&gt;</tt></p>
-</li>
-<li><p class="first">For instance, <tt class="docutils literal">ssh <span class="pre">-i</span> ~/Downloads/id_aws_va.PEM <span class="pre">-L</span> 8080:localhost:8080 <span class="pre">student&#64;ec2-ww-xxx-yyy-zzz.compute-1.amazonaws.com</span></tt></p>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">You can find your EC2 instance public IPv4 DNS by clicking &quot;Connect to Instance&quot; and then selecting the &quot;SSH Client&quot; tab. You will also need to follow the instructions there to make your <tt class="docutils literal">.pem</tt> file private.</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<ul class="last simple">
-<li>The <tt class="docutils literal">A</tt> flag enables agent forwarding, which will allow you to use your local credentials to authenticate to GitHub and clone the repository.</li>
-<li>The <tt class="docutils literal">L</tt> flag above forwards ports.  Later, once you launch the zoobar web server, you should be able to visit <tt class="docutils literal">localhost:8080</tt> <cite>on your laptop</cite> and browse the webserver running on your EC2 instance.</li>
-</ul>
-</div>
-</li>
-</ul>
-</li>
-<li><p class="first">Install missing software packages: The course VM comes with necessary software preinstalled.  Follow  these steps to replicate the environment in the course VM in your instance.</p>
-<ul class="simple">
-<li>Run <tt class="docutils literal">sudo dpkg <span class="pre">--add-architecture</span> i386</tt></li>
-<li>Run <tt class="docutils literal">sudo apt update</tt></li>
-<li>Run <tt class="docutils literal">sudo apt install <span class="pre">--assume-yes</span> execstack <span class="pre">libc6-dev-i386</span> <span class="pre">libssl-dev:i386</span> python2 python3 <span class="pre">python-pip</span></tt></li>
-<li>Run <tt class="docutils literal">pip2 install sqlalchemy flask</tt></li>
-</ul>
-</li>
-<li><p class="first">Disable ASLR: <tt class="docutils literal">echo 0 | sudo tee /proc/sys/kernel/randomize_va_space</tt></p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution!</p>
-<p class="last">You must re-run this if you reboot your instance!</p>
-</div>
-</li>
-<li><p class="first">Clone lab, and proceed normally.</p>
-</li>
-</ol>
+<p>If you are using AWS and have rebooted your instance, remember to re-run the following command to disable ASLR:</p>
+<pre class="literal-block">
+echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
+</pre>
+<p>To make sure this change persists after every reboot, we recommend adding this line to your <tt class="docutils literal">.bash_profile</tt>, ensuring the command executes every time you log in through SSH. You can quickly do this by running:</p>
+<pre class="last literal-block">
+echo &quot;echo 0 | sudo tee /proc/sys/kernel/randomize_va_space &gt; /dev/null&quot; &gt;&gt; ~/.bash_profile
+</pre>
 </div>
 </div>
 <div class="section" id="specification">
