@@ -166,7 +166,7 @@ If you're running into problems running the VM on your laptop, follow these dire
    - For instance, ``ssh -i ~/Downloads/id_aws_va.PEM -L 8080:localhost:8080 student@ec2-ww-xxx-yyy-zzz.compute-1.amazonaws.com``
 
      .. tip::
-        You can find your EC2 instance public IPv4 DNS by clicking "Connect to Instance" and then selecting the "SSH Client" tab. You will also need to follow the instructions there to make your ``.pem`` file private.
+        You can find your EC2 instance public IPv4 DNS by navigating to "Instances", selecting your instance, clicking "Connect", and then selecting the "SSH Client" tab. You will also need to follow the instructions there to make your ``.pem`` file private.
 
      .. tip::
         - The ``A`` flag enables agent forwarding, which will allow you to use your local credentials to authenticate to GitHub and clone the repository.
@@ -176,7 +176,7 @@ If you're running into problems running the VM on your laptop, follow these dire
 
    - Run ``sudo dpkg --add-architecture i386``
    - Run ``sudo apt update``
-   - Run ``sudo apt install libc6=2.35-0ubuntu3.8 libc6:i386=2.35-0ubuntu3.8``
+   - Run ``sudo apt install libc6=2.35-0ubuntu3.10 libc6:i386=2.35-0ubuntu3.10``
    - Run ``sudo apt install --assume-yes execstack libc6-dev-i386 libssl-dev:i386 python2 python3 python-pip``
    - Run ``pip2 install sqlalchemy flask``
 
