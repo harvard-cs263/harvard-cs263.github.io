@@ -56,12 +56,10 @@ VirtualBox Setup
 Depending on the version of VirtualBox you use, the setup may vary slightly from the instructions below. At a high level, setting up your VM in VirtualBox entails importing the provided OVA file, which contains the disk image for the Linux distribution we'll be using, and then setting up the network configuration so that your VM can talk to your local machine (SSH), and the outside world (Github, Google, etc.). You can read more about the particular settings below `here`__.
 
 - `Download VirtualBox`__.
-    - macOS M-chip users must instead download the `developer preview`__, as VirtualBox does not maintain a mainline release.
 - Open VirtualBox.
 - Set up a host-only network:
-    - In VirtualBox preferences, under "Network", go to "Host-only" and click the green add button.
-    - This may also be under "File->Host Network Manager..."
-    - Right-click the newly-created network (will have a default name like ``vboxnet0`` or ``HostNetwork``) and click "Edit".
+    - In the network manager ("File->Host Network Manager..." or "File->Tools->Network"), go to "Host-only Networks" and click the green add button.
+    - Right-click the newly-created network (will have a default name like ``vboxnet0`` or ``HostNetwork``) and click "Edit", if the properties box isn't there already.
     - Enter the following settings:
         - IPv4 Address: 192.168.26.1
         - IPv4 Network Mask: 255.255.255.0
@@ -92,26 +90,34 @@ Depending on the version of VirtualBox you use, the setup may vary slightly from
         - Pick ``/home/student/vmshare/`` as the mount point.
         - Check auto-mount.
     - Ensure you reboot your VM.
-    - If you're getting permissions errors accessing the shared folder, run ``sudo adduser student vboxsf``.
-
-.. tip::
-
-    Try ``ping google.com`` to see if you can access the external network. If not:
-
-    - List your network interfaces using ``ip link``. You should see another ethernet interface, likely named ``eth1``, whose state is down.
-    - Configure your netplan YAML (located in ``etc/netplan/``) to explicitly set ``dhcp4: true`` for your second interface. You may need to use ``sudo`` to write to this file and run ``netplan apply``.
+    - If you're getting permissions errors accessing the shared folder, run ``sudo adduser student vboxsf`` inside the VM.
 
 
 __ virtualbox_manual_
 __ virtualbox_download_
-__ virtualbox_mac_download_
 
 Starting and Logging Into the VM
 --------------------------------
 
-Having set up your VM, you may now start it by clicking "Start". You may choose to access it via either the VM's console or SSH. The username is ``student`` and the password is ``student``.
+Having set up your VM, you may now start it by clicking "Start". For the first login, you'll use the VM's console, but SSH will be configured later. The username is ``student`` and the password is ``student``.
 
-To access your VM using SSH, execute ``ssh student@192.168.26.X``. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by looking at the first interface (typically named ``eth0``) in your network interface configuration (``ifconfig | less``).
+Run ``ping google.com`` to see if you can access the external network. If not:
+
+- List your network interfaces using ``ip link``. You should see another ethernet interface, likely named ``eth1``, whose state is down.
+- Edit your netplan YAML (located in ``/etc/netplan/``) to explicitly set ``dhcp4: true`` for your second interface. You'll need to use ``sudo`` to write to this file. Afterwards, run ``sudo netplan apply``.
+
+Run ``ifconfig | grep 192.168.26`` to see if the host-only network was automatically configured. If you see a line saying ``inet 192.168.26.X netmask 255.255.255.0 broadcast 192.168.26.255``, congratulations, your setup is complete. Otherwise, edit your netplan YAML and change ``dhcp: true`` under ``eth0`` (but not ``eth1``) to::
+
+    dhcp4: false
+    addresses:
+      - 192.168.26.3/24
+    routes:
+      - to: default
+        via: 192.168.26.1
+
+Afterwards, run ``sudo netplan apply`` and ``sudo systemctl restart sshd``. Running ``ifconfig | grep 192.168.26`` again should now print that line.
+
+You can now access your VM using SSH by executing ``ssh student@192.168.26.X``. The last digit of your IP address (your host address on the network) may vary; you can check the exact address inside your VM by running ``ifconfig | grep 192.168.26``).
 
 .. tip::
 
@@ -119,7 +125,7 @@ To access your VM using SSH, execute ``ssh student@192.168.26.X``. The last digi
 
     - Enable password authentication by editing the ``PasswordAuthentication`` flag in ``/etc/ssh/sshd_config`` in your VM, and then restarting the ``sshd`` service (``sudo systemctl restart sshd``), or
     - Share a public key with the VM.
-        - If you already have SSH set up on your host, you can copy your existing SSH public key file (usually located in ``~/.ssh/id_rsa.pub``) into your shared folder, and then do ``cp ~/shared_folder/your_key.pub ~/.ssh/authorized_keys``
+        - If you already have SSH set up on your host, you can copy your existing SSH public key file (usually located in ``~/.ssh/id_rsa.pub``) into your shared folder, and then do ``cp ~/shared_folder/your_key.pub ~/.ssh/authorized_keys`` on the VM. You may need to first create the ``~/.ssh`` directory and set its permissions to ``700``, and then set the permissions on the ``authorized_keys`` file to ``600`` after copying
         - Or, you can `generate a new key pair`__
 
 Everything below assumes you are logged into ``student`` on the VM.
@@ -282,6 +288,5 @@ Deliverables and Rubric
 .. _vm_ova: https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing
 .. _virtualbox_manual: https://www.virtualbox.org/manual/ch06.html
 .. _virtualbox_download: https://www.virtualbox.org/wiki/Downloads
-.. _virtualbox_mac_download: https://www.virtualbox.org/wiki/Testbuilds
 .. _ssh_key_setup: https://www.booleanworld.com/set-ssh-keys-linux-unix-server/
 .. _aws_signup: https://portal.aws.amazon.com/billing/signup#/
