@@ -42,7 +42,7 @@ This course requires a specific Linux environment to complete your assignments. 
 1. Local Virtual Machine (VM) through VirtualBox
 2. Amazon Web Services (AWS) EC2 Instance
 
-If you're using an ARM-based (M-chip) macOs machine, we strongly recommend using the latter.
+If you're using an ARM-based (M-chip) macOS machine, we strongly recommend using the latter.
 
 VM Setup
 ========
@@ -106,7 +106,7 @@ Run ``ping google.com`` to see if you can access the external network. If not:
 - List your network interfaces using ``ip link``. You should see another ethernet interface, likely named ``eth1``, whose state is down.
 - Edit your netplan YAML (located in ``/etc/netplan/``) to explicitly set ``dhcp4: true`` for your second interface. You'll need to use ``sudo`` to write to this file. Afterwards, run ``sudo netplan apply``.
 
-Run ``ifconfig | grep 192.168.26`` to see if the host-only network was automatically configured. If you see a line saying ``inet 192.168.26.X netmask 255.255.255.0 broadcast 192.168.26.255``, congratulations, your setup is complete. Otherwise, edit your netplan YAML and change ``dhcp: true`` under ``eth0`` (but not ``eth1``) to::
+Run ``ifconfig | grep 192.168.26`` to see if the host-only network was automatically configured. If you see a line saying ``inet 192.168.26.X netmask 255.255.255.0 broadcast 192.168.26.255``, congratulations, your setup is complete. Otherwise, edit your netplan YAML and change ``dhcp4: true`` under ``eth0`` (but not ``eth1``) to::
 
     dhcp4: false
     addresses:
