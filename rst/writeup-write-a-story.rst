@@ -112,7 +112,7 @@ Run ``ifconfig | grep 192.168.26`` to see if the host-only network was automatic
     addresses:
       - 192.168.26.3/24
     routes:
-      - to: default
+      - to: 192.168.26.0/24
         via: 192.168.26.1
 
 Afterwards, run ``sudo netplan apply`` and ``sudo systemctl restart sshd``. Running ``ifconfig | grep 192.168.26`` again should now print that line.
