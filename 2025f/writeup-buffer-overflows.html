@@ -661,17 +661,6 @@ color: red }
 <p class="first admonition-title">Caution!</p>
 <p class="last">As mentioned in Project 0's writeup, <strong>do not</strong> use <tt class="docutils literal"><span class="pre">apt-get</span></tt> and related commands yet. Installing, removing, or upgrading packages (esp. <tt class="docutils literal">lib*</tt>) has the potential to change various things in your address space, so your code will probably fail tests on our grading machines.</p>
 </div>
-<div class="admonition caution">
-<p class="first admonition-title">Caution!</p>
-<p>If you are using AWS and have rebooted your instance, remember to re-run the following command to disable ASLR:</p>
-<pre class="literal-block">
-echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
-</pre>
-<p>To make sure this change persists after every reboot, we recommend adding this line to your <tt class="docutils literal">.bash_profile</tt>, ensuring the command executes every time you log in through SSH. You can quickly do this by running:</p>
-<pre class="last literal-block">
-echo &quot;echo 0 | sudo tee /proc/sys/kernel/randomize_va_space &gt; /dev/null&quot; &gt;&gt; ~/.bash_profile
-</pre>
-</div>
 </div>
 <div class="section" id="specification">
 <h1>Specification</h1>

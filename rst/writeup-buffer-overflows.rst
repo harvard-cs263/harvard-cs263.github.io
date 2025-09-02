@@ -36,20 +36,6 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     As mentioned in Project 0's writeup, **do not** use ``apt-get`` and related commands yet. Installing, removing, or upgrading packages (esp. ``lib*``) has the potential to change various things in your address space, so your code will probably fail tests on our grading machines.
 
-.. caution::
-
-    If you are using AWS and have rebooted your instance, remember to re-run the following command to disable ASLR:
-
-    ::
-
-        echo 0 | sudo tee /proc/sys/kernel/randomize_va_space
-
-    To make sure this change persists after every reboot, we recommend adding this line to your ``.bash_profile``, ensuring the command executes every time you log in through SSH. You can quickly do this by running:
-
-    ::
-
-        echo "echo 0 | sudo tee /proc/sys/kernel/randomize_va_space > /dev/null" >> ~/.bash_profile
-
 Specification
 =============
 
