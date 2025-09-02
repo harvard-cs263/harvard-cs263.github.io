@@ -282,7 +282,7 @@ Deliverables and Rubric
 
 .. Links follow
 
-.. _github_edu_discount: https://education.github.com/discount_requests/new
+.. _github_edu_discount: https://github.com/settings/education/benefits
 .. _github_tutorial: https://try.github.io
 .. _github_ssh_setup: https://help.github.com/articles/connecting-to-github-with-ssh/
 .. _vm_ova: https://drive.google.com/file/d/1T-tfAm2Fuh5_EAPTWLzvBiYbQ3rucQ7s/view?usp=sharing
