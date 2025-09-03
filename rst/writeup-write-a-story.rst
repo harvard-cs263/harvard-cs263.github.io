@@ -160,7 +160,7 @@ If you're running into problems running the VM on your laptop, follow these dire
    - From the console dashboard, search "EC2" in the top searchbox.
    - Click "Launch Instance".
    - Use the community AMI ``ami-032c2461106e6aee3``.
-   - Ensure the instance type is ``t2.micro``.
+   - Select the instance type which is identified as "Free Tier Eligible" (``t2.micro`` or ``t3.micro``)
    - Under "Key pair", create a new key pair (choose ``RSA`` and ``.pem``) and save the PEM file.  (Don't lose it!  You'll need it later.)
    - Under "Network", leave "Create security group" checked, and ensure "Allow SSH traffic" is set to anywhere 0.0.0.0/0.
    - Under "Storage", use 16 GB of gp2 storage.
@@ -185,11 +185,6 @@ If you're running into problems running the VM on your laptop, follow these dire
    - Run ``sudo apt install libc6=2.35-0ubuntu3.10 libc6:i386=2.35-0ubuntu3.10``
    - Run ``sudo apt install --assume-yes execstack libc6-dev-i386 libssl-dev:i386 python2 python3 python-pip``
    - Run ``pip2 install sqlalchemy flask``
-
-5. Disable ASLR: ``echo 0 | sudo tee /proc/sys/kernel/randomize_va_space``
-
-   .. caution::
-      You must re-run this if you reboot your instance!
 
 __ aws_signup_
 
