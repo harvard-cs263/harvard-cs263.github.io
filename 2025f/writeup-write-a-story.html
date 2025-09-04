@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.22: https://docutils.sourceforge.io/" />
+<meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <title>Write A Story!</title>
 <style type="text/css">
 
@@ -823,7 +823,7 @@ routes:
 <li>From the console dashboard, search &quot;EC2&quot; in the top searchbox.</li>
 <li>Click &quot;Launch Instance&quot;.</li>
 <li>Use the community AMI <tt class="docutils literal"><span class="pre">ami-032c2461106e6aee3</span></tt>.</li>
-<li>Ensure the instance type is <tt class="docutils literal">t2.micro</tt>.</li>
+<li>Select the instance type which is identified as &quot;Free Tier Eligible&quot; (<tt class="docutils literal">t2.micro</tt> or <tt class="docutils literal">t3.micro</tt>)</li>
 <li>Under &quot;Key pair&quot;, create a new key pair (choose <tt class="docutils literal">RSA</tt> and <tt class="docutils literal">.pem</tt>) and save the PEM file.  (Don't lose it!  You'll need it later.)</li>
 <li>Under &quot;Network&quot;, leave &quot;Create security group&quot; checked, and ensure &quot;Allow SSH traffic&quot; is set to anywhere 0.0.0.0/0.</li>
 <li>Under &quot;Storage&quot;, use 16 GB of gp2 storage.</li>
@@ -857,12 +857,6 @@ routes:
 <li>Run <tt class="docutils literal">sudo apt install <span class="pre">--assume-yes</span> execstack <span class="pre">libc6-dev-i386</span> <span class="pre">libssl-dev:i386</span> python2 python3 <span class="pre">python-pip</span></tt></li>
 <li>Run <tt class="docutils literal">pip2 install sqlalchemy flask</tt></li>
 </ul>
-</li>
-<li><p class="first">Disable ASLR: <tt class="docutils literal">echo 0 | sudo tee /proc/sys/kernel/randomize_va_space</tt></p>
-<div class="admonition caution">
-<p class="first admonition-title">Caution!</p>
-<p class="last">You must re-run this if you reboot your instance!</p>
-</div>
 </li>
 </ol>
 </div>
