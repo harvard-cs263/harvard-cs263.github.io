@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.22: https://docutils.sourceforge.io/" />
 <title>Buffer Overflows</title>
 <style type="text/css">
 
@@ -690,7 +690,7 @@ color: red }
 <p class="last">The Makefile includes the <tt class="docutils literal">test</tt> target that runs zook and your exploits in a standardized manner.  Check that your exploits work by running <tt class="docutils literal">make test</tt>.  This is how we will grade your submission.</p>
 </div>
 <p>The reference binaries of zookws are provided in <tt class="docutils literal">bin.tar.gz</tt>. We will use those binaries for grading, so make sure that your exploits work on those binaries.</p>
-<p>Now, make sure that you can run the zookws web server and start the application via <tt class="docutils literal"><span class="pre">./clean-env.sh</span> ./zookld <span class="pre">zook-exstack.conf</span></tt>. You should then be able to open your browser and go to <a class="reference external" href="http://192.168.26.3:8080/">http://192.168.26.3:8080/</a>. If something doesn't seem to be working, try to figure out what went wrong before proceeding further.</p>
+<p>Now, make sure that you can run the zookws web server and start the application via <tt class="docutils literal"><span class="pre">./clean-env.sh</span> ./zookld <span class="pre">zook-exstack.conf</span></tt>. You should then be able to open your browser and go to <a class="reference external" href="http://192.168.26.3:8080">http://192.168.26.3:8080</a> if you're using VirtualBox, or <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> if you're using AWS. If something doesn't seem to be working, try to figure out what went wrong before proceeding further.</p>
 </div>
 <div class="section" id="gdb">
 <h2>GDB</h2>
