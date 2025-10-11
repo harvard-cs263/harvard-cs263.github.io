@@ -227,11 +227,11 @@ If you need to edit your submission before the deadline, just commit and push yo
 
 .. caution::
 
-    Do **not** click "Merge pull request" after submitting, as this will modify your repository. We will merge your pull request when grading.
+    Do **not** click "Merge pull request" after submitting.
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 16 hours of lateness.
 
     Note that the Github Actions tests can take a while, and no testing-related extensions will be granted. 
 
