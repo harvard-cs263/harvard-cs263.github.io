@@ -275,4 +275,4 @@ Deliverables and Rubric
 .. _mozilla_pretty_print_js: https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Pretty-print_a_minified_file
 .. _wikipedia_minification: https://en.wikipedia.org/wiki/Minification_(programming)
 .. _yolinux_libraries: http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html
-.. _github_assignment: https://classroom.github.com/a/MgeggGB_
+.. _github_assignment: https://classroom.github.com/a/h5BaUsVw
