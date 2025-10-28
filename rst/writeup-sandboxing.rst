@@ -38,9 +38,9 @@ Refer to Project 0's writeup for elaboration on any of these steps.
 
     It is important that you **do not** push to main. Push to the submission branch.
 
-.. caution::
+.. tip::
 
-    For this assignment, you should use a modern x86-64 Ubuntu VM. Course staff will test your submission using the AWS setup (i.e. `Ubuntu 22.04`__ with Python 3.10.12).
+    For this assignment, you can continue using the course VM, or use a modern x86-64 Ubuntu VM (>= 22.04). Course staff will test your submission using `Ubuntu 22.04`__ with Python 3.10.12.
 __ Ubuntu_link_
 
 Specification
@@ -143,7 +143,7 @@ If you need to edit your submission before the deadline, just commit and push yo
 
 .. caution::
 
-    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 8 hours of lateness.
+    The deadlines for all assignments are on Canvas. Deadlines are enforced to the minute, and the course late policy is a 10% deduction per 16 hours of lateness.
 
 Deliverables and Rubric
 =======================
@@ -165,7 +165,7 @@ Deliverables and Rubric
 +---------------------------------------------------+--------+----------------+
 
 .. Links follow
-.. _github_assignment: https://classroom.github.com/a/USuA5Ozo
+.. _github_assignment: https://classroom.github.com/a/_GbES6Gy
 .. _Ubuntu_link: https://ubuntu.com/download/desktop
 .. _ptrace_man_page: https://www.man7.org/linux/man-pages/man2/ptrace.2.html
 .. _kill_man_page: https://man7.org/linux/man-pages/man2/kill.2.html
