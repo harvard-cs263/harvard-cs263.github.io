@@ -50,9 +50,9 @@ Specification
 
     For all projects, trying to modify or otherwise game the test cases will result in a grade of zero and academic dishonesty sanctions. Contact the course staff if you encounter issues with the tests.
 
-.. tip::
+.. caution::
 
-    For all projects, you may commit and push your changes at your leisure. Commit your changes to the submission branch and push using ``git push origin submission``. Once pushed, open a Pull Request for your branch. Note that there are no Travis build tests for this pset.
+    As with Project 2, your submission time is deemed as the last runtime of the GitHub Actions run. This means you should open a pull request early! Note that a green checkmark does not necessarily mean the sandbox output is correct, just that it compiled and ran without crashing or returning a non-zero error code.
 
 PART 1: ``pid`` namespacing
 ---------------------------
