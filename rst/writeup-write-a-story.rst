@@ -159,7 +159,7 @@ If you're running into problems running the VM on your laptop, follow these dire
    - Make sure you're in ``us-east-1`` (Northern Virginia).  The region selector is at the upper right of the top toolbar, next to your account name.
    - From the console dashboard, search "EC2" in the top searchbox.
    - Click "Launch Instance".
-   - Use the community AMI ``ami-032c2461106e6aee3``.
+   - Use the community AMI ``ami-00a23c404b272db44``.
    - Select the instance type which is identified as "Free Tier Eligible" (``t2.micro`` or ``t3.micro``)
    - Under "Key pair", create a new key pair (choose ``RSA`` and ``.pem``) and save the PEM file.  (Don't lose it!  You'll need it later.)
    - Under "Network", leave "Create security group" checked, and ensure "Allow SSH traffic" is set to anywhere 0.0.0.0/0.
@@ -181,8 +181,11 @@ If you're running into problems running the VM on your laptop, follow these dire
 4. Install missing software packages: The course VM comes with necessary software preinstalled.  Follow  these steps to replicate the environment in the course VM in your instance.
 
    - Run ``sudo dpkg --add-architecture i386``
+   - Run ``sudo rm /etc/apt/sources.list.d/nodesource.list``
+   - Run ``curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -``
+   - Run ``sudo apt install -y nodejs``
    - Run ``sudo apt update``
-   - Run ``sudo apt install libc6=2.35-0ubuntu3.10 libc6:i386=2.35-0ubuntu3.10``
+   - Run ``sudo apt install libc6=2.35-0ubuntu3.14 libc6:i386=2.35-0ubuntu3.14``
    - Run ``sudo apt install --assume-yes execstack libc6-dev-i386 libssl-dev:i386 python2 python3 python-pip``
    - Run ``pip2 install sqlalchemy flask``
 
@@ -202,7 +205,7 @@ Clone the Repository
 --------------------
 
 Now it is time to clone the repository.
-Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL (make sure it begins with ``https://``), and run in your VM::
+Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL, and run in your VM::
 
     cd
     git clone <repo_url> write-a-story/
