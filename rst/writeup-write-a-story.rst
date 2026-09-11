@@ -195,7 +195,7 @@ __ aws_signup_
 Project Setup
 =============
 
-Click on the provided GitHub Classroom assignment link, login via GitHub if necessary, and click "Accept assignment".
+Click on the provided Classroom 50 assignment link, login via GitHub if necessary, and click "Accept assignment".
 
 .. important::
 
@@ -205,7 +205,7 @@ Clone the Repository
 --------------------
 
 Now it is time to clone the repository.
-Go to ``https://github.com/harvard-cs263/write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL, and run in your VM::
+Go to ``https://github.com/harvard-cs263/cs2630-pset-0-write-a-story-<YOUR-GITHUB-USERNAME>``, copy the URL, and run in your VM::
 
     cd
     git clone <repo_url> write-a-story/
