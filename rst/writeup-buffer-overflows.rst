@@ -15,7 +15,7 @@ This project will give you hands-on experience with buffer overflow vulnerabilit
 Project Setup
 =============
 
-- Click on the `provided GitHub Classroom assignment link`__, login via GitHub if necessary, and click "Accept assignment".
+- Click on the `provided Classroom 50 assignment link`__, login via GitHub if necessary, and click "Accept assignment".
 - Login to the VM.
 - Run ``cd`` to enter your home directory, then run ``git clone <repo_url> lab/`` to clone your repo.
 - Run ``cd lab/`` to enter the project directory.
@@ -430,7 +430,7 @@ This project was derived from one offered by MIT's 6.858 class.
 
 .. Links follow
 
-.. _github_classroom: https://classroom.github.com/a/RFGSAxmO 
+.. _github_classroom: https://classroom50.org/harvard-cs263/cs2630/assignments/pset-1-buffer-overflows/accept
 .. _garshol_http: http://www.garshol.priv.no/download/text/http-tut.html
 .. _python3_struct: https://docs.python.org/3/library/struct.html
 .. _python3_urllib: https://docs.python.org/3/library/urllib.html
