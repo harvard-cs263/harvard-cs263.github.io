@@ -15,7 +15,7 @@ In this project, you'll reverse engineer ChatMax 2000, a simple email server. Ch
 Project Setup
 =============
 
-- Click on the provided `Github Classroom assignment link`__, login via Github if necessary, and click "Accept assignment".
+- Click on the provided `Classroom 50 assignment link`__, login via Github if necessary, and click "Accept assignment".
 - Wait for the repository to be created.
 - Login to your AWS free instance or the course VM.
 - ``cd ~`` to your home directory and run ``git clone <repo_url> reverse-engineering/`` to clone your repo.
@@ -275,4 +275,4 @@ Deliverables and Rubric
 .. _mozilla_pretty_print_js: https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Pretty-print_a_minified_file
 .. _wikipedia_minification: https://en.wikipedia.org/wiki/Minification_(programming)
 .. _yolinux_libraries: http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html
-.. _github_assignment: https://classroom.github.com/a/h5BaUsVw
+.. _github_assignment: https://classroom50.org/harvard-cs263/cs2630/assignments/pset-2-reverse-engineering/accept
