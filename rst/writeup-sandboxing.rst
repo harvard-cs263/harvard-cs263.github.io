@@ -20,7 +20,7 @@ In this project, you'll implement a sandboxing framework. In particular, the fra
 Project Setup
 =============
 
-- Click on the provided `GitHub Classroom assignment link`__, login via GitHub if necessary, and click "Accept assignment".
+- Click on the provided `Classroom 50 assignment link`__, login via GitHub if necessary, and click "Accept assignment".
 - Wait for the repository to be created.
 - Login to the VM.
 - ``cd ~`` to your home directory and run ``git clone <repo_url> sandboxing/`` to clone your repo.
